@@ -71,8 +71,8 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>文章管理 </a>
         <ul class="collapse list-unstyled " id="articleDropdown">
-          <li><a class="sidebar-link" href="./sp/article-list.php">文章列表</a></li>
-          <li><a class="sidebar-link" href="">文章類型</a></li>
+          <li><a class="sidebar-link" href="../article/article-list.php">文章列表</a></li>
+          <li><a class="sidebar-link" href="../article/article-list.php">文章類型</a></li>
         </ul>
       </li>
 
@@ -82,7 +82,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>活動管理 </a>
         <ul class="collapse list-unstyled " id="eventDropdown">
-          <li><a class="sidebar-link" href="active.php">活動管理</a></li>
+          <li><a class="sidebar-link" href="../active/active.php">活動管理</a></li>
         </ul>
       </li>
     </ul>

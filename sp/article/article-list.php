@@ -9,9 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <!-- theme stylesheet-->
-  <link rel="stylesheet" href="css/style.default.premium.css" id="theme-stylesheet">
+  <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
   <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="../css/custom.css">
   <!-- font-awsome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <?php include("../nav1.php") ?>
+    <?php include("../../nav1.php") ?>
     <main class="main-content ">
       <div class="d-flex justify-content-between align-items-start">
         <p class="m-0 d-inline text-lg text-secondary">文章管理 /<span class="text-sm">文章列表</span></p>
@@ -60,14 +60,14 @@
               <td>placeholder</td>
               <td>text</td>
               <td>text</td>
-              <td>
-                <a href="article-edit.php" class="btn btn-outline-secondary btn-sm">
+              <td class="d-flex gap-3 ">
+                <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
                   <i class="fa-regular fa-eye"></i>
                 </a>
-                <a href="article-edit.php" class="btn btn-outline-secondary btn-sm">
+                <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
                   <i class="fa-regular fa-pen-to-square"></i>
                 </a>
-                <a href="" class="btn btn-outline-secondary btn-sm">
+                <a href="" class="btn btn-outline-secondary btn-md">
                   <i class="fa-regular fa-trash-can"></i>
                 </a>
               </td>
@@ -78,17 +78,21 @@
               <td>irrelevant</td>
               <td>visual</td>
               <td>layout</td>
+              <td>text</td>
+              <td>text</td>
+              
             </tr>
             
-
+            
           </tbody>
         </table>
       </div>
     </main>
+    
 
     </div>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/front.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/front.js"></script>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
