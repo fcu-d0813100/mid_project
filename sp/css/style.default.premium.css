@@ -15521,12 +15521,12 @@ nav.navbar .dropdown-menu.show {
 .side-navbar.hide {
   left: -70px;
 }
-/* @media (max-width: 1199.98px) {
+@media (max-width: 1199.98px) {
   .side-navbar {
     left: -200px;
     width: 200px;
     text-align: center;
-  } */
+  }
   .side-navbar.show-sm {
     left: 0 !important;
   }
@@ -15558,11 +15558,11 @@ nav.navbar .dropdown-menu.show {
   width: 70px;
   text-align: center;
 }
-/* @media (max-width: 1199.98px) {
+@media (max-width: 1199.98px) {
   .side-navbar.shrink {
     width: 200px;
   }
-} */
+}
 .side-navbar.shrink .brand-small {
   display: block;
 }

@@ -71,8 +71,8 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>文章管理 </a>
         <ul class="collapse list-unstyled " id="articleDropdown">
-          <li><a class="sidebar-link" href="forms-texteditor.html">文章列表</a></li>
-          <li><a class="sidebar-link" href="forms-texteditor.html">文章類型</a></li>
+          <li><a class="sidebar-link" href="./sp/article-list.php">文章列表</a></li>
+          <li><a class="sidebar-link" href="">文章類型</a></li>
         </ul>
       </li>
 
