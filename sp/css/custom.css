@@ -1,0 +1,14 @@
+/* your styles go here */
+.brand{
+   width: 200px;
+   padding: 24px 0; 
+   padding-left: 40px;
+}
+.edit-zone{
+   padding-left: 50px;
+}
+
+.main-content{
+   padding-top: 80px;
+   padding-left: 255px;
+}
