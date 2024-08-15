@@ -13,3 +13,7 @@
   padding-left: 255px;
   padding-right: 40px;
 }
+.activePic {
+  width: 300px;
+  height: auto;
+}

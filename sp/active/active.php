@@ -22,8 +22,14 @@
   <?php include("../../nav1.php") ?>
 
   <main class="main-content ">
-    <div class="d-flex justify-content-between align-items-start">
+    <div class="d-flex justify-content-between align-items-start mt-3">
       <p class="m-0 d-inline text-lg text-secondary">活動管理 /<span class="text-sm">活動列表</span></p>
+      <button
+        type="button"
+        class="btn btn-success">
+        <a href="doCreateActive.php" class="text-white">新增 <i class="fa-solid fa-plus" style="color: #ffffff;"></i></a>
+      </button>
+
       <div>
         <!-- sort button -->
         <!-- <div class="btn-group btn-group-sm">
@@ -45,18 +51,18 @@
         <thead>
           <tr>
             <th scope="col">編號</th>
-            <th scope="col">標籤</th>
-            <th scope="col" class="col-2">標題</th>
-            <th scope="col" class="col-2">內容</th>
             <th scope="col">圖片</th>
-            <th scope="col">發布時間</th>
-            <th scope="col" class="col-2">動作</th>
+            <th scope="col" class="col-2">名稱</th>
+            <th scope="col" class="col-2">活動日</th>
+            <th scope="col">地點</th>
+            <th scope="col">報名人數</th>
+            <th scope="col" class="col-2">操作</th>
           </tr>
         </thead>
         <tbody>
           <tr class="align-middle">
             <td>1,001</td>
-            <td>random</td>
+            <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover " src="../../../images/batman.webp" alt=""></td>
             <td>data</td>
             <td>placeholder</td>
             <td>text</td>
