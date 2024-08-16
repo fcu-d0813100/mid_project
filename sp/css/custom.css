@@ -17,3 +17,8 @@
   width: 400px;
   height: auto;
 }
+.addbtn {
+  :hover {
+    color: white;
+  }
+}

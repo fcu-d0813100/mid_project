@@ -1,4 +1,11 @@
 <?php
+$page = 1;
+$per_page = 5;
+$totalPage = ceil(50 / $per_page);
+
+if (isset($_GET["p"])) {
+  $page = $_GET["p"];
+}
 ?>
 
 <!doctype html>
@@ -27,104 +34,149 @@
   <main class="main-content ">
     <div class="d-flex justify-content-between align-items-start mt-3">
       <p class="m-0 d-inline text-lg text-secondary">活動管理 /<span class="text-sm">活動列表</span></p>
+      <div class="align-self-center">
+        <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search" style="width:600px;">
+      </div>
 
       <div>
-        <!-- sort button -->
-        <div class="btn-group btn-group-md">
-          <button class="btn btn-outline-secondary">Share</button>
-          <button class="btn btn-outline-secondary">Export</button>
-          <button class="btn btn-outline-secondary">Export</button>
-          <button class="btn btn-outline-secondary">Export</button>
-        </div>
-        <!-- add button -->
         <button class="btn btn-outline-secondary btn-md">
-          <a href="active-create.php" class="text-secondary"><i class="fa-solid fa-plus"></i>新增</a>
+          <a href="active-create.php" class="text-secondary addbtn"><i class="fa-solid fa-plus">新增</i></a>
         </button>
       </div>
     </div>
-    <hr>
+
+
     <!-- table-->
-    <div class="table-responsive small">
-      <table class="table table-striped table-md">
+    <div class="table-responsive large">
+
+      <table class="table table-striped table-md" id="datatable">
+
         <thead>
           <tr>
             <th scope="col" style="width: 100px;">
-              <span style="background-color: none;">編號</span>
+              <span style="background-color: none;">ID</span>
               <button
                 type="button"
-                class="btn btn-outline-white btn-sm sort">
+                class="btn btn-outline-none btn-sm sort">
                 <i class="fa-solid fa-sort-down"></i>
               </button>
             </th>
             <th scope="col">圖片</th>
             <th scope="col" class="col-2">活動名稱</th>
-            <th scope="col" class="col-2"><span style="background-color: none;">活動日期</span>
+            <th scope="col" class="col-2" style=" width:150px;"><span style="background-color: none;">活動日期</span>
               <button
                 type="button"
-                class="btn btn-outline-white btn-sm sort">
+                class="btn btn-outline-none btn-sm sort">
                 <i class="fa-solid fa-sort-down"></i>
               </button>
             </th>
-            <th scope="col">地點</th>
+            <th scope="col" style="width: 100px
+            ;">活動地點</th>
+            <th scope="col">活動狀態</th>
             <th scope="col" style="width: 100px;">報名人數</th>
             <th scope="col" style="width: 100px;">活動說明</th>
             <th scope="col" class="col-2">操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="align-middle">
-            <td>1,001</td>
-            <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover " src="../../../images/batman.webp" alt=""></td>
-            <td>data</td>
-            <td>placeholder</td>
-            <td>text</td>
-            <td>text</td>
-            <td>text</td>
-            <td>
-              <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
-                <i class="fa-regular fa-eye"></i>
-              </a>
-              <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
-                <i class="fa-regular fa-pen-to-square"></i>
-              </a>
-              <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-md">
-                <i class="fa-regular fa-trash-can"></i>
-              </a>
-            </td>
-          </tr>
+          <?php for ($i = 0; $i < $per_page; $i++): ?>
+            <tr class="align-middle">
+              <td>1,001</td>
+              <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover " src="../../../images/batman.webp" alt=""></td>
+              <td>新品發表會暨專屬試妝活動</td>
+              <td>placeholder</td>
+              <td>
 
-
-
+              </td>
+              <td><span class=" rounded-pill bg-success p-2 text-white">報名中</span>
+                <span class=" rounded-pill bg-danger p-2 text-white">已截止</span>
+                <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
+                <span class=" rounded-pill bg-secondary p-2 text-white">已結束</span>
+              </td>
+              <td>text</td>
+              <td>text</td>
+              <td>
+                <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
+                  <i class="fa-regular fa-eye"></i>
+                </a>
+                <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+                <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-md">
+                  <i class="fa-regular fa-trash-can"></i>
+                </a>
+              </td>
+            </tr>
+          <?php endfor; ?>
         </tbody>
       </table>
     </div>
+    <nav aria-label="Page navigation example ">
+      <ul class="pagination pagination-sm justify-content-center">
+        <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+          <li class="page-item   <?php if ($page == $i) echo "active"; ?>">
+            <a class="page-link" href="active.php?p=<?= $i ?>"><?= $i ?></a>
+          </li>
+        <?php endfor; ?>
+      </ul>
+    </nav>
   </main>
 
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/front.js"></script>
+  <!-- <script src="../js/front.js"></script> -->
   <script>
     const sortButtons = document.querySelectorAll('.sort');
-
-
     sortButtons.forEach(button => {
       button.addEventListener('click', () => {
-
         const icon = button.querySelector('i');
 
-
         if (icon.classList.contains('fa-sort-down')) {
-
           icon.classList.remove('fa-sort-down');
           icon.classList.add('fa-sort-up');
         } else {
-
           icon.classList.remove('fa-sort-up');
           icon.classList.add('fa-sort-down');
         }
       });
     });
+
+
+
+    function searchTable() {
+      // 获取输入框中的搜索关键字
+
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById('datatable');
+      const tr = table.getElementsByTagName('tr');
+
+      console.log(tr);
+
+      // 循环遍历所有表格行
+      for (let i = 1; i < tr.length; i++) { // 跳过表头
+        const tds = tr[i].getElementsByTagName('td');
+        let match = false;
+
+        // 循环遍历当前行中的每个单元格
+        for (let j = 0; j < tds.length; j++) {
+          const td = tds[j];
+          if (td) {
+            // 如果单元格内容包含搜索关键字，则标记为匹配
+            if (td.textContent.toLowerCase().indexOf(filter) > -1) {
+              match = true;
+              break;
+            }
+          }
+        }
+
+        // 如果匹配，显示该行；否则隐藏
+        tr[i].style.display = match ? '' : 'none';
+      }
+    }
   </script>
+
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
