@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -24,24 +27,19 @@
   <main class="main-content ">
     <div class="d-flex justify-content-between align-items-start mt-3">
       <p class="m-0 d-inline text-lg text-secondary">活動管理 /<span class="text-sm">活動列表</span></p>
-      <button
-        type="button"
-        class="btn btn-success">
-        <a href="doCreateActive.php" class="text-white">新增 <i class="fa-solid fa-plus" style="color: #ffffff;"></i></a>
-      </button>
 
       <div>
         <!-- sort button -->
-        <!-- <div class="btn-group btn-group-sm">
-            <button class="btn btn-outline-secondary">Share</button>
-            <button class="btn btn-outline-secondary">Export</button>
-            <button class="btn btn-outline-secondary">Export</button>
-            <button class="btn btn-outline-secondary">Export</button>
-          </div> -->
+        <div class="btn-group btn-group-md">
+          <button class="btn btn-outline-secondary">Share</button>
+          <button class="btn btn-outline-secondary">Export</button>
+          <button class="btn btn-outline-secondary">Export</button>
+          <button class="btn btn-outline-secondary">Export</button>
+        </div>
         <!-- add button -->
-        <!-- <button class="btn btn-outline-secondary btn-sm">
-            <i class="fa-solid fa-plus"></i>新增
-          </button> -->
+        <button class="btn btn-outline-secondary btn-md">
+          <a href="active-create.php" class="text-secondary"><i class="fa-solid fa-plus"></i>新增</a>
+        </button>
       </div>
     </div>
     <hr>
@@ -50,12 +48,26 @@
       <table class="table table-striped table-md">
         <thead>
           <tr>
-            <th scope="col">編號</th>
+            <th scope="col" style="width: 100px;">
+              <span style="background-color: none;">編號</span>
+              <button
+                type="button"
+                class="btn btn-outline-white btn-sm sort">
+                <i class="fa-solid fa-sort-down"></i>
+              </button>
+            </th>
             <th scope="col">圖片</th>
-            <th scope="col" class="col-2">名稱</th>
-            <th scope="col" class="col-2">活動日</th>
+            <th scope="col" class="col-2">活動名稱</th>
+            <th scope="col" class="col-2"><span style="background-color: none;">活動日期</span>
+              <button
+                type="button"
+                class="btn btn-outline-white btn-sm sort">
+                <i class="fa-solid fa-sort-down"></i>
+              </button>
+            </th>
             <th scope="col">地點</th>
-            <th scope="col">報名人數</th>
+            <th scope="col" style="width: 100px;">報名人數</th>
+            <th scope="col" style="width: 100px;">活動說明</th>
             <th scope="col" class="col-2">操作</th>
           </tr>
         </thead>
@@ -67,28 +79,20 @@
             <td>placeholder</td>
             <td>text</td>
             <td>text</td>
+            <td>text</td>
             <td>
-              <a href="active-edit.php" class="btn btn-outline-secondary btn-sm">
+              <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
                 <i class="fa-regular fa-eye"></i>
               </a>
-              <a href="active-edit.php" class="btn btn-outline-secondary btn-sm">
+              <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
                 <i class="fa-regular fa-pen-to-square"></i>
               </a>
-              <a href="" class="btn btn-outline-secondary btn-sm">
+              <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-md">
                 <i class="fa-regular fa-trash-can"></i>
               </a>
             </td>
           </tr>
-          <tr>
-            <td>1,002</td>
-            <td>placeholder</td>
-            <td>irrelevant</td>
-            <td>visual</td>
-            <td>layout</td>
-            <td>text</td>
-            <td>text</td>
 
-          </tr>
 
 
         </tbody>
@@ -99,6 +103,28 @@
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../js/front.js"></script>
+  <script>
+    const sortButtons = document.querySelectorAll('.sort');
+
+
+    sortButtons.forEach(button => {
+      button.addEventListener('click', () => {
+
+        const icon = button.querySelector('i');
+
+
+        if (icon.classList.contains('fa-sort-down')) {
+
+          icon.classList.remove('fa-sort-down');
+          icon.classList.add('fa-sort-up');
+        } else {
+
+          icon.classList.remove('fa-sort-up');
+          icon.classList.add('fa-sort-down');
+        }
+      });
+    });
+  </script>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">

@@ -34,7 +34,7 @@
                 <a href="active.php" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-lg">
+                <a href="" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-trash-can"></i>
                 </a>
             </div>
@@ -82,6 +82,21 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>報名人數</th>
+                                <td>
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <label for="" class="mb-2">報名最大人數 :</label>
+                                            <div class="">
+                                                <input type="number" id="" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>活動說明</th>
                                 <td>
                                     <div class="mb-2">
@@ -91,7 +106,7 @@
                             </tr>
                         </table>
                         <div class="text-end">
-                            <a href="doUpdateActive.php" class="btn btn-outline-secondary btn-lg">儲存</a>
+                            <a href="doCreateActive.php" class="btn btn-outline-secondary btn-lg">新增</a>
                         </div>
                     </form>
                 </div>
