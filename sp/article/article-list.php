@@ -26,13 +26,13 @@
         <p class="m-0 d-inline text-lg text-secondary">文章管理 /<span class="text-sm">文章列表</span></p>
       </div>
       <!-- sort search -->
-          <form action="" class="col-6 search-form">
-            <div class="input-group ">
-              <input type="search" class="form-control border-dark" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋標題">
-              <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i></button>
-            </div>
-          </form>
-        
+      <form action="" class="col-6 search-form">
+        <div class="input-group ">
+          <input type="search" class="form-control border-dark" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋標題">
+          <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i></button>
+        </div>
+      </form>
+
       <div>
         <!-- sort button -->
         <div class="btn-group btn-group-md">
@@ -48,7 +48,7 @@
     <hr>
     <!-- table-->
     <div class="table-responsive small">
-      <table class="table table-striped table-md">
+      <table class="table table-striped table-md text-lg">
         <thead>
           <tr>
             <th scope="col">編號</th>
@@ -65,10 +65,11 @@
             <td>1,001</td>
             <td>random</td>
             <td>data</td>
-            <td>placeholder</td>
             <td>text</td>
+            <td class="ratio ratio-4x3"><img class="object-fit-cover img-fluid" src="/images/batman.webp" alt=""></td>
+
             <td>text</td>
-            <td class="d-flex gap-3 ">
+            <td class="d-flex gap-3">
               <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
                 <i class="fa-regular fa-eye"></i>
               </a>
