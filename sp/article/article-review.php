@@ -1,3 +1,31 @@
+<?php
+require_once("/xampp/htdocs/mid_project/db_coonect.php");
+$id=$_GET["id"];
+
+
+$sql = "SELECT * FROM article
+--     article.*,  
+--     brand.name AS brand_name,
+--     article_type.name AS type_name
+-- FROM  article
+-- JOIN brand ON article.brand_id = brand.id
+
+-- JOIN  article_type ON article.type_id = article_type.id
+WHERE id='$id'
+";
+
+
+$result = $conn->query($sql);
+$articleCount = $result->num_rows;
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+
+
+var_dump($rows);
+?>
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -40,34 +68,40 @@
 
         <div class="row mt-3">
             <div class="col-lg">
-                <form action="doUpdateArticle.php" method="post">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>編號</th>
-                            <td><input type="text" name="id"></td>
-                        </tr>
-                        <tr>
-                            <th>標題</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>品牌</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>類型</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>圖片</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>發布時間</th>
-                            <td></td>
-                        </tr>
-                    </table>
-                </form>
+
+            <?php if ($articleCount > 0) : ?>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>編號</th>
+                        <td><?= $row["id"] ?></td>
+                    </tr>
+                    <tr>
+                        <th>品牌</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>類型</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>標題</th>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>內容</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>圖片</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>發布時間</th>
+                        <td></td>
+                    </tr>
+                </table>
+                <?php endif; ?>
             </div>
             <div class="text-end">
                 <a href="doUpdateArticle.php" class="btn btn-outline-secondary btn-lg ">儲存</a>

@@ -1,3 +1,19 @@
+<?php
+require_once("/xampp/htdocs/mid_project/db_coonect.php");
+$sql = "SELECT 
+    article.*,  
+    brand.name AS brand_name,
+    article_type.name AS type_name
+FROM  article
+JOIN brand ON article.brand_id = brand.id
+
+JOIN  article_type ON article.type_id = article_type.id"; 
+
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+// var_dump($rows);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -35,14 +51,14 @@
 
       <div>
         <!-- sort button -->
-        <div class="btn-group btn-group-md">
+        <!-- <div class="btn-group btn-group-md">
           <button class="btn btn-outline-secondary">按時間排序 <i class="fa-solid fa-arrow-down"></i></button>
           <button class="btn btn-outline-secondary">按標籤排序 <i class="fa-solid fa-arrow-down"></i></button>
-        </div>
+        </div> -->
         <!-- add button -->
-        <button class="btn btn-outline-secondary btn-md">
-          <i class="fa-solid fa-plus"></i> 新增
-        </button>
+        <div class="text-end">
+          <a href="article-create.php" class="btn btn-outline-secondary btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
+        </div>
       </div>
     </div>
     <hr>
@@ -51,46 +67,40 @@
       <table class="table table-striped table-md text-lg">
         <thead>
           <tr>
-            <th scope="col" class="col-2">編號 <i class="fa-solid fa-sort btn btn-md mb-1"></th>
-            <th scope="col">標籤</th>
-            <th scope="col" class="col-1">標題</th>
-            <th scope="col" class="col-2">內容</th>
-            <th scope="col" >圖片</th>
-            <th scope="col" class="col-3">發布時間 <i class="fa-solid fa-sort btn btn-md mb-1"></i></th>
-            <th scope="col" class="col-1">動作</th>
+            <th scope="col" class="col-1">編號 <i class="fa-solid fa-sort btn btn-md mb-1"></th>
+            <th scope="col" class="col-1">品牌</th>
+            <th scope="col" class="col-1">類型</th>
+            <th scope="col" class="col-3">標題</th>
+            <th scope="col">圖片</th>
+            <th scope="col" class="col-2">發布時間 <i class="fa-solid fa-sort btn btn-md mb-1"></i></th>
+            <th scope="col" class="col-2">動作</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="align-middle dataList" >
-            <td>1,001</td>
-            <td>random</td>
-            <td>data</td>
-            <td>text</td>
-            <td class="ratio ratio-4x3"><img class="object-fit-cover img-fluid" src="/images/batman.webp" alt=""></td>
+          <?php foreach ($rows as $row) : ?>
+            <tr class="align-middle dataList">
+              <td><?= $row["id"] ?></td>
+              <td><?= $row["brand_name"] ?></td>
+              <td><?= $row["type_name"] ?></td>
+              <td class="article-title"><?= $row["title"] ?></td>
+              
+              <td class="ratio ratio-4x3"><img class="object-fit-cover img-fluid" src="/images/batman.webp" alt=""></td>
 
-            <td>text</td>
-            <td class="d-flex gap-3">
-              <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
-                <i class="fa-regular fa-eye"></i>
-              </a>
-              <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
-                <i class="fa-regular fa-pen-to-square"></i>
-              </a>
-              <a href="" class="btn btn-outline-secondary btn-md">
-                <i class="fa-regular fa-trash-can"></i>
-              </a>
-            </td>
-          </tr>
-          <tr  class="align-middle dataList">
-            <td>1,002</td>
-            <td>placeholder</td>
-            <td>irrelevant</td>
-            <td>visual</td>
-            <td>layout</td>
-            <td>text</td>
-            <td>text</td>
+              <td><?= $row["launched_date"] ?></td>
+              <td class="gap-3">
+                <a href="article-review.php" class="btn btn-outline-secondary btn-md">
+                  <i class="fa-regular fa-eye"></i>
+                </a>
+                <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+                <a href="" class="btn btn-outline-secondary btn-md">
+                  <i class="fa-regular fa-trash-can"></i>
+                </a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
 
-          </tr>
 
 
         </tbody>
@@ -101,28 +111,28 @@
 
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  
-  <script>
-  function search() {
-    let searchInput = document.querySelector(".searchInput");
-    let filter = searchInput.value.toUpperCase();
-    let tr = document.querySelectorAll(".dataList");
-    
-    tr.forEach(row => {
-      let td = row.getElementsByTagName('td');
-      let match = false;
 
-      for (let i = 0; i < td.length; i++) {
-        let txtValue = td[i].textContent || td[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          match = true;
-          break;
+  <script>
+    function search() {
+      let searchInput = document.querySelector(".searchInput");
+      let filter = searchInput.value.toUpperCase();
+      let tr = document.querySelectorAll(".dataList");
+
+      tr.forEach(row => {
+        let td = row.getElementsByTagName('td');
+        let match = false;
+
+        for (let i = 0; i < td.length; i++) {
+          let txtValue = td[i].textContent || td[i].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            match = true;
+            break;
+          }
         }
-      }
-      row.style.display = match ? "" : "none";
-    });
-  }
-</script>
+        row.style.display = match ? "" : "none";
+      });
+    }
+  </script>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
