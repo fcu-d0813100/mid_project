@@ -28,7 +28,7 @@
       <!-- sort search -->
       <form action="" class="col-6 search-form">
         <div class="input-group ">
-          <input type="search" class="form-control border-dark" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋標題">
+          <input type="search" class="form-control border-dark searchInput" onkeyup="search()" placeholder="搜尋標題">
           <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i></button>
         </div>
       </form>
@@ -51,17 +51,17 @@
       <table class="table table-striped table-md text-lg">
         <thead>
           <tr>
-            <th scope="col">編號</th>
+            <th scope="col" class="col-2">編號 <i class="fa-solid fa-sort btn btn-md mb-1"></th>
             <th scope="col">標籤</th>
-            <th scope="col" class="col-2">標題</th>
+            <th scope="col" class="col-1">標題</th>
             <th scope="col" class="col-2">內容</th>
-            <th scope="col">圖片</th>
-            <th scope="col">發布時間</th>
-            <th scope="col" class="col-2">動作</th>
+            <th scope="col" >圖片</th>
+            <th scope="col" class="col-3">發布時間 <i class="fa-solid fa-sort btn btn-md mb-1"></i></th>
+            <th scope="col" class="col-1">動作</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="align-middle">
+          <tr class="align-middle dataList" >
             <td>1,001</td>
             <td>random</td>
             <td>data</td>
@@ -81,7 +81,7 @@
               </a>
             </td>
           </tr>
-          <tr>
+          <tr  class="align-middle dataList">
             <td>1,002</td>
             <td>placeholder</td>
             <td>irrelevant</td>
@@ -101,7 +101,28 @@
 
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/front.js"></script>
+  
+  <script>
+  function search() {
+    let searchInput = document.querySelector(".searchInput");
+    let filter = searchInput.value.toUpperCase();
+    let tr = document.querySelectorAll(".dataList");
+    
+    tr.forEach(row => {
+      let td = row.getElementsByTagName('td');
+      let match = false;
+
+      for (let i = 0; i < td.length; i++) {
+        let txtValue = td[i].textContent || td[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          match = true;
+          break;
+        }
+      }
+      row.style.display = match ? "" : "none";
+    });
+  }
+</script>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
