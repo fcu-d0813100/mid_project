@@ -1,7 +1,19 @@
 <?php
-$page = 1;
-$per_page = 5;
-$totalPage = ceil(50 / $per_page);
+
+require_once("../../db_connect.php");
+//計算資料庫中全部的活動
+$sqlAll = "SELECT * FROM active WHERE valid=1";
+$resultALL = $conn->query($sqlAll);
+$activeCountAll = $resultALL->num_rows;
+
+$sql = "SELECT * FROM active";
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+
+$page = 1; //頁數
+$per_page = 5; //此頁要顯示幾筆活動
+$totalPage = ceil($activeCountAll / $per_page);
 
 if (isset($_GET["p"])) {
   $page = $_GET["p"];
@@ -14,7 +26,7 @@ if (isset($_GET["p"])) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bootstrap Dashboard</title>
+  <title>活動管理</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
@@ -40,7 +52,7 @@ if (isset($_GET["p"])) {
       </div>
 
       <div>
-        <button class="btn btn-outline-secondary btn-md">
+        <button class="btn btn-outline-secondary btn-lg">
           <a href="active-create.php" class="text-secondary addbtn"><i class="fa-solid fa-plus">新增</i></a>
         </button>
       </div>
@@ -48,79 +60,88 @@ if (isset($_GET["p"])) {
 
 
     <!-- table-->
-    <div class="table-responsive large">
+    <?php if ($activeCountAll): ?>
+      <div class="text-md">共有<?= $activeCountAll ?> 筆活動</div>
 
-      <table class="table table-striped table-md" id="datatable">
-
-        <thead>
-          <tr>
-            <th scope="col" style="width: 100px;">
-              <span style="background-color: none;">ID</span>
-              <button
-                type="button"
-                class="btn btn-outline-none btn-sm sort">
-                <i class="fa-solid fa-sort-down"></i>
-              </button>
-            </th>
-            <th scope="col">圖片</th>
-            <th scope="col" class="col-2">活動名稱</th>
-            <th scope="col" class="col-2" style=" width:150px;"><span style="background-color: none;">活動日期</span>
-              <button
-                type="button"
-                class="btn btn-outline-none btn-sm sort">
-                <i class="fa-solid fa-sort-down"></i>
-              </button>
-            </th>
-            <th scope="col" style="width: 100px
+      <div class="table-responsive large">
+        <table class="table table-striped table-md" id="datatable">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 100px;">
+                <span style="background-color: none;">ID</span>
+                <button
+                  type="button"
+                  class="btn btn-outline-none btn-sm sort">
+                  <i class="fa-solid fa-sort-down"></i>
+                </button>
+              </th>
+              <th scope="col">圖片</th>
+              <th scope="col">活動品牌</th>
+              <th scope="col" class="col-2">活動名稱</th>
+              <th scope="col" class="col-2" style=" width:150px;"><span style="background-color: none;">活動日期</span>
+                <button
+                  type="button"
+                  class="btn btn-outline-none btn-sm sort">
+                  <i class="fa-solid fa-sort-down"></i>
+                </button>
+              </th>
+              <th scope="col" style="width: 100px
             ;">活動地點</th>
-            <th scope="col">活動狀態</th>
-            <th scope="col" style="width: 100px;">報名人數</th>
-            <th scope="col" style="width: 100px;">活動說明</th>
-            <th scope="col" class="col-2">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php for ($i = 0; $i < $per_page; $i++): ?>
-            <tr class="align-middle">
-              <td>1,001</td>
-              <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover " src="../../../images/batman.webp" alt=""></td>
-              <td>新品發表會暨專屬試妝活動</td>
-              <td>placeholder</td>
-              <td>
+              <th scope="col">活動狀態</th>
+              <th scope="col" style="width: 100px;">報名人數</th>
 
-              </td>
-              <td><span class=" rounded-pill bg-success p-2 text-white">報名中</span>
-                <span class=" rounded-pill bg-danger p-2 text-white">已截止</span>
-                <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
-                <span class=" rounded-pill bg-secondary p-2 text-white">已結束</span>
-              </td>
-              <td>text</td>
-              <td>text</td>
-              <td>
-                <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-eye"></i>
-                </a>
-                <a href="active-edit.php" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-pen-to-square"></i>
-                </a>
-                <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-trash-can"></i>
-                </a>
-              </td>
+              <th scope="col" class="col-2">操作</th>
             </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($rows as $row): ?>
+
+
+              <tr class="align-middle">
+                <td><?= $row["id"] ?></td>
+                <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover " src="images/<?= $row["image"] ?>" alt=""></td>
+                <td><?= $row["brand"] ?></td>
+                <td><?= $row["name"] ?></td>
+                <td><?= $row["start_at"] ?></td>
+                <td>
+                  <?= $row["address"] ?>
+                </td>
+                <td>
+                  <span class=" rounded-pill bg-success p-2 text-white">報名中</span>
+                  <span class=" rounded-pill bg-danger p-2 text-white">已截止</span>
+                  <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
+                  <span class=" rounded-pill bg-secondary p-2 text-white">已結束</span>
+                </td>
+
+                <td><?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?></td>
+                <td>
+                  <a href="active-info.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+                    <i class="fa-regular fa-eye"></i>
+                  </a>
+                  <a href="active-edit.php" class="btn btn-outline-secondary btn-lg">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </a>
+                  <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-lg">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination pagination-sm justify-content-center">
+          <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+            <li class="page-item   <?php if ($page == $i) echo "active"; ?>">
+              <a class="page-link " href="active.php?p=<?= $i ?>"><?= $i ?></a>
+            </li>
           <?php endfor; ?>
-        </tbody>
-      </table>
-    </div>
-    <nav aria-label="Page navigation example ">
-      <ul class="pagination pagination-sm justify-content-center">
-        <?php for ($i = 1; $i <= $totalPage; $i++): ?>
-          <li class="page-item   <?php if ($page == $i) echo "active"; ?>">
-            <a class="page-link" href="active.php?p=<?= $i ?>"><?= $i ?></a>
-          </li>
-        <?php endfor; ?>
-      </ul>
-    </nav>
+        </ul>
+      </nav>
+    <?php else: ?>
+      目前沒有任何活動
+    <?php endif; ?>
   </main>
 
   </div>

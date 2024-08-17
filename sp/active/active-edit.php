@@ -30,7 +30,7 @@
             </div>
             <hr>
             <!-- table-->
-            <div class="py-2 d-flex justify-content-end gap-2">
+            <div class="py-2 d-flex justify-content-between gap-2">
                 <a href="active.php" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
@@ -52,7 +52,7 @@
                                 <th>圖片</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">選取活動圖片: </label>
+                                        <label for="" class="mb-2">修改活動圖片: </label>
                                         <input type="file" name="pic" id="" class="form-control">
                                     </div>
                                 </td>
@@ -61,6 +61,7 @@
                                 <th>活動名稱</th>
                                 <td>
                                     <div class="mb-2">
+                                        <label for="option1">修改活動名稱:</label>
                                         <input type="text" id="" class="form-control">
                                     </div>
                                 </td>
@@ -69,15 +70,43 @@
                                 <th>活動日期</th>
                                 <td>
                                     <div class="mb-2">
+                                        <label for="option1">修改活動日期:</label>
                                         <input type="date" id="" class="form-control">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>地點</th>
+                                <th>活動地點</th>
                                 <td>
                                     <div class="mb-2">
+                                        <label for="option1">修改活動地點:</label>
                                         <input type="address" id="" class="form-control">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>活動狀態</th>
+                                <td>
+                                    <form>
+                                        <label for="option1">報名中</label>
+                                        <input type="radio" id="option1" name="choices" value="1">
+
+                                        <label for="option2">已截止</label>
+                                        <input type="radio" id="option2" name="choices" value="2">
+
+                                        <label for="option3">進行中</label>
+                                        <input type="radio" id="option3" name="choices" value="3">
+                                        <label for="option3">已結束</label>
+                                        <input type="radio" id="option3" name="choices" value="4">
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>活動報名人數</th>
+                                <td>
+                                    <div class="mb-2">
+                                        <label for="quantity">修改數量:</label>
+                                        <input type="number" id="quantity" name="quantity" class="form-control">
                                     </div>
                                 </td>
                             </tr>
@@ -85,13 +114,14 @@
                                 <th>活動說明</th>
                                 <td>
                                     <div class="mb-2">
+                                        <label for="option1">修改說明</label>
                                         <input type="text" id="" class="form-control">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="text-end">
-                            <a href="doUpdateActive.php" class="btn btn-outline-secondary btn-lg">儲存</a>
+                            <a href="doUpdateActive.php" class="btn btn-outline-secondary btn-lg">修改</a>
                         </div>
                     </form>
                 </div>

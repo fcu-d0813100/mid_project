@@ -1,3 +1,21 @@
+<?php
+if (!isset($_GET["id"])) {
+    echo "請輸入正確ID";
+    exit;
+}
+$id = $_GET["id"];
+require_once("../../db_connect.php");
+
+$sql = "SELECT * FROM active WHERE id = '$id' AND  valid = 1";
+$result = $conn->query($sql);
+$activeCount = $result->num_rows;
+$row = $result->fetch_assoc();
+
+?>
+
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -26,7 +44,7 @@
 
         <main class="main-content">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-secondary">活動列表 /<span class="text-sm">活動編輯</span></p>
+                <p class="m-0 d-inline text-lg text-secondary">活動列表 /<span class="text-sm">活動瀏覽</span></p>
             </div>
             <hr>
             <!-- table-->
@@ -34,7 +52,7 @@
                 <a href="active.php" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <a href="" class="btn btn-outline-secondary btn-lg">
+                <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-trash-can"></i>
                 </a>
             </div>
@@ -42,73 +60,48 @@
             </div>
             <div class="row">
                 <div class="col-lg">
-                    <form action="doUpdateActive.php" method="post">
+                    <?php if ($activeCount > 0): ?>
                         <table class="table table-bordered">
+
                             <tr>
-                                <th>活動名稱</th>
-                                <td>
-                                    <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動名稱: </label>
-                                        <input type="text" id="" class="form-control">
-                                    </div>
-                                </td>
+                                <th>id</th>
+                                <td><?= $row["id"] ?></td>
                             </tr>
                             <tr>
                                 <th>圖片</th>
                                 <td>
-                                    <div class="mb-2">
-                                        <label for="" class="mb-2">選取活動圖片: </label>
-                                        <input type="file" name="pic" id="" class="form-control">
+                                    <div class="mb-2 ratio ratio-4x3 activePic">
+                                        <img class="object-fit-cover " src="images/<?= $row["image"] ?>" alt="">
                                     </div>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <th>活動名稱</th>
+                                <td>
+                                    <?= $row["name"] ?>
+                                </td>
+                            </tr>
                             <tr>
                                 <th>活動日期</th>
                                 <td>
-                                    <div class="mb-2">
-                                        <input type="date" id="" class="form-control">
-                                    </div>
+                                    <?= $row["start_at"] ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>地點</th>
                                 <td>
-                                    <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動地點: </label>
-                                        <input type="address" id="" class="form-control">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>報名人數</th>
-                                <td>
-                                    <div class="row">
-
-                                        <div class="col-6">
-                                            <label for="" class="mb-2">報名最大人數 :</label>
-                                            <div class="">
-                                                <input type="number" id="" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    <?= $row["address"] ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>活動說明</th>
                                 <td>
-                                    <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動內容: </label>
-                                        <input type="text" id="" class="form-control">
-                                    </div>
+                                    <?= $row["description"] ?>
                                 </td>
                             </tr>
                         </table>
-                        <div class="text-end">
-                            <a href="doCreateActive.php" class="btn btn-outline-secondary btn-lg">新增</a>
-                        </div>
-                    </form>
+                    <?php endif; ?>
+
                 </div>
             </div>
         </main>
