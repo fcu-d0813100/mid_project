@@ -1,10 +1,56 @@
+<?php
+if (!isset($_GET["id"])) {
+    echo "請正確帶入get id 變數";
+    exit;
+}
+
+
+$id = $_GET["id"];
+
+require_once("/xampp/htdocs/mid_project/db_connect.php");
+
+$sql = "SELECT 
+    article.*,  
+    brand.name AS brand_name,
+    article_type.name AS type_name
+FROM  article
+JOIN brand ON article.brand_id = brand.id
+
+JOIN  article_type ON article.type_id = article_type.id
+WHERE article.id='$id' 
+";  //有用join 記得指定資料表
+
+
+
+$result = $conn->query($sql);
+$articleCount = $result->num_rows;
+$row = $result->fetch_assoc();
+
+if ($articleCount > 0) {
+    $title = $row["title"];
+} else {
+    $title = "使用者不存在";
+}
+// 撈取 brand 資料
+$sqlBrands = "SELECT id, name FROM brand";
+$resultBrands = $conn->query($sqlBrands);
+$brands = $resultBrands->fetch_all(MYSQLI_ASSOC);
+
+// 撈取 type 資料
+$sqlTypes = "SELECT id, name FROM article_type";
+$resultTypes = $conn->query($sqlTypes);
+$types = $resultTypes->fetch_all(MYSQLI_ASSOC);
+
+// var_dump($rows);
+$conn->close();
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title><?= $title ?></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -41,37 +87,77 @@
         <div class="row mt-3">
             <div class="col-lg">
                 <form action="doUpdateArticle.php" method="post">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>編號</th>
-                            <td><input type="text" name="id"></td>
-                        </tr>
-                        <tr>
-                            <th>標題</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>品牌</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>類型</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>圖片</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>發布時間</th>
-                            <td></td>
-                        </tr>
-                    </table>
-                </form>
+                    <?php if ($articleCount > 0) : ?>
+                        <table class="table table-bordered">
+                            <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                            <tr>
+                                <th class="col-2">編號</th>
+                                <td><?= $row["id"] ?></td>
+                            </tr>
+                            <!-- 品牌 -->
+                            <tr class="form-label">
+                                <th>品牌</th>
+                                <td class="d-flex gap-3">
+                                    <?php 
+                                    $selected_brand_id =$row["brand_id"];
+                                    foreach ($brands as $brand) : ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="brand" id="<?= $brand["name"] ?>" value="<?= $brand["id"] ?>" <?php if ($brand["id"] == $selected_brand_id) echo 'checked'; ?> >
+                                            <label class="form-check-label" for="<?= $brand["name"] ?>">
+                                                <?= $brand["name"] ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                            <!-- 類型 -->
+                            <tr class="form-label">
+                                <th>類型</th>
+                                <td class="d-flex gap-3">
+                                    <?php  $selected_type_id =$row["type_id"];
+                                    foreach ($types as $type) : ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="type" id="<?= $type["name"] ?>" value="<?= $type["id"] ?>" <?php if ($type["id"] == $selected_type_id) echo 'checked'; ?> >
+                                            <label class="form-check-label" for="<?= $type["name"] ?>">
+                                                <?= $type["name"] ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>標題</th>
+                                <td>
+                                    <input type="text" class="form-control" name="title"
+                                        value="<?= $row["title"] ?>">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>內容</th>
+                                <td>
+                                    <textarea style="height: 500px;" type="text" class="form-control" name="content"><?= $row["content"] ?></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>圖片</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>發布時間</th>
+                                <td><input type="date" class="form-control" name="date"
+                                        value="<?= $row["launched_date"] ?>"></td>
+                            </tr>
+                        </table>
+                    <?php else: ?>
+                        文章不存在
+                    <?php endif; ?>
+
             </div>
             <div class="text-end">
-                <a href="doUpdateArticle.php" class="btn btn-outline-secondary btn-lg ">儲存</a>
+                <button type="submit" class="btn btn-outline-secondary btn-lg">儲存</button>
             </div>
+            </form>
         </div>
     </main>
     <!-- Quill-->

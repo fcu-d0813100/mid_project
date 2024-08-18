@@ -1,3 +1,31 @@
+<?php
+require_once("/xampp/htdocs/mid_project/db_connect.php");
+$sql = "SELECT 
+    article.*,  
+    brand.name AS brand_name,
+    article_type.name AS type_name
+FROM  article
+JOIN brand ON article.brand_id = brand.id
+
+JOIN  article_type ON article.type_id = article_type.id";
+
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+// 撈取 brand 資料
+$sqlBrands = "SELECT id, name FROM brand";
+$resultBrands = $conn->query($sqlBrands);
+$brands = $resultBrands->fetch_all(MYSQLI_ASSOC);
+
+// 撈取 type 資料
+$sqlTypes = "SELECT id, name FROM article_type";
+$resultTypes = $conn->query($sqlTypes);
+$types = $resultTypes->fetch_all(MYSQLI_ASSOC);
+
+// 使用 var_dump() 可以檢視資料結構
+// var_dump($brands);
+// var_dump($types);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -40,53 +68,76 @@
 
         <div class="row mt-3 justify-content-start">
             <div class="col-lg">
-                <form action="doUpdateArticle.php" method="post">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>標籤</th>
-                            <td class="form-control">
-                                <label>
-                                    <input type="checkbox" name="option1" value="value1" class="d-inline">
-                                    NARS
-                                    <input type="checkbox" name="option2" value="value2" class="d-inline">
-                                    YSL
-                                </label><br>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>標題</th>
-                            <td><input class="form-control" type="text" name="title" require>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>內容</th>
-                            <td class="content">
-                                <input class="form-control" type="text" name="content" id="" require>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>圖片</th>
-                            <td> <label for=""></label>
-                                <input type="file" name="pic" class="form-control">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>發布時間</th>
-                            <td><input class="form-control" type="date" name="date" id="" require>
+                <table class="table table-bordered">
+                    <form action="doCreateArticle.php" method="post">
+                        <table class="table table-bordered">
+                            <!-- 品牌 -->
+                            <tr class="form-label">
+                                <th>品牌</th>
+                                <td class="d-flex gap-3">
+                                    <?php foreach ($brands as $brand) : ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="brand" id="<?= $brand["name"] ?>" value="<?= $brand["id"] ?>">
+                                            <label class="form-check-label" for="<?= $brand["name"] ?>">
+                                                <?= $brand["name"] ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                            <!-- 類型 -->
+                            <tr class="form-label">
+                                <th>類型</th>
+                                <td class="d-flex gap-3">
+                                    <?php foreach ($types as $type) : ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="type" id="<?= $type["name"] ?>" value="<?= $type["id"] ?>">
+                                            <label class="form-check-label" for="<?= $type["name"] ?>">
+                                                <?= $type["name"] ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>標題</th>
+                                <td>
+                                    <input class="form-control" type="text" name="title" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>內容</th>
+                                <td class="">
+                                    <textarea class="form-control" style="height: 500px;" type="text" name="content" required></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>圖片</th>
+                                <td>
+                                    <input class="form-control" type="file" name="pic">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>發布時間</th>
+                                <td>
+                                    <input class="form-control" type="date" name="date" required>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- 提交按鈕 -->
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-outline-secondary btn-lg">儲存</button>
+                        </div>
+                    </form>
+                    <!-- 表單結束 -->
+                </table>
             </div>
-            </td>
-            </tr>
-            </table>
-
-        </div>
-        <div class="text-end">
-            <a href="doUpdateArticle.php" class="btn btn-outline-secondary btn-lg ">儲存</a>
         </div>
 
-        </div>
+
     </main>
-   
+
 </body>
 
 </html>

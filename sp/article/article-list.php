@@ -1,18 +1,25 @@
 <?php
-require_once("/xampp/htdocs/mid_project/db_coonect.php");
-$sql = "SELECT 
+
+
+if (isset($_GET["search"])) {
+  $search = $_GET["search"];
+  $sql = "SELECT * FROM article WHERE title LIKE '%$search%'";
+} else {
+  $sql = "SELECT 
     article.*,  
     brand.name AS brand_name,
     article_type.name AS type_name
-FROM  article
-JOIN brand ON article.brand_id = brand.id
+    FROM  article
+    JOIN brand ON article.brand_id = brand.id
+    JOIN  article_type ON article.type_id = article_type.id";
+}
+require_once("/xampp/htdocs/mid_project/db_connect.php");
 
-JOIN  article_type ON article.type_id = article_type.id"; 
 
 $result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+$articleCount = $result->num_rows;
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-// var_dump($rows);
 ?>
 <!doctype html>
 <html lang="en">
@@ -41,102 +48,150 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       <div>
         <p class="m-0 d-inline text-lg text-secondary">文章管理 /<span class="text-sm">文章列表</span></p>
       </div>
-      <!-- sort search -->
-      <form action="" class="col-6 search-form">
-        <div class="input-group ">
-          <input type="search" class="form-control border-dark searchInput" onkeyup="search()" placeholder="搜尋標題">
-          <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i></button>
-        </div>
-      </form>
-
-      <div>
-        <!-- sort button -->
-        <!-- <div class="btn-group btn-group-md">
+      <div class="d-flex justify-content-between gap-2">
+        <?php if (isset($_GET["search"])): ?>
+          <a href="article-list.php" class="btn btn-outline-secondary" title="回文章列表"><i class="fa-solid fa-left-long"></i></a>
+        <?php endif; ?>
+        <!-- sort search -->
+        <form action="">
+          <div class="input-group">
+            <input type="search" class="form-control border border-dark" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?> " placeholder="搜尋標題">
+            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+        </form>
+        <div>
+          <!-- sort button -->
+          <!-- <div class="btn-group btn-group-md">
           <button class="btn btn-outline-secondary">按時間排序 <i class="fa-solid fa-arrow-down"></i></button>
           <button class="btn btn-outline-secondary">按標籤排序 <i class="fa-solid fa-arrow-down"></i></button>
         </div> -->
-        <!-- add button -->
-        <div class="text-end">
-          <a href="article-create.php" class="btn btn-outline-secondary btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
+          <!-- add button -->
+          <div class="text-end">
+            <a href="article-create.php" class="btn btn-outline-secondary btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
+          </div>
         </div>
       </div>
     </div>
     <hr>
     <!-- table-->
     <div class="table-responsive small">
-      <table class="table table-striped table-md text-lg">
-        <thead>
-          <tr>
-            <th scope="col" class="col-1">編號 <i class="fa-solid fa-sort btn btn-md mb-1"></th>
-            <th scope="col" class="col-1">品牌</th>
-            <th scope="col" class="col-1">類型</th>
-            <th scope="col" class="col-3">標題</th>
-            <th scope="col">圖片</th>
-            <th scope="col" class="col-2">發布時間 <i class="fa-solid fa-sort btn btn-md mb-1"></i></th>
-            <th scope="col" class="col-2">動作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($rows as $row) : ?>
-            <tr class="align-middle dataList">
-              <td><?= $row["id"] ?></td>
-              <td><?= $row["brand_name"] ?></td>
-              <td><?= $row["type_name"] ?></td>
-              <td class="article-title"><?= $row["title"] ?></td>
-              
-              <td class="ratio ratio-4x3"><img class="object-fit-cover img-fluid" src="/images/batman.webp" alt=""></td>
-
-              <td><?= $row["launched_date"] ?></td>
-              <td class="gap-3">
-                <a href="article-review.php" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-eye"></i>
-                </a>
-                <a href="article-edit.php" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-pen-to-square"></i>
-                </a>
-                <a href="" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-trash-can"></i>
-                </a>
-              </td>
+      <?php if ($articleCount > 0):
+        $rows = $result->fetch_all(MYSQLI_ASSOC) ?>
+        共有<?= $articleCount ?> 則文章
+        <table class="table table-striped table-md text-md">
+          <thead>
+            <tr>
+              <th scope="col" class="col-1">編號 <i class="fa-solid fa-sort btn btn-sm mb-1"></th>
+              <th scope="col" class="col-1">品牌</th>
+              <th scope="col" class="col-1">類型</th>
+              <th scope="col" class="col-3">標題</th>
+              <th scope="col">圖片</th>
+              <th scope="col" class="col-2">發布時間 <i class="fa-solid fa-sort btn btn-sm mb-1"></i></th>
+              <th scope="col" class="col-2">動作</th>
             </tr>
-          <?php endforeach; ?>
+          </thead>
+          <tbody>
+            <?php foreach ($rows as $row) : ?>
+              <tr class="align-middle dataList">
+                <td><?= $row["id"] ?></td>
+                <td><?= $row["brand_name"] ?></td>
+                <td><?= $row["type_name"] ?></td>
+                <td class="article-title"><?= $row["title"] ?></td>
+
+                <td class="ratio ratio-4x3"><img class="object-fit-cover img-fluid" src="/images/batman.webp" alt=""></td>
+
+                <td><?= $row["launched_date"] ?></td>
+                <td class="gap-3">
+                  <a href="article-review.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
+                    <i class="fa-regular fa-eye"></i>
+                  </a>
+                  <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </a>
+                  <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
 
 
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      <?php else: ?>
+        目前沒有文章
+      <?php endif; ?>
     </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center" id="pagination"></ul>
+    </nav>
+
+
   </main>
 
 
   </div>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
   <script>
-    function search() {
-      let searchInput = document.querySelector(".searchInput");
-      let filter = searchInput.value.toUpperCase();
-      let tr = document.querySelectorAll(".dataList");
+    //分頁
+    const rowsPerPage = 4; // 每頁幾篇文章
+    const rows = <?= json_encode($rows) ?>; // PHP 傳到给 JS
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+    let currentPage = 1;
 
-      tr.forEach(row => {
-        let td = row.getElementsByTagName('td');
-        let match = false;
+    function displayPage(page) {
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const paginatedItems = rows.slice(start, end);
+      1
 
-        for (let i = 0; i < td.length; i++) {
-          let txtValue = td[i].textContent || td[i].innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            match = true;
-            break;
-          }
-        }
-        row.style.display = match ? "" : "none";
+      const tbody = document.querySelector("tbody");
+      tbody.innerHTML = ""; // 清空现有行
+
+      paginatedItems.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.classList.add("align-middle", "dataList");
+        tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.brand_name}</td>
+        <td>${row.type_name}</td>
+        <td class="article-title">${row.title}</td>
+        <td class="ratio ratio-4x3"><img class="object-fit-cover img-fluid" src="/images/batman.webp" alt=""></td>
+        <td>${row.launched_date}</td>
+        <td class="gap-3">
+          <a href="article-review.php?id=${row.id}" class="btn btn-outline-secondary btn-md"><i class="fa-regular fa-eye"></i></a>
+          <a href="article-edit.php?id=${row.id}" class="btn btn-outline-secondary btn-md"><i class="fa-regular fa-pen-to-square"></i></a>
+          <a href="doDeleteArticle.php?id=${row.id}" class="btn btn-outline-secondary btn-md"><i class="fa-regular fa-trash-can"></i></a>
+        </td>
+      `;
+        tbody.appendChild(tr);
       });
+
+      renderPagination();
     }
+
+    function renderPagination() {
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = ""; // 清空现有分页
+
+      for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement("li");
+        li.classList.add("page-item");
+        li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+        pagination.appendChild(li);
+      }
+    }
+
+    function changePage(page) {
+      currentPage = page;
+      displayPage(currentPage);
+    }
+
+    // 初始化显示第一页
+    displayPage(currentPage);
   </script>
-
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
-    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+  <script src="../js/search.js"></script>
+  <script src="../js/pagination.js"></script>
 </body>
 
 </html>

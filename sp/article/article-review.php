@@ -1,30 +1,41 @@
 <?php
-require_once("/xampp/htdocs/mid_project/db_coonect.php");
+if (!isset($_GET["id"])) {
+    echo "請正確帶入get id 變數";
+    exit;
+}
+
+
 $id=$_GET["id"];
 
+require_once("/xampp/htdocs/mid_project/db_connect.php");
 
-$sql = "SELECT * FROM article
---     article.*,  
---     brand.name AS brand_name,
---     article_type.name AS type_name
--- FROM  article
--- JOIN brand ON article.brand_id = brand.id
+$sql = "SELECT 
+    article.*,  
+    brand.name AS brand_name,
+    article_type.name AS type_name
+FROM  article
+JOIN brand ON article.brand_id = brand.id
 
--- JOIN  article_type ON article.type_id = article_type.id
-WHERE id='$id'
-";
+JOIN  article_type ON article.type_id = article_type.id
+WHERE article.id='$id' 
+";  //有用join 記得指定資料表
+
 
 
 $result = $conn->query($sql);
 $articleCount = $result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+$row = $result->fetch_assoc();
+
+if($articleCount>0){
+    $title=$row["title"];
+}else{
+    $title="使用者不存在";
+}
 
 
-
-var_dump($rows);
+// var_dump($rows);
+$conn->close();
 ?>
-
-
 
 <!doctype html>
 <html lang="en">
@@ -32,7 +43,7 @@ var_dump($rows);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title><?=$title?></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -72,25 +83,25 @@ var_dump($rows);
             <?php if ($articleCount > 0) : ?>
                 <table class="table table-bordered">
                     <tr>
-                        <th>編號</th>
-                        <td><?= $row["id"] ?></td>
+                        <th class="col-2">編號</th>
+                        <td><?=$row["id"]?></td>
                     </tr>
                     <tr>
                         <th>品牌</th>
-                        <td></td>
+                        <td><?= $row["brand_name"] ?></td>
                     </tr>
                     <tr>
                         <th>類型</th>
-                        <td></td>
+                        <td><?= $row["type_name"] ?></td>
                     </tr>
                     <tr>
                         <th>標題</th>
-                        <td></td>
+                        <td><?= $row["title"] ?></td>
                     </tr>
 
                     <tr>
                         <th>內容</th>
-                        <td></td>
+                        <td><?= $row["content"] ?></td>
                     </tr>
                     <tr>
                         <th>圖片</th>
@@ -98,22 +109,20 @@ var_dump($rows);
                     </tr>
                     <tr>
                         <th>發布時間</th>
-                        <td></td>
+                        <td><?= $row["launched_date"] ?></td>
                     </tr>
                 </table>
+                <?php else: ?>
+                    文章不存在
                 <?php endif; ?>
             </div>
-            <div class="text-end">
-                <a href="doUpdateArticle.php" class="btn btn-outline-secondary btn-lg ">儲存</a>
-            </div>
+            
         </div>
     </main>
-    <!-- Quill-->
-    <script src="../vendor/quill/quill.min.js"></script>
-    <!-- Quill init-->
-    <script src="../js/forms-texteditor.js"></script>
+    
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
 </body>
 
 </html>
+

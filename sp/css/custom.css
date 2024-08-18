@@ -21,9 +21,5 @@
 }
 .align-middle>.ratio-4x3 {
   width: 200px; 
-}
-.article-title{
-  width: 250px;  
-  overflow: hidden;
-    word-break: break-word;
+  background-color: rgb(205, 226, 255);
 }
