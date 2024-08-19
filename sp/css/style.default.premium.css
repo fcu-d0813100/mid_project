@@ -2691,12 +2691,14 @@ progress {
   cursor: pointer;
 }
 .form-control:focus {
-  color: var(--bs-body-color);
-  background-color: var(--bs-body-bg);  
-  border-color: none;
+
+  color: #000;
+  background-color: var(--bs-body-bg);
+  border-color:none;
   outline: 0;
   -webkit-box-shadow: none;
-  box-shadow: none;
+  box-shadow: none
+
 }
 .form-control::-webkit-date-and-time-value {
   min-width: 85px;
