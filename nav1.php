@@ -45,7 +45,8 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>類別管理 </a>
         <ul class="collapse list-unstyled " id="categoryDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../category/category.php">品項管理</a></li>
+          <li><a class="sidebar-link" href="color.php">色號庫存</a></li>
         </ul>
       </li>
       <li class="sidebar-item"><a class="sidebar-link" href="#orderDropdown" data-bs-toggle="collapse">
