@@ -54,6 +54,21 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>活動品牌</th>
+                                <td>
+                                    <div class="mb-2">
+                                        <label for="dropdown">選擇一個品牌：</label>
+                                        <select id="dropdown" name="options">
+                                            <option value="1">YSL</option>
+                                            <option value="2">Bobbi Brown</option>
+                                            <option value="3">Estee Lauder</option>
+                                            <option value="4">NARS</option>
+                                            <option value="5">Lancome</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>圖片</th>
                                 <td>
                                     <div class="mb-2">

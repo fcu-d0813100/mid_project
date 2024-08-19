@@ -6,18 +6,34 @@ $sqlAll = "SELECT * FROM active WHERE valid=1";
 $resultALL = $conn->query($sqlAll);
 $activeCountAll = $resultALL->num_rows;
 
-$sql = "SELECT * FROM active";
-$result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+
 
 
 $page = 1; //頁數
+$startItem = 0;
 $per_page = 5; //此頁要顯示幾筆活動
 $totalPage = ceil($activeCountAll / $per_page);
 
-if (isset($_GET["p"])) {
+if (isset($_GET["search"])) {
+  $search = $_GET["search"];
+  $sql = "SELECT * FROM active 
+          WHERE (brand LIKE '%$search%' 
+          OR name LIKE '%$search%' 
+          OR id LIKE '%$search%') 
+          AND valid = 1";
+} elseif (isset($_GET["p"])) {
   $page = $_GET["p"];
+  $startItem = ($page - 1) * $per_page;
+  //$sql = "SELECT * FROM active WHERE valid = 1 LIMIT $startItem,$per_page";
+  $sql = "SELECT * FROM active WHERE valid = 1 $where_clause LIMIT $startItem,$per_page";
+} else {
+  header("location:active.php?p=1");
+  exit;
+  //$sql = "SELECT * FROM users WHERE valid = 1 LIMIT $startItem,$per_page";
 }
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!doctype html>
@@ -46,10 +62,15 @@ if (isset($_GET["p"])) {
   <main class="main-content ">
     <div class="d-flex justify-content-between align-items-start mt-3">
       <p class="m-0 d-inline text-lg text-secondary">活動管理 /<span class="text-sm">活動列表</span></p>
-      <div class="align-self-center">
-        <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search" style="width:600px;">
-      </div>
+
+      <form action="" class="align-self-center mt-2" style="width: 600px;">
+        <div class="input-group mb-3">
+          <input type="search" class="form-control border border-dark" placeholder="輸入使用者名稱" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
+            value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>">
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+      </form>
+
 
       <div>
         <button class="btn btn-outline-secondary btn-lg">
