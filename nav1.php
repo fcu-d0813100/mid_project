@@ -72,7 +72,7 @@
           </svg>文章管理 </a>
         <ul class="collapse list-unstyled " id="articleDropdown">
           <li><a class="sidebar-link" href="../article/article-list.php">文章列表</a></li>
-          <li><a class="sidebar-link" href="../article/article-list.php">文章類型</a></li>
+          <li><a class="sidebar-link" href="../article/article-type.php">文章類型</a></li>
         </ul>
       </li>
 

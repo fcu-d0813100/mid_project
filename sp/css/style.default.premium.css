@@ -16386,7 +16386,7 @@ nav.navbar .dropdown-menu.show {
 .side-navbar.hide {
   left: -70px;
 }
-@media (max-width: 1199.98px) {
+/* @media (max-width: 1199.98px) {
   .side-navbar {
     left: -200px;
     width: 200px;
@@ -16415,7 +16415,7 @@ nav.navbar .dropdown-menu.show {
   .side-navbar .sidenav-header-inner {
     display: block;
   }
-}
+} */
 .side-navbar .brand-small {
   display: none;
 }
