@@ -1,0 +1,50 @@
+.price-pagination-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.price-filter {
+  display: inline-block !important;
+  width: 50%; /* 這裡的 50% 可以改成具體的像素值或者百分比 */
+  text-align: right; /* 分頁按鈕靠右對齊 */
+}
+
+.pagination {
+  display: inline-block;
+  width: 50%;
+  width: auto; /* 使分頁根據內容自動調整寬度 */
+  flex-grow: 0; /* 保持原來的寬度 */
+}
+
+.pagination a {
+  padding: 10px 15px;
+  margin: 0;
+  background-color: #ffffff; /* 白色背景 */
+  color: #000000; /* 黑色文字 */
+  text-decoration: none;
+  border-radius: 0; /* 移除圓角 */
+  border: 1px solid #cccccc; /* 灰色邊框 */
+  transition: transform 0.2s ease-in-out; /* 過渡效果，用於方格放大 */
+}
+
+.pagination a:hover {
+  transform: scale(1.1); /* 當滑鼠移過時方格放大 */
+  border-color: #999999; /* 滑鼠移過時邊框顏色變化 */
+}
+
+.pagination a.active {
+  transform: scale(1.1); /* 當前頁面放大效果 */
+  background-color: #ffffff; /* 當前頁面背景維持白色 */
+  color: #000000; /* 當前頁面文字顏色維持黑色 */
+  border-color: #999999; /* 當前頁面邊框顏色 */
+  cursor: default; /* 當前頁面不可點擊 */
+}
+
+.pagination a[disabled] {
+  background-color: #f9f9f9; /* 禁用狀態背景顏色 */
+  color: #cccccc; /* 禁用狀態文字顏色 */
+  cursor: not-allowed; /* 禁用狀態的鼠標樣式 */
+  border-color: #f9f9f9; /* 禁用狀態的邊框顏色 */
+}
