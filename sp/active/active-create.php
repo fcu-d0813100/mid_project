@@ -38,18 +38,16 @@
                     <i class="fa-regular fa-trash-can"></i>
                 </a>
             </div>
-            <div>
-            </div>
             <div class="row">
                 <div class="col-lg">
-                    <form action="doUpdateActive.php" method="post">
+                    <form action="doCreateActive.php" method="post" enctype="multipart/form-data">
                         <table class="table table-bordered">
                             <tr>
                                 <th>活動名稱</th>
                                 <td>
                                     <div class="mb-2">
                                         <label for="" class="mb-2">輸入活動名稱: </label>
-                                        <input type="text" id="" class="form-control">
+                                        <input type="text" id="" class="form-control" name="name">
                                     </div>
                                 </td>
                             </tr>
@@ -58,12 +56,13 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="dropdown">選擇一個品牌：</label>
-                                        <select id="dropdown" name="options">
-                                            <option value="1">YSL</option>
-                                            <option value="2">Bobbi Brown</option>
-                                            <option value="3">Estee Lauder</option>
-                                            <option value="4">NARS</option>
-                                            <option value="5">Lancome</option>
+                                        <select id="dropdown" name="brand">
+                                            <!-- 之後關聯式資料表再改回數字 -->
+                                            <option value="YSL">YSL</option>
+                                            <option value="Bobbi Brown">Bobbi Brown</option>
+                                            <option value="Estee Lauder">Estee Lauder</option>
+                                            <option value="NARS">NARS</option>
+                                            <option value="Lancome">Lancome</option>
                                         </select>
                                     </div>
                                 </td>
@@ -73,7 +72,7 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="" class="mb-2">選取活動圖片: </label>
-                                        <input type="file" name="pic" id="" class="form-control">
+                                        <input type="file" name="image" id="" class="form-control">
                                     </div>
                                 </td>
                             </tr>
@@ -82,7 +81,8 @@
                                 <th>活動日期</th>
                                 <td>
                                     <div class="mb-2">
-                                        <input type="date" id="" class="form-control">
+                                        <input type="datetime-local" id="" class="form-control mb-2" name="start_at">
+                                        <input type="datetime-local" id="" class="form-control" name="end_at">
                                     </div>
                                 </td>
                             </tr>
@@ -91,7 +91,7 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="" class="mb-2">輸入活動地點: </label>
-                                        <input type="address" id="" class="form-control">
+                                        <input type="address" id="" class="form-control" name="address">
                                     </div>
                                 </td>
                             </tr>
@@ -101,9 +101,10 @@
                                     <div class="row">
 
                                         <div class="col-6">
+
                                             <label for="" class="mb-2">報名最大人數 :</label>
                                             <div class="">
-                                                <input type="number" id="" class="form-control">
+                                                <input type="number" id="" class="form-control" name="maxAPP">
                                             </div>
                                         </div>
                                     </div>
@@ -115,13 +116,13 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="" class="mb-2">輸入活動內容: </label>
-                                        <input type="text" id="" class="form-control">
+                                        <input type="text" id="" class="form-control" name="description">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="text-end">
-                            <a href="doCreateActive.php" class="btn btn-outline-secondary btn-lg">新增</a>
+                            <button class="btn btn-outline-secondary btn-lg" type="submit">新增</button>
                         </div>
                     </form>
                 </div>
