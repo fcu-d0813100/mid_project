@@ -95,6 +95,7 @@ $articleCount = $articleCountAll;
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
     <div class="d-flex justify-content-between align-items-start mt-3">
+
       <div>
         <p class="m-0 d-inline text-lg text-secondary">文章管理 /<span class="text-sm">文章列表</span></p>
       </div>
@@ -115,12 +116,18 @@ $articleCount = $articleCountAll;
           <div class="text-end">
             <a href="article-create.php" class="btn btn-outline-secondary btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
           </div>
+
         </div>
+        <!-- add button -->
+        <button class="btn btn-outline-secondary btn-md">
+          <i class="fa-solid fa-plus"></i>新增
+        </button>
       </div>
     </div>
     <hr>
     <!-- table-->
     <div class="table-responsive small">
+
       <div class="d-flex justify-content-between">
         <?php if ($articleCount > 0):
           $rows = $result->fetch_all(MYSQLI_ASSOC) ?>
@@ -158,11 +165,13 @@ $articleCount = $articleCountAll;
             <th scope="col" class="col-2">發布時間
               <!-- <a href="javascript:void(0)" onclick="sortTable(3)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a>
               <a href="javascript:void(0)" onclick="sortTable(4)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a> -->
+
             </th>
             <th scope="col" class="col-2">動作</th>
           </tr>
         </thead>
         <tbody>
+
           <?php foreach ($rows as $row) : ?>
             <tr class="align-middle dataList">
               <td><?= $row["id"] ?></td>
@@ -204,11 +213,11 @@ $articleCount = $articleCountAll;
         </ul>
       </nav>
     <?php endif; ?>
-
   </main>
 
 
   </div>
+
 
   <script>
     function sortTable(orderType) {
@@ -217,6 +226,11 @@ $articleCount = $articleCountAll;
       window.location.href = url;
     }
   </script>
+
+
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 </body>
 

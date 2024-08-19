@@ -13,6 +13,7 @@
   padding-left: 255px;
   padding-right: 40px;
 }
+
 .input-group {
   width: 300px;
 }
@@ -22,4 +23,14 @@
 .align-middle>.ratio-4x3 {
   width: 200px; 
   background-color: rgb(205, 226, 255);
+}
+
+.activePic {
+  width: 400px;
+  height: auto;
+}
+.addbtn {
+  :hover {
+    color: white;
+  }
 }
