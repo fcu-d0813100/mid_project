@@ -34,7 +34,7 @@ if ($userCount > 0) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <?php include("../../css.php") ?>
+    <?php include("css.php") ?>
 </head>
 
 <body>
@@ -71,26 +71,23 @@ if ($userCount > 0) {
                                 <td><?= ($row["gender"] == 1) ? '男' : '女' ?></td>
                             </tr>
 
-
-
-
-
                             <tr>
                                 <th>會員等級</th>
-                                <td> <select class="form-control" name="level_id">
 
-                                        <option value="1">一般會員</option>
-                                        <option value="2">VIP</option>
-                                        <option value="3">管理員</option>
-                                    </select>
-                                    <!-- </td>
+                                <td><?= $row["level_name"] ?></td>
 
-                                <td><?= $row["level_name"] ?>
-
-
-
-                                </td> -->
                             </tr>
+
+                            <!-- <tr>
+                                <th>會員等級</th>
+                                <td>
+                                    <select class="form-control" name="level_id">
+                                        <option value="1" <?= ($row["level_id"] == 1) ? 'selected' : '' ?>>一般會員</option>
+                                        <option value="2" <?= ($row["level_id"] == 2) ? 'selected' : '' ?>>VIP</option>
+                                        <option value="3" <?= ($row["level_id"] == 3) ? 'selected' : '' ?>>管理員</option>
+                                    </select>
+                                </td>
+                            </tr> -->
                             <tr>
                                 <th>聯絡電話</th>
                                 <td>
