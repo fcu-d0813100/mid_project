@@ -5,7 +5,7 @@ if (!isset($_GET["id"])) {
 }
 
 
-$id=$_GET["id"];
+$id = $_GET["id"];
 
 require_once("/xampp/htdocs/mid_project/db_connect.php");
 
@@ -26,10 +26,10 @@ $result = $conn->query($sql);
 $articleCount = $result->num_rows;
 $row = $result->fetch_assoc();
 
-if($articleCount>0){
-    $title=$row["title"];
-}else{
-    $title="使用者不存在";
+if ($articleCount > 0) {
+    $title = $row["title"];
+} else {
+    $title = "使用者不存在";
 }
 
 
@@ -43,7 +43,7 @@ $conn->close();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?=$title?></title>
+    <title><?= $title ?></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -72,7 +72,10 @@ $conn->close();
             <a href="article-list.php" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <a href="" class="btn btn-outline-secondary btn-lg">
+            <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+                <i class="fa-regular fa-pen-to-square"></i>
+            </a>
+            <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>
@@ -80,49 +83,48 @@ $conn->close();
         <div class="row mt-3">
             <div class="col-lg">
 
-            <?php if ($articleCount > 0) : ?>
-                <table class="table table-bordered">
-                    <tr>
-                        <th class="col-2">編號</th>
-                        <td><?=$row["id"]?></td>
-                    </tr>
-                    <tr>
-                        <th>品牌</th>
-                        <td><?= $row["brand_name"] ?></td>
-                    </tr>
-                    <tr>
-                        <th>類型</th>
-                        <td><?= $row["type_name"] ?></td>
-                    </tr>
-                    <tr>
-                        <th>標題</th>
-                        <td><?= $row["title"] ?></td>
-                    </tr>
+                <?php if ($articleCount > 0) : ?>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="col-2">編號</th>
+                            <td><?= $row["id"] ?></td>
+                        </tr>
+                        <tr>
+                            <th>品牌</th>
+                            <td><?= $row["brand_name"] ?></td>
+                        </tr>
+                        <tr>
+                            <th>類型</th>
+                            <td><?= $row["type_name"] ?></td>
+                        </tr>
+                        <tr>
+                            <th>標題</th>
+                            <td><?= $row["title"] ?></td>
+                        </tr>
 
-                    <tr>
-                        <th>內容</th>
-                        <td><?= $row["content"] ?></td>
-                    </tr>
-                    <tr>
-                        <th>圖片</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>發布時間</th>
-                        <td><?= $row["launched_date"] ?></td>
-                    </tr>
-                </table>
+                        <tr>
+                            <th>內容</th>
+                            <td><?= $row["content"] ?></td>
+                        </tr>
+                        <tr>
+                            <th>圖片</th>
+                            <td class="ratio ratio-4x3"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
+                        </tr>
+                        <tr>
+                            <th>發布時間</th>
+                            <td><?= $row["launched_date"] ?></td>
+                        </tr>
+                    </table>
                 <?php else: ?>
                     文章不存在
                 <?php endif; ?>
             </div>
-            
+
         </div>
     </main>
-    
+
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
 </body>
 
 </html>
-

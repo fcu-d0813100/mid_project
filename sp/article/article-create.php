@@ -69,7 +69,7 @@ $types = $resultTypes->fetch_all(MYSQLI_ASSOC);
         <div class="row mt-3 justify-content-start">
             <div class="col-lg">
                 <table class="table table-bordered">
-                    <form action="doCreateArticle.php" method="post">
+                    <form action="doCreateArticle.php" method="post" enctype="multipart/form-data">
                         <table class="table table-bordered">
                             <!-- 品牌 -->
                             <tr class="form-label">
@@ -114,7 +114,7 @@ $types = $resultTypes->fetch_all(MYSQLI_ASSOC);
                             <tr>
                                 <th>圖片</th>
                                 <td>
-                                    <input class="form-control" type="file" name="pic">
+                                    <input class="form-control" type="file" name="main_pic">
                                 </td>
                             </tr>
                             <tr>

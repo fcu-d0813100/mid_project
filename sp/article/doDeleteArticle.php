@@ -20,4 +20,4 @@ if ($conn->query($sql) === TRUE) {
 $conn->close();
 
 
-header("location:users.php"); //刪完之後回到哪邊
+header("location:article-list.php"); //刪完之後回到哪邊

@@ -79,7 +79,7 @@ $conn->close();
             <a href="article-list.php" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <a href="" class="btn btn-outline-secondary btn-lg">
+            <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>
@@ -141,7 +141,9 @@ $conn->close();
                             </tr>
                             <tr>
                                 <th>圖片</th>
-                                <td></td>
+                                <td>
+                                    <input class="form-control" type="file" name="main_pic">
+                                </td>
                             </tr>
                             <tr>
                                 <th>發布時間</th>
