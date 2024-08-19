@@ -118,15 +118,12 @@ $articleCount = $articleCountAll;
           </div>
 
         </div>
-        <!-- add button -->
-        <button class="btn btn-outline-secondary btn-md">
-          <i class="fa-solid fa-plus"></i>新增
-        </button>
+        
       </div>
     </div>
     <hr>
     <!-- table-->
-    <div class="table-responsive small">
+    <div class="table-responsive large">
 
       <div class="d-flex justify-content-between">
         <?php if ($articleCount > 0):
@@ -179,7 +176,7 @@ $articleCount = $articleCountAll;
               <td><?= $row["type_name"] ?></td>
               <td class="article-title"><?= $row["title"] ?></td>
 
-              <td class="ratio ratio-4x3 "><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
+              <td class="ratio ratio-4x3 activePic "><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
 
               <td><?= $row["launched_date"] ?></td>
               <td class="gap-3">
@@ -202,8 +199,8 @@ $articleCount = $articleCountAll;
     <?php endif; ?>
     </div>
     <?php if (isset($_GET["p"])): ?>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination d-flex justify-content-end">
           <?php for ($i = 1; $i <= $total_page; $i++): ?>
             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
               <a class="page-link" href="article-list.php?p=<?= $i ?>&order=<?= $order ?>">
