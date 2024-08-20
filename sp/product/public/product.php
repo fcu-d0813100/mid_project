@@ -1,254 +1,87 @@
-<?php 
+<?php
 include('../config/database.php');
 
-// 每頁顯示的資料筆數
-$limit = 12;
+// 初始化變數
+$productId = 1; // 假設我們更新id為1的商品
+$description = "";
+$imageName = "";
 
-// 當前頁碼
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+// 處理表單提交
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 更新描述
+    if (!empty($_POST['description'])) {
+        $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
+        $updateDescriptionSql = "UPDATE product_list SET description = :description WHERE id = :id";
+        $stmt = $pdo->prepare($updateDescriptionSql);
+        $stmt->execute(['description' => $description, 'id' => $productId]);
+    }
 
-// 計算資料查詢的起始位置
-$offset = ($page - 1) * $limit;
+    // 更新圖片
+    if (!empty($_FILES['image']['name'])) {
+        $targetDir = "../uploads/";
+        $imageName = basename($_FILES["image"]["name"]);
+        $targetFilePath = $targetDir . $imageName;
 
-// 初始化過濾器變數
-$filter = "";
-
-// SQL 查詢語句，首先獲取總數據條數以計算總頁數
-$sql_count = "SELECT COUNT(*) FROM product_list";
-if (isset($_GET['price_filter'])) {
-    $filter = $_GET['price_filter'];
-    if ($filter == 'under_1000') {
-        $sql_count .= " WHERE price < 1000";
-    } elseif ($filter == '1000_2000') {
-        $sql_count .= " WHERE price BETWEEN 1000 AND 2000";
-    } elseif ($filter == 'above_2000') {
-        $sql_count .= " WHERE price > 2000";
+        // 上傳圖片並更新資料庫
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            $updateImageSql = "UPDATE product_images SET mainimage = :mainimage WHERE id = :id";
+            $stmt = $pdo->prepare($updateImageSql);
+            $stmt->execute(['mainimage' => $imageName, 'id' => $productId]);
+        } else {
+            echo "圖片上傳失敗。";
+        }
     }
 }
 
-// 執行計算總數的查詢
-$stmt = $pdo->query($sql_count);
-$totalItems = $stmt->fetchColumn();
+// 獲取當前商品資料
+$productSql = "SELECT pi.mainimage, pl.description 
+               FROM product_images pi 
+               JOIN product_list pl ON pi.images_id = pl.id 
+               WHERE pi.images_id = :id";
+$stmt = $pdo->prepare($productSql);
+$stmt->execute(['id' => $productId]);
 
-// 計算總頁數
-$totalPages = ceil($totalItems / $limit);
-
-// 每組顯示 5 個頁碼
-$pagesPerGroup = 5;
-
-// 計算當前頁碼所在的頁碼組
-$currentGroup = ceil($page / $pagesPerGroup);
-
-// 當前組的起始和結束頁碼
-$startPage = ($currentGroup - 1) * $pagesPerGroup + 1;
-$endPage = min($currentGroup * $pagesPerGroup, $totalPages);
-
-// 處理新增商品的表單提交
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
-    $id = $_POST['id'];
-    $product_name = $_POST['product_name'];
-    $brand_id = $_POST['brand_id'];
-    $main_category_id = $_POST['main_category_id'];
-    $sub_category_id = $_POST['sub_category_id'];
-    $color_id = $_POST['color_id'];
-    $price = $_POST['price'];
-    $description = $_POST['description'];
-    $images_id = $_POST['images_id'];
-
-    $sql_insert = "INSERT INTO product_list (id, product_name, brand_id, main_category_id, sub_category_id, color_id, price, description, images_id)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt_insert = $pdo->prepare($sql_insert);
-    $stmt_insert->execute([$id, $product_name, $brand_id, $main_category_id, $sub_category_id, $color_id, $price, $description, $images_id]);
-
-    echo "<script>alert('商品已成功新增！'); window.location.href='product.php';</script>";
+if ($stmt->rowCount() > 0) {
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $imageName = $row['mainimage'];
+    $description = $row['description'];
+} else {
+    echo "找不到商品資料。";
 }
+
+$pdo = null;
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-    <title>Product List</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css?v=1.0">
-    <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品頁</title>
 </head>
 <body>
-<?php include("../../../nav1.php") ?>
+<h2>商品頁</h2>
 
-<div class="main-content-wrapper">
-    <div class="container">
-        <!-- 新增商品按鈕 -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">新增商品</button>
+<!-- 顯示圖片 -->
+<?php if ($imageName): ?>
+    <img src="../uploads/<?php echo htmlspecialchars($imageName, ENT_QUOTES, 'UTF-8'); ?>" alt="商品圖片" style="max-width: 200px;">
+<?php else: ?>
+    <p>無圖片</p>
+<?php endif; ?>
 
-        <!-- 模態視窗 -->
-        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProductModalLabel">新增商品</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="id">ID:</label>
-                                <input type="number" class="form-control" id="id" name="id" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="product_name">產品名稱:</label>
-                                <input type="text" class="form-control" id="product_name" name="product_name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="brand_id">品牌 ID:</label>
-                                <input type="number" class="form-control" id="brand_id" name="brand_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="main_category_id">主類別 ID:</label>
-                                <input type="number" class="form-control" id="main_category_id" name="main_category_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="sub_category_id">子類別 ID:</label>
-                                <input type="number" class="form-control" id="sub_category_id" name="sub_category_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="color_id">顏色 ID:</label>
-                                <input type="number" class="form-control" id="color_id" name="color_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">價格:</label>
-                                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">描述:</label>
-                                <textarea class="form-control" id="description" name="description"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="images_id">圖片 ID:</label>
-                                <input type="number" class="form-control" id="images_id" name="images_id" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-primary" name="add_product">新增</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!-- 顯示描述 -->
+<p>描述: <?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></p>
 
-        <!-- 篩選表單 -->
-        <form method="GET" action="product.php" class="price-pagination-form">
-            <!-- 分頁連結 -->
-            <div class="pagination">
-                <?php
-                // Previous group button
-                $prevGroupPage = 0; // 初始化變量
-                if ($currentGroup > 1) {
-                    $prevGroupPage = $startPage - 1;
-                    echo "<a href='product.php?page=$prevGroupPage&price_filter=$filter'>Previous</a>";
-                }
+<!-- 更新表單 -->
+<form action="" method="post" enctype="multipart/form-data">
+    <label for="image">更新圖片:</label>
+    <input type="file" name="image" id="image"><br><br>
 
-                // 顯示當前組的頁碼
-                for ($i = $startPage; $i <= $endPage; $i++) {
-                    if ($i == $page) {
-                        echo "<strong>$i</strong>";
-                    } else {
-                        echo "<a href='product.php?page=$i&price_filter=$filter'>$i</a>";
-                    }
-                }
+    <label for="description">更新描述:</label><br>
+    <textarea name="description" id="description" rows="4" cols="50"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></textarea><br><br>
 
-                // Next group button
-                $nextGroupPage = 0; // 初始化變量
-                if ($endPage < $totalPages) {
-                    $nextGroupPage = $endPage + 1;
-                    echo "<a href='product.php?page=$nextGroupPage&price_filter=$filter'>Next</a>";
-                }
-                ?>
-            </div>
-            <div class="price-filter">
-                <label for="price_filter">依價格篩選:</label>
-                <select id="price_filter" name="price_filter">
-                    <option value="">All</option>
-                    <option value="under_1000" <?php if(isset($_GET['price_filter']) && $_GET['price_filter'] == 'under_1000') echo 'selected'; ?>>Under 1000</option>
-                    <option value="1000_2000" <?php if(isset($_GET['price_filter']) && $_GET['price_filter'] == '1000_2000') echo 'selected'; ?>>1000 - 2000</option>
-                    <option value="above_2000" <?php if(isset($_GET['price_filter']) && $_GET['price_filter'] == 'above_2000') echo 'selected'; ?>>Above 2000</option>
-                </select>
-                <input type="submit" value="Filter">
-            </div>
-        </form>
+    <input type="submit" value="更新">
+</form>
 
-        <table>
-            <tr>
-                <th>編號</th>
-                <th>產品名稱</th>
-                <th>品牌</th>
-                <th>部位</th>
-                <th>品項</th>
-                <th>色號</th>
-                <th>顏色</th>
-                <th>價格</th>
-                <th>商品</th>
-                <th>操作</th>
-            </tr>
-            <?php
-            // 獲取資料的查詢語句
-            $sql = "SELECT p.id, p.product_name, b.name AS brand_name, mc.name AS main_category_name, sc.name AS sub_category_name, p.color_id, c.color AS color_name, p.price, p.images_id
-                    FROM product_list p
-                    JOIN brand b ON p.brand_id = b.id
-                    JOIN main_category mc ON p.main_category_id = mc.id
-                    JOIN sub_category sc ON p.sub_category_id = sc.id
-                    JOIN color c ON p.color_id = c.id";
-            if (isset($_GET['price_filter'])) {
-                if ($filter == 'under_1000') {
-                    $sql .= " WHERE p.price < 1000";
-                } elseif ($filter == '1000_2000') {
-                    $sql .= " WHERE p.price BETWEEN 1000 AND 2000";
-                } elseif ($filter == 'above_2000') {
-                    $sql .= " WHERE p.price > 2000";
-                }
-            }
-
-            $sql .= " ORDER BY p.id ASC LIMIT $limit OFFSET $offset";
-
-            // 執行查詢
-            $stmt = $pdo->query($sql);
-
-            // 顯示資料
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['brand_name']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['main_category_name']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['sub_category_name']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['color_id']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['color_name']) . "</td>";
-                echo "<td>" . number_format($row['price']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['images_id']) . "</td>";
-                echo "<td>
-                        <a href='update.php?id=" . htmlspecialchars($row['id']) . "'>編輯</a> |
-                        <a href='delete.php?id=" . htmlspecialchars($row['id']) . "'>刪除</a>
-                      </td>";
-                echo "</tr>";
-            }
-            ?>
-        </table>
-    </div>
-</div>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>      
+</html>
