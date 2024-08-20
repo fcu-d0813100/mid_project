@@ -35,6 +35,17 @@ if ($userCount > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <?php include("css.php") ?>
+    <script>
+        function confirmDelete(id) {
+            var confirmation = confirm("您確定要刪除這筆資料嗎?");
+            if (confirmation) {
+                // 使用者確認刪除，重定向到刪除頁面
+                window.location.href = 'doDeleteUser.php?id=' + id;
+            }
+            // 使用者取消刪除，返回 false 防止跳轉
+            return false;
+        }
+    </script>
 </head>
 
 <body>
@@ -66,19 +77,32 @@ if ($userCount > 0) {
                                         value="<?= $row["name"] ?>">
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>性別</th>
                                 <td><?= ($row["gender"] == 1) ? '男' : '女' ?></td>
+                            </tr> -->
+                            <tr>
+                                <th>性別</th>
+                                <td>
+                                    <div>
+                                        <input type="radio" id="male" name="gender" value="1" <?= ($row["gender"] == 1) ? 'checked' : '' ?>>
+                                        <label for="male">男</label>
+                                        <input type="radio" id="female" name="gender" value="2" <?= ($row["gender"] == 2) ? 'checked' : '' ?>>
+                                        <label for="female">女</label>
+                                    </div>
+                                </td>
                             </tr>
 
-                            <tr>
+
+
+                            <!-- <tr>
                                 <th>會員等級</th>
 
                                 <td><?= $row["level_name"] ?></td>
 
-                            </tr>
+                            </tr> -->
 
-                            <!-- <tr>
+                            <tr>
                                 <th>會員等級</th>
                                 <td>
                                     <select class="form-control" name="level_id">
@@ -87,7 +111,7 @@ if ($userCount > 0) {
                                         <option value="3" <?= ($row["level_id"] == 3) ? 'selected' : '' ?>>管理員</option>
                                     </select>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr>
                                 <th>聯絡電話</th>
                                 <td>
@@ -125,7 +149,7 @@ if ($userCount > 0) {
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-primary"
                                 type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
-                            <a class="btn btn-danger" href="doDeleteUser.php?id=<?= $row["id"] ?>">
+                            <a class="btn btn-danger" href="#" onclick="return confirmDelete(<?= $row['id'] ?>)">
                                 <i class="fa-regular fa-trash-can"></i>
                             </a>
                         </div>
