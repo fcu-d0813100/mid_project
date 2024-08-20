@@ -138,6 +138,7 @@ $types = $resultTypes->fetch_all(MYSQLI_ASSOC);
 
     </main>
 
+    <script script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
