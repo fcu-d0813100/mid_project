@@ -86,12 +86,12 @@ $conn->close();
 
         <div class="row mt-3">
             <div class="col-lg">
-                <form action="doUpdateArticle.php" method="post">
+                <form action="doUpdateArticle.php" method="post" enctype="multipart/form-data">
                     <?php if ($articleCount > 0) : ?>
                         <table class="table table-bordered">
                             <input type="hidden" name="id" value="<?= $row["id"] ?>">
                             <tr>
-                                <th class="col-2">編號</th>
+                                <th class="col-1">編號</th>
                                 <td><?= $row["id"] ?></td>
                             </tr>
                             <!-- 品牌 -->

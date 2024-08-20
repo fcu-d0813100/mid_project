@@ -42,7 +42,7 @@ if ($userCount > 0) {
 
     <main class="main-content px-3 pb-3 pt-5">
         <div class="container">
-            <div class="row d-flex justify-content-center align-items-center">
+            <div class="mt-4 row d-flex justify-content-center align-items-center">
                 <div class="col-10">
 
                     <h1 class="h2 mt-5 pt-5 mb-2">編輯資料</h1>
