@@ -20,9 +20,12 @@ if (isset($_GET["search"])) {
 
     switch ($order) {
         case 1:
-            $where_clause = "ORDER BY years ASC"; //數字升冪
+            $where_clause = "ORDER BY id ASC"; //數字升冪
             break;
         case 2:
+            $where_clause = "ORDER BY years ASC"; //數字升冪
+            break;
+        case 3:
             $where_clause = "ORDER BY years DESC"; //數字降冪
             break;
         default:
@@ -30,6 +33,22 @@ if (isset($_GET["search"])) {
             break;
     }
     $sql = "SELECT * FROM teachers WHERE valid=1 $where_clause LIMIT $start_item,$per_page";
+} elseif (isset($_GET["p"]) && isset($_GET["nation"])) {
+    $nation = $_GET["nation"];
+    $page = $_GET["p"];
+    $start_item = ($page - 1) * $per_page;
+
+    switch ($nation) {
+        case 1:
+            $sql = "SELECT * FROM teachers WHERE nation='臺灣' AND valid=1 LIMIT $start_item,$per_page";
+            break;
+        case 2:
+            $sql = "SELECT * FROM teachers WHERE nation!='臺灣' AND valid=1 LIMIT $start_item,$per_page";
+            break;
+        default:
+            header("location:teachers.php?p=1&order=1");
+            break;
+    }
 } else {
     header("location:teachers.php?p=1&order=1");
     // $sql = "SELECT * FROM teachers WHERE valid=1 LIMIT $start_item,$per_page ";
@@ -38,15 +57,14 @@ if (isset($_GET["search"])) {
 // $sql = "SELECT * FROM teachers";
 $result = $conn->query($sql);
 
+// $sqlnation_taiwan = "SELECT * FROM teachers WHERE nation='臺灣'";
+// $sqlnation_other = "SELECT * FROM teachers WHERE nation='臺灣'";
+
 if (isset($_GET["search"])) {
     $userCount = $result->num_rows;
 } else {
     $userCount = $userCountAll;
 };
-
-
-
-
 
 ?>
 <!doctype html>
@@ -68,7 +86,7 @@ if (isset($_GET["search"])) {
 
     <main class="main-content px-3 pb-3 pt-5">
         <div class="container ">
-            <div class="row d-flex justify-content-center align-items-center ">
+            <div class="mt-4 row d-flex justify-content-center align-items-center ">
                 <div class="col-10">
                     <div>
                         <h1 class="h2 mt-5 pt-5 mb-3">師資列表</h1>
@@ -97,22 +115,30 @@ if (isset($_GET["search"])) {
                                 </a>
                             </div>
                             <div>
-                                <div class="btn-group me-2">
-                                    <a class="btn btn-dark border-end" href="">
-                                        <i class="py-1 fa-solid fa-location-dot me-2"></i>國內
-                                    </a>
-                                    <a class="btn btn-dark border-start" href="">
-                                        <i class="py-1 fa-solid fa-earth-americas me-2"></i>國際
-                                    </a>
-                                </div>
                                 <?php if (isset($_GET["p"])): ?>
+
+                                    <a class="btn btn-dark me-2
+                                        <?php if ($order == 1) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=1">
+                                        <i class="py-1 fa-solid fa-list-ol me-2"></i>ID
+                                    </a>
+
+                                    <div class="btn-group me-2">
+                                        <a class="btn btn-dark border-end 
+                                        <?php if ($nation == 1) echo "active" ?>" href="teachers.php?p=<?= $page ?>&nation=1">
+                                            <i class="py-1 fa-solid fa-location-dot me-2"></i>國內
+                                        </a>
+                                        <a class="btn btn-dark border-start
+                                        <?php if ($nation == 2) echo "active" ?>" href="teachers.php?p=<?= $page ?>&nation=2">
+                                            <i class="py-1 fa-solid fa-earth-americas me-2"></i>國際
+                                        </a>
+                                    </div>
                                     <div class="btn-group">
                                         <a class="btn btn-dark border-end
-                                        <?php if ($order == 1) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=1">
+                                        <?php if ($order == 2) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=2">
                                             <i class="py-1 fa-solid fa-arrow-down-1-9 me-2"></i>年資
                                         </a>
                                         <a class="btn btn-dark border-start
-                                        <?php if ($order == 2) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=2">
+                                        <?php if ($order == 3) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=3">
                                             <i class="py-1 fa-solid fa-arrow-down-9-1 me-2"></i>年資
                                         </a>
                                     </div>
@@ -127,13 +153,13 @@ if (isset($_GET["search"])) {
                                     <thead>
 
                                         <tr>
-                                            <th class="bg-body-secondary fw-semibold">ID</th>
-                                            <th class="bg-body-secondary fw-semibold name-style">姓名</th>
-                                            <th class="bg-body-secondary fw-semibold">性別</th>
-                                            <th class="bg-body-secondary fw-semibold">Email</th>
-                                            <th class="bg-body-secondary fw-semibold">彩妝年資</th>
-                                            <th class="bg-body-secondary fw-semibold">國籍</th>
-                                            <th class="bg-body-secondary fw-semibold"></th>
+                                            <th class="col-1 bg-body-secondary fw-semibold">ID</th>
+                                            <th class="col-2 bg-body-secondary fw-semibold ">姓名</th>
+                                            <th class="col-1 bg-body-secondary fw-semibold">性別</th>
+                                            <th class="col-4 bg-body-secondary fw-semibold">Email</th>
+                                            <th class="col-1 bg-body-secondary fw-semibold">彩妝年資</th>
+                                            <th class="col-1 bg-body-secondary fw-semibold">國籍</th>
+                                            <th class="col-2 bg-body-secondary fw-semibold"></th>
                                         </tr>
 
                                     </thead>
@@ -175,14 +201,22 @@ if (isset($_GET["search"])) {
                                         <?php if ($page == $i)
                                                 echo "active";
                                         ?>
-                                        "><a class="page-link px-3" href="teachers.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                        "><a class="page-link px-3" href="teachers.php?p=<?= $i ?>
+                <?php if (isset($_GET['order'])): ?>
+                    &order=<?= $_GET['order'] ?>
+                <?php endif; ?>
+                <?php if (isset($_GET['nation'])): ?>
+                    &nation=<?= $_GET['nation'] ?>
+                <?php endif; ?>">
+                                                    <?= $i ?>
+                                                </a></li>
                                         <?php endfor; ?>
                                     </ul>
                                 </nav>
                             <?php endif; ?>
 
                             <?php if ($userCount > 0) : ?>
-                                <p class="m-0 text-end">共有 <?= $userCountAll ?> 個使用者</p>
+                                <p class="m-0 text-end">共有 <?= $userCount ?> 位老師</p>
                             <?php else : ?>
                                 目前沒有使用者
                             <?php endif; ?>

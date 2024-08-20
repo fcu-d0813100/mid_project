@@ -10,7 +10,7 @@ body {
 :root {
   --primary-color: rgb(161, 29, 29);
   --primary-hover-color: rgb(114, 14, 14);
-  --primary-active-color: rgb(169, 19, 19);
+  --primary-active-color: rgb(161, 29, 29);
 }
 .btn-dark {
   --bs-btn-bg: var(--primary-color);
@@ -19,6 +19,9 @@ body {
   --bs-btn-hover-border-color: var(--primary-hover-color);
   --bs-btn-active-bg: var(--primary-active-color);
   --bs-btn-active-border-color: var(--primary-active-color);
+}
+.btn.active {
+  background-color: var(--primary-hover-color);
 }
 .btn-outline-danger {
   --bs-btn-color: var(--primary-color);
