@@ -54,7 +54,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>訂單管理 </a>
         <ul class="collapse list-unstyled " id="orderDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../order/order-list.php">訂單列表</a></li>
         </ul>
       </li>
       <li class="sidebar-item"><a class="sidebar-link" href="#discountDropdown" data-bs-toggle="collapse"
@@ -63,7 +63,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>優惠管理 </a>
         <ul class="collapse list-unstyled " id="discountDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../coupon/coupon-list.php">優惠券列表</a></li>
         </ul>
       </li>
 
