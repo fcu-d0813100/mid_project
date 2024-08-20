@@ -1,46 +1,49 @@
 <?php
 
-require_once("../db_connect.php");
+require_once("../../db_connect.php");
 
 if (!isset($_POST["name"])) {
     echo "請循正常管道進入此頁";
     exit;
 }
 
-$account=$_POST["account"];
-if(empty($account)){
-    echo "帳號不能為空";
-    exit;
-}
-$password=$_POST["password"];
-if(empty($password)){
-    echo "密碼不能為空";
-    exit;
-}
+// $account=$_POST["account"];
+// if(empty($account)){
+//     echo "帳號不能為空";
+//     exit;
+// }
+// $password=$_POST["password"];
+// if(empty($password)){
+//     echo "密碼不能為空";
+//     exit;
+// }
 
-$sqlCheck="SELECT *FROM users WHERE account ='$account'";
+$sqlCheck="SELECT *FROM coupon_list WHERE code ='$code'";
 $result=$conn->query($sqlCheck);
-$userCount=$result->num_rows;
-if($userCount>0){
-    echo "帳號已存在";
+$couponCount=$result->num_rows;
+if($couponCount>0){
+    echo "優惠券已存在";
     exit;
 }
 // echo $userCount;
 // exit;
 
-$repassword=$_POST["repassword"];
-if($password!=$repassword){
-    echo "密碼輸入不一致";
-    exit;
-}
-$password=md5($password);
-$name = $_POST["name"];
-$phone = $_POST["phone"];
-$email = $_POST["email"];
-$now = date('Y-m-d H:i:s');
+// $repassword=$_POST["repassword"];
+// if($password!=$repassword){
+//     echo "密碼輸入不一致";
+//     exit;
+// }
 
-$sql = "INSERT INTO users (account,password,name, phone, email, created_at,valid)
-	VALUES ('$account','$password','$name', '$phone', '$email', '$now',1)";
+$id=$_POST["id"];
+$name=$_POST["name"];
+$minimum_amount=$_POST["minimum_amount"];
+$discount_value=$_POST["discount_value"];
+$maximum=$_POST["maximum"];
+$start_date=$_POST["start_date"];
+$end_date=$_POST["end_date"];
+
+$sql = "INSERT INTO coupon_list (name,minimum_amount,maximum, start_date, end_date,discount_value,valid)
+	VALUES ('$name','$minimum_amount','$maximum', '$start_date', '$end_date','$discount_value',1)";
 
 // echo $sql;
 // exit;
@@ -52,6 +55,6 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-header("location: users.php?id=$id");
+header("location: coupon-list.php?id=$id");
 
 $conn->close();

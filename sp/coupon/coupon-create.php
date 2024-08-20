@@ -33,27 +33,22 @@
             <a href="coupon-list.php" class="btn btn-outline-secondary btn-lg" title="回優惠券列表">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <a href="" class="btn btn-outline-secondary btn-lg" title="刪除">
-                <i class="fa-regular fa-trash-can"></i>
-            </a>
         </div>
 
         <div class="row mt-3 justify-content-center">
             <div class="col-6 text-end">
                 <form action="doCreateCoupon.php" method="post">
 
-                    <!-- <table class="table table-bordered"> -->
-
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="">
+                            <input type="text" class="form-control" name="name">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="">
+                            <input type="text" class="form-control" name="code">
                         </div>
                         <div class="col-sm-3">
                             <a href="" class="btn btn-outline-secondary">隨機產生代碼</a>
@@ -63,7 +58,7 @@
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">消費金額</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="">
+                            <input type="text" class="form-control" name="minimum_amount">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -75,33 +70,37 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="mb-3 row">
+                        <label for="name" class="col-sm-2 col-form-label">折扣數</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="discount_value">
+                        </div>
+                    </div>
+
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="">
+                            <input type="text" class="form-control" name="maximum">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">起始日期</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="">
+                            <input type="date" class="form-control" name="start_date">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">結束日期</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="">
+                            <input type="date" class="form-control" name="end_date">
                         </div>
                     </div>
+                    <button class="btn btn-outline-secondary" type="submit">送出</button>
 
-
-
-                    
                 </form>
             </div>
-            <div class="text-end">
-                <a href="doUpdateArticle.php" class="btn btn-outline-secondary btn-lg ">儲存</a>
-            </div>
+
         </div>
     </main>
     <!-- Quill-->
