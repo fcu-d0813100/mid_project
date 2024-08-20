@@ -51,7 +51,7 @@ if ($userCount > 0) {
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-primary" href="user.php?id=<?= $row["id"] ?>" title="返回會員列表"><i class="fa-solid fa-left-long"></i></a>
+            <a class="btn btn-outline-secondary" href="user.php?id=<?= $row["id"] ?>" title="返回會員列表"><i class="fa-solid fa-left-long"></i></a>
         </div>
         <div class="row ">
             <div class="col-lg-4">
@@ -138,7 +138,7 @@ if ($userCount > 0) {
                         <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
                         <div class="">
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary"
+                                <button class="btn btn-outline-secondary"
                                     type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
                                 <a class="btn btn-danger" href="#" onclick="return confirmDelete(<?= $row['id'] ?>)">
                                     <i class="fa-regular fa-trash-can"></i>

@@ -18,7 +18,7 @@ if (isset($_GET["search"])) {
     $sql = "SELECT users.* , user_level.name AS level_name 
     FROM users 
     JOIN user_level ON users.level_id = user_level.id 
-    WHERE users.name LIKE '%$search%' AND users.valid=1";
+    WHERE users.name  LIKE '%$search%' AND users.valid=1";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
@@ -38,12 +38,7 @@ if (isset($_GET["search"])) {
             $where_clause = " ORDER BY level_id DESC";
             break;
             // 這邊可以調整升冪跟降冪的名稱
-        case 5:
-            $where_clause = " ORDER BY created_at ASC";
-            break;
-        case 6:
-            $where_clause = " ORDER BY created_at DESC";
-            break;
+
         default:
             header("location: users.php?p=1&order=1");
             break;
@@ -92,7 +87,6 @@ if (isset($_GET["search"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <?php include("css.php") ?>
 </head>
 
 <body>
@@ -104,16 +98,18 @@ if (isset($_GET["search"])) {
         <div class="container">
             <div class="py-2">
                 <?php if (isset($_GET["search"])) : ?>
-                    <a class="btn btn-primary" href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long"></i></a>
+                    <a class="btn btn-outline-secondary" href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long"></i></a>
                 <?php endif; ?>
-                <a class="btn btn-primary" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
+                <a class="btn btn-outline-secondary" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
             </div>
 
+
+            <!-- 搜尋 -->
             <div class="py-2">
                 <form action="">
                     <div class="input-group">
                         <input type="search" class="form-control" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋關鍵字">
-                        <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i>搜尋</button>
+                        <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i>搜尋</button>
                     </div>
                 </form>
             </div>
@@ -121,24 +117,19 @@ if (isset($_GET["search"])) {
                 <div class="py-2 d-flex justify-content-end">
                     <div class="btn-group">
                         <!-- 排序ID(由小到大)由大到小 利用order by -->
-                        <a class="btn btn-primary"
+                        <a class="btn btn-outline-secondary"
                             <?php if ($order == 1) echo "active" ?>
-                            href="users.php?p=<?= $page ?>&order=1">id升冪排序</a>
-                        <a class="btn btn-primary"
+                            href="users.php?p=<?= $page ?>&order=1"><i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                        <a class="btn btn-outline-secondary"
                             <?php if ($order == 2) echo "active" ?>
-                            href="users.php?p=<?= $page ?>&order=2">id降冪降冪</a>
-                        <a class="btn btn-primary"
+                            href="users.php?p=<?= $page ?>&order=2"><i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                        <a class="btn btn-outline-secondary"
                             <?php if ($order == 3) echo "active" ?>
                             href="users.php?p=<?= $page ?>&order=3">依照會員等級排序(低)</a>
-                        <a class="btn btn-primary"
+                        <a class="btn btn-outline-secondary"
                             <?php if ($order == 4) echo "active" ?>
                             href="users.php?p=<?= $page ?>&order=4">依照會員等級排序(高)</a>
-                        <a class="btn btn-primary"
-                            <?php if ($order == 5) echo "active" ?>
-                            href="users.php?p=<?= $page ?>&order=5">依照註冊時間排序(最新)</a>
-                        <a class="btn btn-primary"
-                            <?php if ($order == 6) echo "active" ?>
-                            href="users.php?p=<?= $page ?>&order=6">依照註冊時間排序(最晚)</a>
+
                     </div>
                 </div>
             <?php endif; ?>
@@ -147,7 +138,7 @@ if (isset($_GET["search"])) {
             ?>
                 <p>第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -158,7 +149,7 @@ if (isset($_GET["search"])) {
                             <th>信箱</th>
                             <th>註冊時間</th>
                             <th>會員等級</th>
-                            <th></th>
+                            <th>檢視及編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -173,9 +164,9 @@ if (isset($_GET["search"])) {
                                 <td><?= $user["created_at"] ?></td>
                                 <td><?= $user["level_name"] ?></td>
                                 <td>
-                                    <a class="btn btn-primary" href="user.php?id=<?= $user["id"] ?>">詳細<i class="ms-2 fa-solid fa-eye"></i>
+                                    <a class="btn btn-outline-secondary" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <a class="btn btn-primary" href="user-edit.php?id=<?= $user["id"] ?>">編輯<i class="ms-2 fa-solid fa-pen-to-square"></i></a>
+                                    <a class="btn btn-outline-secondary" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                 </td>
                             </tr>
 
@@ -183,7 +174,7 @@ if (isset($_GET["search"])) {
                     </tbody>
                 </table>
                 <?php if (isset($_GET["p"])) : ?>
-                    <nav aria-label="Page navigation example">
+                    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                         <ul class="pagination">
                             <li class="page-item">
                                 <a class="page-link cursor-pointer" <?php if ($page > 1) : ?> href="users.php?p=<?= $page - 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Previous">
