@@ -1,12 +1,14 @@
 <?php require_once("../../db_connect.php");
 
-
+$sqlAll = "SELECT * FROM teachers WHERE valid=1";
+$resultAll = $conn->query($sqlAll);
+$userCountAll = $resultAll->num_rows;
 
 $page = 1;
 $start_item = 0;
 $per_page = 5;
 
-
+$total_page = ceil($userCountAll / $per_page);
 
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
@@ -31,10 +33,6 @@ if (isset($_GET["search"])) {
             break;
     }
     $sql = "SELECT * FROM teachers WHERE valid=1 $where_clause LIMIT $start_item,$per_page";
-
-    $sqlAll = "SELECT * FROM teachers WHERE valid=1";
-    $resultAll = $conn->query($sqlAll);
-    $userCountAll = $resultAll->num_rows;
 } elseif (isset($_GET["p"]) && isset($_GET["nation"])) {
     $nation = $_GET["nation"];
     $page = $_GET["p"];
@@ -56,12 +54,8 @@ if (isset($_GET["search"])) {
 } else {
     header("location:teachers.php?p=1&order=1");
     // $sql = "SELECT * FROM teachers WHERE valid=1 LIMIT $start_item,$per_page ";
-    $sqlAll = "SELECT * FROM teachers WHERE valid=1";
-    $resultAll = $conn->query($sqlAll);
-    $userCountAll = $resultAll->num_rows;
 }
 
-$total_page = ceil($userCountAll / $per_page);
 
 // $sql = "SELECT * FROM teachers";
 $result = $conn->query($sql);
