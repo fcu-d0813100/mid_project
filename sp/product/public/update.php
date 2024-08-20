@@ -44,7 +44,10 @@
 
             <label for="main_category_id">Main Category ID:</label>
             <input type="number" id="main_category_id" name="main_category_id" value="<?php echo $product['main_category_id']; ?>" required>
-
+           
+            <label for="sub_category_id">品項:</label>
+            <input type="select" id="sub_category_id" name="sub_category_id" value="<?php echo $product['sub_category_id']; ?>" required>
+            
             <label for="sub_category_id">Sub Category ID:</label>
             <input type="number" id="sub_category_id" name="sub_category_id" value="<?php echo $product['sub_category_id']; ?>" required>
 
