@@ -22,7 +22,7 @@
 }
 .align-middle > .ratio-4x3 {
   width: 200px;
-  background-color: rgb(205, 226, 255);
+  /* background-color: rgb(205, 226, 255); */
 }
 
 .activePic {

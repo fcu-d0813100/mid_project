@@ -36,7 +36,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>商品管理 </a>
         <ul class="collapse list-unstyled " id="productDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../product/product_list.php">商品管理</a></li>
         </ul>
       </li>
       <li class="sidebar-item"><a class="sidebar-link" href="#categoryDropdown" data-bs-toggle="collapse"

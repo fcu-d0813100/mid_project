@@ -1,3 +1,4 @@
+/* #region product_list start */
 .price-pagination-form {
   display: flex;
   justify-content: space-between;
@@ -48,3 +49,4 @@
   cursor: not-allowed; /* 禁用狀態的鼠標樣式 */
   border-color: #f9f9f9; /* 禁用狀態的邊框顏色 */
 }
+/* #region product_list  */
