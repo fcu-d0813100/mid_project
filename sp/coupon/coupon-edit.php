@@ -1,3 +1,29 @@
+<?php
+if (!isset($_GET["id"])) {
+    echo "請正確帶入 get id 變數";
+    exit;
+}
+
+$id = $_GET["id"];
+
+require_once("../../db_connect.php");
+
+$sql = "SELECT * FROM coupon_list
+WHERE id='$id'";
+$result = $conn->query($sql);
+$couponCount = $result->num_rows;
+$row = $result->fetch_assoc();
+
+if ($couponCount > 0) {
+    $titile = $row["name"];
+} else {
+    $titile = "使用者不存在";
+}
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -29,73 +55,88 @@
         </div>
         <hr>
         <!-- table-->
+
         <div class="py-2 d-flex justify-content-end gap-2">
             <a href="coupon-list.php" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <a href="" class="btn btn-outline-secondary btn-lg">
-                <i class="fa-regular fa-trash-can"></i>
-            </a>
+
         </div>
 
         <div class="row mt-3 justify-content-center">
             <div class="col-6">
-                <form action="doUpdateCoupon.php" method="post">
-                    
-                <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="">
+                <?php if ($couponCount > 0) : ?>
+                    <form action="doUpdateCoupon.php" method="post">
+                        <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="name" value="<?= $row["name"] ?>">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
+                            <input type="hidden" class="form-control" name="code" value="<?= $row["code"] ?>">
+                            <div class="col-sm-7">
+                                <?= $row["code"] ?>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="" class="btn btn-outline-secondary">隨機產生代碼</a>
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            <a href="" class="btn btn-outline-secondary">隨機產生代碼</a>
-                        </div>
-                    </div>
 
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">消費金額</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">消費金額</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="minimum_amount" value="<?= $row["minimum_amount"] ?>">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="1">金額</option>
-                                <option value="2">百分比%</option>
-                            </select>
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="1">金額</option>
+                                    <option value="2">百分比%</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">折扣數</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="discount_value" value="<?= $row["discount_value"] ?>">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">起始日期</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" id="">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="maximum" value="<?= $row["maximum"] ?>">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">結束日期</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" id="">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">起始日期</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="start_date" value="<?= $row["start_date"] ?>">
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-2 col-form-label">結束日期</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="end_date" value="<?= $row["end_date"] ?>">
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
+                            <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary ">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </form>
+
+                <?php else : ?>
+                    優惠券不存在
+                <?php endif; ?>
             </div>
-            <div class="text-end">
-                <a href="doUpdateArticle.php" class="btn btn-outline-secondary btn-lg ">儲存</a>
-            </div>
+
         </div>
     </main>
     <!-- Quill-->

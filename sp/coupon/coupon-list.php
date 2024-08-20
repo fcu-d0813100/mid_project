@@ -1,3 +1,15 @@
+<?php
+// 使用mysql
+require_once("../../db_connect.php");
+
+$sql = "SELECT * FROM coupon_list 
+WHERE valid=1";
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -38,16 +50,6 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="coupon-list.php">全部 </a>
         </li>
-
-        <!-- <?php foreach ($rowsCategory as $categoryItem) : ?>
-          <li class="nav-item">
-            <a class="nav-link <?php if (isset($_GET["category"]) && $_GET["category"] == $categoryItem["id"]) echo "active" ?> " href="product-list.php?category=<?= $categoryItem["id"] ?>"><?= $categoryItem["name"] ?></a>
-          </li>
-        <?php endforeach; ?> -->
-
-
-
-
       </ul>
     </div>
 
@@ -71,40 +73,38 @@
 
       </thead>
       <tbody>
-        <tr>
-          <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"><!-- 鎖死disabled -->
-            </div>
-          </td>
-          <!-- <?php
-                $subtotal = $row["price"] * $row["amount"];
-                $total += $subtotal
-                ?> -->
-          <!-- <td class="text-start"><?= number_format($subtotal) ?></td> -->
-          <td class=" ">
-            <a href="coupon.php" class="btn btn-outline-secondary btn-md">
-              <i class="fa-regular fa-eye"></i>
-            </a>
-          </td>
-          <td>
-            <a href="coupon-edit.php" class="btn btn-outline-secondary btn-md">
-              <i class="fa-regular fa-pen-to-square"></i>
-            </a>
-          </td>
-          <td>
-            <a href="" class="btn btn-outline-secondary btn-md">
-              <i class="fa-regular fa-trash-can"></i>
-            </a>
-          </td>
-        </tr>
+        <?php foreach ($rows as $row) : ?>
 
+          <tr>
+            <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+            <td><?= $row["name"] ?></td>
+            <td><?= $row["code"] ?></td>
+            <td><?= $row["start_date"] ?>~<?= $row["end_date"] ?></td>
+            <td><?= $row["status_id"] ?></td>
+            <td><?= $row["maximum"] ?></td>
+            <td>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"><!-- 鎖死disabled -->
+              </div>
+            </td>
+
+            <td class=" ">
+              <a href="coupon.php" class="btn btn-outline-secondary btn-md">
+                <i class="fa-regular fa-eye"></i>
+              </a>
+            </td>
+            <td>
+              <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </a>
+            </td>
+            <td>
+              <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary ">
+                <i class="fa-regular fa-trash-can"></i>
+              </a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
 
     </table>
