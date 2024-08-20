@@ -1,14 +1,12 @@
 <?php require_once("../../db_connect.php");
 
-$sqlAll = "SELECT * FROM teachers WHERE valid=1";
-$resultAll = $conn->query($sqlAll);
-$userCountAll = $resultAll->num_rows;
+
 
 $page = 1;
 $start_item = 0;
 $per_page = 5;
 
-$total_page = ceil($userCountAll / $per_page);
+
 
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
@@ -33,6 +31,10 @@ if (isset($_GET["search"])) {
             break;
     }
     $sql = "SELECT * FROM teachers WHERE valid=1 $where_clause LIMIT $start_item,$per_page";
+
+    $sqlAll = "SELECT * FROM teachers WHERE valid=1";
+    $resultAll = $conn->query($sqlAll);
+    $userCountAll = $resultAll->num_rows;
 } elseif (isset($_GET["p"]) && isset($_GET["nation"])) {
     $nation = $_GET["nation"];
     $page = $_GET["p"];
@@ -49,16 +51,21 @@ if (isset($_GET["search"])) {
             header("location:teachers.php?p=1&order=1");
             break;
     }
+    $resultAll = $conn->query($sql);
+    $userCountAll = $resultAll->num_rows;
 } else {
     header("location:teachers.php?p=1&order=1");
     // $sql = "SELECT * FROM teachers WHERE valid=1 LIMIT $start_item,$per_page ";
+    $sqlAll = "SELECT * FROM teachers WHERE valid=1";
+    $resultAll = $conn->query($sqlAll);
+    $userCountAll = $resultAll->num_rows;
 }
+
+$total_page = ceil($userCountAll / $per_page);
 
 // $sql = "SELECT * FROM teachers";
 $result = $conn->query($sql);
 
-// $sqlnation_taiwan = "SELECT * FROM teachers WHERE nation='臺灣'";
-// $sqlnation_other = "SELECT * FROM teachers WHERE nation='臺灣'";
 
 if (isset($_GET["search"])) {
     $userCount = $result->num_rows;
@@ -90,11 +97,10 @@ if (isset($_GET["search"])) {
                 <div class="col-10">
                     <div>
                         <h1 class="h2 mt-5 pt-5 mb-3">師資列表</h1>
-
                         <div class="py-3">
                             <form action="">
                                 <div class="input-group">
-                                    <input type="search" class="form-control focus-ring focus-ring-secondary" name=" search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋教師">
+                                    <input type="search" class="form-control focus-ring focus-ring-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋教師">
                                     <button class="btn btn-dark" type="submit">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </button>
@@ -202,12 +208,12 @@ if (isset($_GET["search"])) {
                                                 echo "active";
                                         ?>
                                         "><a class="page-link px-3" href="teachers.php?p=<?= $i ?>
-                <?php if (isset($_GET['order'])): ?>
-                    &order=<?= $_GET['order'] ?>
-                <?php endif; ?>
-                <?php if (isset($_GET['nation'])): ?>
-                    &nation=<?= $_GET['nation'] ?>
-                <?php endif; ?>">
+                                        <?php if (isset($_GET['order'])): ?>
+                                            &order=<?= $order ?>
+                                        <?php endif; ?>
+                                        <?php if (isset($_GET['nation'])): ?>
+                                            &nation=<?= $nation ?>
+                                        <?php endif; ?>">
                                                     <?= $i ?>
                                                 </a></li>
                                         <?php endfor; ?>
@@ -216,7 +222,7 @@ if (isset($_GET["search"])) {
                             <?php endif; ?>
 
                             <?php if ($userCount > 0) : ?>
-                                <p class="m-0 text-end">共有 <?= $userCount ?> 位老師</p>
+                                <p class=" m-0 text-end">共有 <?= $userCount ?> 位老師</p>
                             <?php else : ?>
                                 目前沒有使用者
                             <?php endif; ?>
