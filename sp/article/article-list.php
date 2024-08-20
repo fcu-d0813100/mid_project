@@ -118,13 +118,12 @@ $articleCount = $articleCountAll;
           </div>
 
         </div>
-        <!-- add button -->
 
       </div>
     </div>
     <hr>
     <!-- table-->
-    <div class="table-responsive small">
+    <div class="table-responsive large">
 
       <div class="d-flex justify-content-between">
         <?php if ($articleCount > 0):
@@ -200,8 +199,8 @@ $articleCount = $articleCountAll;
     <?php endif; ?>
     </div>
     <?php if (isset($_GET["p"])): ?>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination d-flex justify-content-end">
           <?php for ($i = 1; $i <= $total_page; $i++): ?>
             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
               <a class="page-link" href="article-list.php?p=<?= $i ?>&order=<?= $order ?>">
