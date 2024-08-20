@@ -77,10 +77,7 @@ if ($userCount > 0) {
                                         value="<?= $row["name"] ?>">
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <th>性別</th>
-                                <td><?= ($row["gender"] == 1) ? '男' : '女' ?></td>
-                            </tr> -->
+
                             <tr>
                                 <th>性別</th>
                                 <td>
@@ -92,15 +89,6 @@ if ($userCount > 0) {
                                     </div>
                                 </td>
                             </tr>
-
-
-
-                            <!-- <tr>
-                                <th>會員等級</th>
-
-                                <td><?= $row["level_name"] ?></td>
-
-                            </tr> -->
 
                             <tr>
                                 <th>會員等級</th>
@@ -146,13 +134,16 @@ if ($userCount > 0) {
                             </tr>
 
                         </table>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-primary"
-                                type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
-                            <a class="btn btn-danger" href="#" onclick="return confirmDelete(<?= $row['id'] ?>)">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </div>
+                        <h2>會員照片</h2>
+                        <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
+                        <div class="">
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary"
+                                    type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
+                                <a class="btn btn-danger" href="#" onclick="return confirmDelete(<?= $row['id'] ?>)">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </div>
                     </form>
                 <?php else : ?>
                     使用者不存在
