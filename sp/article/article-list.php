@@ -118,7 +118,7 @@ $articleCount = $articleCountAll;
           </div>
 
         </div>
-        
+
       </div>
     </div>
     <hr>
@@ -176,7 +176,7 @@ $articleCount = $articleCountAll;
               <td><?= $row["type_name"] ?></td>
               <td class="article-title"><?= $row["title"] ?></td>
 
-              <td class="ratio ratio-4x3 activePic "><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
+              <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
 
               <td><?= $row["launched_date"] ?></td>
               <td class="gap-3">

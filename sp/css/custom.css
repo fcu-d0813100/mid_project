@@ -17,9 +17,10 @@
 .input-group {
   width: 300px;
 }
-.search-form{
+.search-form {
   padding-left: 11.75rem;
 }
+
 .align-middle>.ratio-4x3 {
   width: 200px; 
   /* background-color:#5a5a5a; */

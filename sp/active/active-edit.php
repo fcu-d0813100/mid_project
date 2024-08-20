@@ -1,3 +1,18 @@
+<?php
+if (!isset($_GET["id"])) {
+    echo "請輸入正確ID";
+    exit;
+}
+$id = $_GET["id"];
+require_once("../../db_connect.php");
+
+$sql = "SELECT * FROM active WHERE id = '$id' AND  valid = 1";
+$result = $conn->query($sql);
+$activeCount = $result->num_rows;
+$row = $result->fetch_assoc();
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -26,7 +41,7 @@
 
         <main class="main-content">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-secondary">活動列表 /<span class="text-sm">活動編輯</span></p>
+                <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-dark">活動列表 </a> /<span class="text-sm">活動編輯</span></p>
             </div>
             <hr>
             <!-- table-->
@@ -34,7 +49,7 @@
                 <a href="active.php" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-lg">
+                <a href="doDeleteActive.php?id=<?= $id ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-trash-can"></i>
                 </a>
             </div>
@@ -45,15 +60,29 @@
                     <form action="doUpdateActive.php" method="post">
                         <table class="table table-bordered">
                             <tr>
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
                                 <th>id</th>
-                                <td>12</td>
+                                <td><?= $row["id"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>品牌</th>
+                                <td>
+                                    <label for="dropdown">修改活動品牌：</label>
+                                    <select id="dropdown" name="brand">
+                                        <!-- 之後關聯式資料表再改回數字 -->
+                                        <option value="YSL">YSL</option>
+                                        <option value="Bobbi Brown">Bobbi Brown</option>
+                                        <option value="Estee Lauder">Estee Lauder</option>
+                                        <option value="NARS">NARS</option>
+                                        <option value="Lancome">Lancome</option>
+                                    </select>
                             </tr>
                             <tr>
                                 <th>圖片</th>
                                 <td>
                                     <div class="mb-2">
                                         <label for="" class="mb-2">修改活動圖片: </label>
-                                        <input type="file" name="pic" id="" class="form-control">
+                                        <input type="file" name="image" id="" class="form-control">
                                     </div>
                                 </td>
                             </tr>
@@ -62,7 +91,7 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="option1">修改活動名稱:</label>
-                                        <input type="text" id="" class="form-control">
+                                        <input type="text" id="" class="form-control" name="name">
                                     </div>
                                 </td>
                             </tr>
@@ -70,8 +99,11 @@
                                 <th>活動日期</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="option1">修改活動日期:</label>
-                                        <input type="date" id="" class="form-control">
+                                        <label for="option1">修改活動日期時間:</label>
+                                        <p class="mb-0 mt-2">開始:</p>
+                                        <input type="datetime-local" id="" class="form-control" name="start_at">
+                                        <p class="mb-0 mt-2">結束:</p>
+                                        <input type="datetime-local" id="" class="form-control" name="end_at">
                                     </div>
                                 </td>
                             </tr>
@@ -80,11 +112,11 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="option1">修改活動地點:</label>
-                                        <input type="address" id="" class="form-control">
+                                        <input type="address" id="" class="form-control" name="address">
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>活動狀態</th>
                                 <td>
                                     <form>
@@ -100,13 +132,13 @@
                                         <input type="radio" id="option3" name="choices" value="4">
                                     </form>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th>活動報名人數</th>
                                 <td>
                                     <div class="mb-2">
                                         <label for="quantity">修改數量:</label>
-                                        <input type="number" id="quantity" name="quantity" class="form-control">
+                                        <input type="number" id="quantity" name="maxAPP" class="form-control">
                                     </div>
                                 </td>
                             </tr>
@@ -115,13 +147,13 @@
                                 <td>
                                     <div class="mb-2">
                                         <label for="option1">修改說明</label>
-                                        <input type="text" id="" class="form-control">
+                                        <input type="text" id="" class="form-control" name="description">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="text-end">
-                            <a href="doUpdateActive.php" class="btn btn-outline-secondary btn-lg">修改</a>
+                            <button class="btn btn-outline-secondary btn-lg" type="submit">修改</button>
                         </div>
                     </form>
                 </div>
