@@ -5,17 +5,6 @@ $sqlAll = "SELECT * FROM users WHERE valid=1";
 $resultAll = $conn->query($sqlAll);
 $userCountAll = $resultAll->num_rows;
 
-
-// 
-// $sqlUserLevel = "SELECT users.*, user_level.name AS level_name
-//         FROM users
-//         JOIN user_level ON users.level_id = user_level.id
-//         WHERE valid = 1
-//         LIMIT $start_item, $per_page";
-
-// $userResult = $conn->query($sqlUserLevel);
-// $userRows = $userResult->fetch_all(MYSQLI_ASSOC); // 取得所有資料列
-
 $page = 1;
 $start_item = 0;
 $per_page = 10;
@@ -26,7 +15,10 @@ $total_page = ceil($userCountAll / $per_page);
 
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
-    $sql = "SELECT * FROM users WHERE name LIKE '%$search%' AND valid=1";
+    $sql = "SELECT users.* , user_level.name AS level_name 
+    FROM users 
+    JOIN user_level ON users.level_id = user_level.id 
+    WHERE users.name LIKE '%$search%' AND users.valid=1";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
@@ -57,7 +49,7 @@ if (isset($_GET["search"])) {
             break;
     }
 
-    // 連接level_name
+    // JOIN level_name
     $sql = "SELECT users.* , user_level.name AS level_name FROM users
     JOIN user_level ON users.level_id = user_level.id
     WHERE valid=1 $where_clause LIMIT $start_item, $per_page";
@@ -71,15 +63,14 @@ if (isset($_GET["search"])) {
 
 $result = $conn->query($sql);
 
+
 if (isset($_GET["search"])) {
     $userCount = $result->num_rows;
 } else {
     $userCount = $userCountAll;
 }
-
-
-
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -200,12 +191,10 @@ if (isset($_GET["search"])) {
                                 </a>
                             </li>
                             <?php for ($i = 1; $i <= $total_page; $i++) : ?>
-                                <li class="page-item <?php
-                                                        if ($page == $i) echo "active";
-                                                        ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
                             <?php endfor; ?>
                             <li class="page-item">
-                                <a class="page-link" href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" aria-label="Next">
+                                <a class="page-link" <?php if ($page < $total_page) : ?> href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -219,28 +208,6 @@ if (isset($_GET["search"])) {
     </main>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
-    <script>
-        const sortButtons = document.querySelectorAll('.sort');
-
-
-        sortButtons.forEach(button => {
-            button.addEventListener('click', () => {
-
-                const icon = button.querySelector('i');
-
-
-                if (icon.classList.contains('fa-sort-down')) {
-
-                    icon.classList.remove('fa-sort-down');
-                    icon.classList.add('fa-sort-up');
-                } else {
-
-                    icon.classList.remove('fa-sort-up');
-                    icon.classList.add('fa-sort-down');
-                }
-            });
-        });
-    </script>
 </body>
 <?php $conn->close(); ?>
 

@@ -114,7 +114,10 @@ if ($userCount > 0) {
                                 <?= $row["created_at"] ?>
                             </td>
                         </tr>
+
                     </table>
+                    <h2>會員照片</h2>
+                    <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
                     <div class="">
                         <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></a>
                     </div>
