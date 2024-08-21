@@ -70,43 +70,44 @@ $orderCountAll = $resulorderAll->num_rows;
         <main class="main-content">
             <div class="pt-5 px-5 mx-5">
                 <div class="d-flex justify-content-start align-items-center">
-                   
+
                     <p class="m-0 d-inline text-lg text-secondary">訂單明細 /<span class="text-sm">#<?= $_GET["id"] ?></span></p>
                 </div>
-
-                <!-- table-->
-                <div class="py-2 d-flex justify-content-end gap-2">
-                    <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-solid fa-arrow-left"></i>
-                        取消
-                    </a>
-                    <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary justify-content-end"> <i class="fa-solid fa-floppy-disk"></i>
-                        儲存
-                    </a>
-                </div>
-
-                <div class="d-flex align-items-center justify-content-between p-3 border mb-3 " action="doUpdateOrder.php" method="post">
-                    <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號#<?= $_GET["id"] ?></span></p>
-                    <div class="d-flex align-items-center justify-content-between col-6">
-                        <div>
-                            <p>付款狀態</p>
-                            <select class="form-select" aria-label="Default select example" name="pay">
-                                <option selected><?= $row["pay_name"] ?></option>
-                                <option value="1">未付款</option>
-                                <option value="2">已付款</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>訂單狀態</p>
-                            <select class="form-select" aria-label="Default select example" name="status">
-                                <option selected><?= $row["status_name"] ?></option>
-                                <option value="1">處理中</option>
-                                <option value="2">已完成</option>
-                            </select>
-                        </div>
-                        <div></div>
+                <form action="doUpdateOrder.php" method="post">
+                    <!-- table-->
+                    <div class="py-2 d-flex justify-content-end gap-2">
+                        <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-solid fa-arrow-left"></i>
+                            取消
+                        </a>
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa-solid fa-floppy-disk"></i> 儲存
+                        </button>
+                        <!-- <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary justify-content-end" type="submit"> <i class="fa-solid fa-floppy-disk"></i>
+                            儲存
+                        </a> -->
                     </div>
-                </div>
 
+                    <div class="d-flex align-items-center justify-content-between p-3 border mb-3 ">
+                        <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號#<?= $_GET["id"] ?></span></p>
+                        <div class="d-flex align-items-center justify-content-between col-6">
+                            <div>
+                                <p>付款狀態</p>
+                                <select class="form-select" aria-label="Default select example" name="pay">
+                                    <option value="1" <?= $row["pay_id"] == 1 ? 'selected' : '' ?>>未付款</option>
+                                    <option value="2" <?= $row["pay_id"] == 2 ? 'selected' : '' ?>>已付款</option>
+                                </select>
+                            </div>
+                            <div>
+                                <p>訂單狀態</p>
+                                <select class="form-select" aria-label="Default select example" name="status">
+                                    <option value="1" <?= $row["status_id"] == 1 ? 'selected' : '' ?>>處理中</option>
+                                    <option value="2" <?= $row["status_id"] == 2 ? 'selected' : '' ?>>已完成</option>
+                                </select>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                </form>
 
                 <table class="table "> <!-- table-bordered -->
                     <thead class="table-light">
@@ -128,7 +129,7 @@ $orderCountAll = $resulorderAll->num_rows;
                                 <td><?= $row["product_name"] ?></td>
                                 <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>
-                                <td><?= $row["price"] ?></td>
+                                <td><?= number_format($row["price"]) ?></td>
                                 <?php
                                 $subtotal = $row["price"] * $row["amount"];
                                 $total += $subtotal

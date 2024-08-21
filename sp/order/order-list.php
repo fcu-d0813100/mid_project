@@ -244,7 +244,7 @@ $result = $conn->query($sql);
                         $total = 0;
                         foreach ($rows as $order) : ?>
                             <tr class="">
-                                <td><?= $order["id"] ?></td>
+                                <td><?= $order["number"] ?></td>
                                 <td><?= $order["order_date"] ?></td>
                                 <td><?= $order["pay_name"] ?></td>
                                 <td><?= $order["status_name"] ?></td>

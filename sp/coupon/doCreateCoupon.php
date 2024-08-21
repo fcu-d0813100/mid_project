@@ -36,6 +36,7 @@ if (!isset($_POST["name"])) {
 // }
 
 $id=$_POST["id"];
+$type_id = $_POST["type_id"];
 $name=$_POST["name"];
 $minimum_amount=$_POST["minimum_amount"];
 $discount_value=$_POST["discount_value"];
@@ -44,8 +45,8 @@ $maximum=$_POST["maximum"];
 $start_date=$_POST["start_date"];
 $end_date=$_POST["end_date"];
 
-$sql = "INSERT INTO coupon_list (name,minimum_amount,maximum, start_date, end_date,discount_value,code,valid)
-	VALUES ('$name','$minimum_amount','$maximum', '$start_date', '$end_date','$discount_value','$code',1)";
+$sql = "INSERT INTO coupon_list (name,minimum_amount,maximum, start_date, end_date,discount_value,code,valid,type_id)
+	VALUES ('$name','$minimum_amount','$maximum', '$start_date', '$end_date','$discount_value','$code',1,'$type_id')";
 
 // echo $sql;
 // exit;
