@@ -14,6 +14,7 @@ $result = $conn->query($sql);
 $userCount = $result->num_rows;
 $row = $result->fetch_assoc();
 
+
 if ($userCount > 0) {
     $title = $row["name"];
 } else {
@@ -56,9 +57,11 @@ if ($userCount > 0) {
                     <div class="bg-light-subtle bg-opacity-75 shadow-sm rounded mt-3 pe-5 d-flex justify-content-between align-items-center">
                         <?php if ($userCount > 0) : ?>
                             <div class="col-5">
+
                                 <div class="ratio ratio-1x1 ">
-                                    <img class="rounded" src="../../images/teacher/T_1.jpg" alt="">
+                                    <img class="rounded" src="./upload/<?= $row["main_picture"] ?>" alt="">
                                 </div>
+
                             </div>
                             <div class="col-6">
                                 <table class="align-middle w-100">

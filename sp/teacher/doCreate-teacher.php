@@ -33,6 +33,9 @@ if ($password != $repassword) {
     exit;
 }
 
+// var_dump($_FILES["pic"]);
+// exit;
+
 $password = md5($password);
 
 $name = $_POST["name"];
@@ -42,17 +45,44 @@ $years = $_POST["years"];
 $email = $_POST["email"];
 $now = date('Y-m-d H:i:s');
 
-$sql = "INSERT INTO teachers (account,password, name, email , gender,years, nation,slogan,about,experience , created_at,valid )
-	VALUES ('$account','$password','$name','$email','$gender', '$years','$nation','' ,'','' ,'$now',1)";
+// $pic = $_FILES["pic"];
 
-// echo $sql;
+$sql = "INSERT INTO teachers (account,password, name, email , gender,years, nation,slogan,about,experience, created_at,valid )
+	VALUES ('$account','$password','$name','$email','$gender', '$years','$nation','' ,'','','$now',1)";
+
 
 if ($conn->query($sql) === TRUE) {
-    echo "新資料輸入成功";
+    $last_id = $conn->insert_id;
+    echo "新資料輸入成功, id 為 $last_id";
+
+    // 插入圖片
+    if ($_FILES["pic"]["error"] == 0) {
+        $filename = $_FILES["pic"]["name"];
+        $fileInfo = pathinfo($filename);
+        $extension = $fileInfo["extension"];
+        $newFilename = time() . ".$extension";
+
+        if (move_uploaded_file($_FILES["pic"]["tmp_name"], "./upload/" . $newFilename)) {
+            $sql = "UPDATE teachers SET main_picture = '$newFilename' WHERE id = $last_id";
+            if ($conn->query($sql) === TRUE) {
+                header("Location: teachers.php"); // 跳轉到上傳成功頁面
+                exit;
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+
+            echo "圖片上傳成功";
+        } else {
+            echo "圖片上傳失敗";
+        }
+    }
+
+    header("Location:teachers.php");
+    exit;
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-header("location:teachers.php");
+
 
 $conn->close();

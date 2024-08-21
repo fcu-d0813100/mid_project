@@ -20,7 +20,7 @@
     <main class="main-content px-3 pb-3 pt-5">
         <div class="container ">
             <div class="row d-flex justify-content-center align-items-center ">
-                <div class="col-9">
+                <div class="col-10">
                     <div>
                         <h1 class="h2 mt-5 pt-5 mb-2">新增教師</h1>
                         <div class="py-2">
@@ -29,14 +29,14 @@
                             </a>
                         </div>
 
-                        <form action="doCreate-teacher.php" method="post" class="my-4">
+                        <form action="doCreate-teacher.php" method="post" class="my-3" enctype="multipart/form-data">
 
-                            <div class="mb-2">
+                            <div class=" mb-2">
                                 <label class="form-label" for="account"><span class="text-danger">* </span> 請輸入帳號</label>
                                 <input type="text" class="form-control" name="account" required>
                             </div>
 
-                            <div class="mt-3 mb-2 d-flex row">
+                            <div class=" mb-2 d-flex row">
                                 <div class="col">
                                     <label class="form-label" for="password"><span class="text-danger">* </span> 請輸入密碼</label>
                                     <input type="text" class="form-control" name="password" required>
@@ -48,7 +48,7 @@
 
                             </div>
 
-                            <div class=" mb-2 d-flex row mt-3">
+                            <div class=" mb-2 d-flex row ">
                                 <div class="col-4">
                                     <label class="form-label " for="name">姓名</label>
                                     <input type="text" class="form-control" name="name">
@@ -77,15 +77,32 @@
                                 </div>
                             </div>
 
-                            <div class="mt-3 mb-2">
+                            <div class=" mb-2">
                                 <label class="form-label" for="email">Email</label>
                                 <input type="email" class="form-control" name="email">
                             </div>
 
-                            <div class="text-center">
-                                <button class="btn btn-dark px-5 my-3" type="submit">
-                                    送出
-                                </button>
+
+                            <div class="">
+
+                                <div class=" mb-2 ">
+                                    <label class="form-label" for="">選取頭像圖片</label>
+                                    <input type="file" name="pic" class="form-control" required>
+                                </div>
+
+                            </div>
+                            <div class="mt-3 d-flex justify-content-between align-items-end">
+
+                                <div class="w-25">
+                                    <div class="ratio ratio-1x1 w-50 ">
+                                        <img class="object-fit-cover" src="./upload/<?= $row["name"] ?>" alt="">
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <button class=" btn btn-dark px-5 " type="submit">
+                                        送出
+                                    </button>
+                                </div>
                             </div>
 
 
