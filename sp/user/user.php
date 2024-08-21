@@ -56,7 +56,7 @@ if ($userCount > 0) {
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-primary" href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long"></i></a>
+            <a class="btn btn-outline-secondary" href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long"></i></a>
         </div>
         <div class="row ">
             <div class="col-lg-4">
@@ -119,7 +119,7 @@ if ($userCount > 0) {
                     <h2>會員照片</h2>
                     <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
                     <div class="">
-                        <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></a>
+                        <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary"><i class="fa-solid fa-user-pen"></i></a>
                     </div>
 
                     <!-- <h2 class="h3 mt-3">收藏商品</h2> -->
