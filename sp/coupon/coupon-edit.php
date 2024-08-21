@@ -64,7 +64,9 @@ if ($couponCount > 0) {
                     <?php if ($couponCount > 0) : ?>
 
                         <form action="doUpdateCoupon.php" method="post">
-                            <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                            <div>
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                            </div>
                             <div class="mb-3 row">
                                 <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
                                 <div class="col-sm-10">
@@ -88,9 +90,12 @@ if ($couponCount > 0) {
                             <div class="mb-3 row">
                                 <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="discount_type" aria-label="Default select example">
-                                        <option value="1" <?= $row["discount_value"] == "1" ? "selected" : "" ?>>金額</option>
-                                        <option value="2" <?= $row["discount_value"] == "2" ? "selected" : "" ?>>百分比%</option>
+                                    <select class="form-select" name="type_id" aria-label="Default select example">
+                                    
+                                        <option value="1" <?= $row["type_id"] == "1" ? "selected" : "" ?>>百分比%
+                                        </option>
+                                        <option value="2" <?= $row["type_id"] == "2" ? "selected" : "" ?>>金額
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -119,15 +124,16 @@ if ($couponCount > 0) {
                                 </div>
                             </div>
                             <div class="text-end">
-                                <a href="coupon-list.php" class="btn btn-outline-secondary" type="submit">
+                                <button  class="btn btn-outline-secondary" type="submit">
                                     <i class="fa-solid fa-floppy-disk"></i>
-                                </a>
+                                </button>
+
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hid    den="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content ">
                                             <div class="modal-body">
@@ -144,14 +150,12 @@ if ($couponCount > 0) {
                                     取消
                                 </a>
                             </div>
-
                         </form>
 
                     <?php else : ?>
                         優惠券不存在
                     <?php endif; ?>
                 </div>
-
             </div>
         </div>
     </main>

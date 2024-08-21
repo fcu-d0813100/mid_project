@@ -146,17 +146,17 @@ $result = $conn->query($sql);
             <div class="col-12 mt-3">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php">全部 <?= $orderCountAll ?></a>
+                        <a class="nav-link <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
                         <!-- ?p=<?= $_GET["p"] ?> -->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?pay=1">未付款 <?= $payCountAll  ?></a>
+                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
                         <!-- p=<?= $_GET["p"] ?>& -->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?status=1">訂單處理中 <?= $statusCountAll ?></a>
+                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
                         <!-- p=<?= $_GET["p"] ?>& -->
                     </li>
 
@@ -244,7 +244,7 @@ $result = $conn->query($sql);
                         $total = 0;
                         foreach ($rows as $order) : ?>
                             <tr class="">
-                                <td><?= $order["id"] ?></td>
+                                <td><?= $order["number"] ?></td>
                                 <td><?= $order["order_date"] ?></td>
                                 <td><?= $order["pay_name"] ?></td>
                                 <td><?= $order["status_name"] ?></td>
@@ -285,11 +285,32 @@ $result = $conn->query($sql);
 
                 <nav aria-label="Page navigation example ">
                     <ul class="pagination justify-content-center mt-5">
-                        <?php for ($i = 1; $i <= $total_Page; $i++) : ?>
-                            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                <a class="page-link " href="order-list.php?p=<?= $i ?>"><?= $i ?></a>
-                            </li>
-                        <?php endfor; ?>
+                        <?php if (isset($_GET["p"]) && isset($_GET["pay"])): ?>
+                            <?php $payPage = ceil($payCountAll / $per_page);
+                            for ($i = 1; $i <= $payPage; $i++) : ?>
+                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                    <a class="page-link " href="order-list.php?p=<?= $i ?>&pay=1"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                        <?php endif; ?>
+                        <?php if (isset($_GET["p"]) && isset($_GET["status"])): ?>
+                            <?php $staPage = ceil($statusCountAll / $per_page);
+                            for ($i = 1; $i <= $staPage; $i++) : ?>
+                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                    <a class="page-link " href="order-list.php?p=<?= $i ?>&status=1"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                        <?php endif; ?>
+                        <?php if (isset($_GET["p"]) && !isset($_GET["status"]) && !isset($_GET["pay"])): ?>
+                            <?php $orderPage = ceil($orderCountAll / $per_page);
+                            for ($i = 1; $i <= $orderPage; $i++) : ?>
+                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                    <a class="page-link " href="order-list.php?p=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                        <?php endif; ?>
+
+
                     </ul>
                 </nav>
             <?php else : ?>
