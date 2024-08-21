@@ -6,7 +6,7 @@ if (!isset($_POST["account"])) {
     exit;
 }
 
-require_once("../db_connect.php");
+require_once("../../db_connect.php");
 
 $account = $_POST["account"];
 $password = $_POST["password"];
@@ -48,7 +48,7 @@ if ($userCount != 0) {
         "phone" => $user["phone"]
     ];
 
-    header("location:dashboard.php");
+    header("location:users.php");
     exit;
 } else {
     // echo "帳號或密碼錯誤";

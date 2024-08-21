@@ -81,6 +81,12 @@ $articleCount = $articleCountAll;
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+  />
   <!-- theme stylesheet-->
   <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
   <!-- Custom stylesheet - for your changes-->
@@ -176,8 +182,9 @@ $articleCount = $articleCountAll;
                 <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
                   <i class="fa-regular fa-pen-to-square"></i>
                 </a>
-                <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
-                  <i class="fa-regular fa-trash-can"></i>
+                <a href="javascript:void(0);" class="btn btn-outline-secondary btn-md"
+                    onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
+                    <i class="fa-regular fa-trash-can"></i>
                 </a>
               </td>
             </tr>
@@ -201,22 +208,9 @@ $articleCount = $articleCountAll;
       </nav>
     <?php endif; ?>
   </main>
-
-
   </div>
-
-
-  <script>
-    function sortTable(orderType) {
-      var page = <?= $page ?>;
-      var url = "article-list.php?p=" + page + "&order=" + orderType;
-      window.location.href = url;
-    }
-  </script>
-
-
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+            
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
