@@ -71,7 +71,7 @@ $conn->close();
     <?php include("../../nav1.php") ?>
     <main class="main-content container">
         <div class="d-flex justify-content-between align-items-start">
-            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">文章編輯</span></p>
+            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">編輯文章</span></p>
         </div>
         <hr>
         <!-- table-->
@@ -79,7 +79,8 @@ $conn->close();
             <a href="article-list.php" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+            <a href="javascript:void(0);" class="btn btn-outline-secondary btn-lg"
+                onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>
@@ -98,11 +99,11 @@ $conn->close();
                             <tr class="form-label">
                                 <th>品牌</th>
                                 <td class="d-flex gap-3">
-                                    <?php 
-                                    $selected_brand_id =$row["brand_id"];
+                                    <?php
+                                    $selected_brand_id = $row["brand_id"];
                                     foreach ($brands as $brand) : ?>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="brand" id="<?= $brand["name"] ?>" value="<?= $brand["id"] ?>" <?php if ($brand["id"] == $selected_brand_id) echo 'checked'; ?> >
+                                            <input class="form-check-input" type="radio" name="brand" id="<?= $brand["name"] ?>" value="<?= $brand["id"] ?>" <?php if ($brand["id"] == $selected_brand_id) echo 'checked'; ?>>
                                             <label class="form-check-label" for="<?= $brand["name"] ?>">
                                                 <?= $brand["name"] ?>
                                             </label>
@@ -114,10 +115,10 @@ $conn->close();
                             <tr class="form-label">
                                 <th>類型</th>
                                 <td class="d-flex gap-3">
-                                    <?php  $selected_type_id =$row["type_id"];
+                                    <?php $selected_type_id = $row["type_id"];
                                     foreach ($types as $type) : ?>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="type" id="<?= $type["name"] ?>" value="<?= $type["id"] ?>" <?php if ($type["id"] == $selected_type_id) echo 'checked'; ?> >
+                                            <input class="form-check-input" type="radio" name="type" id="<?= $type["name"] ?>" value="<?= $type["id"] ?>" <?php if ($type["id"] == $selected_type_id) echo 'checked'; ?>>
                                             <label class="form-check-label" for="<?= $type["name"] ?>">
                                                 <?= $type["name"] ?>
                                             </label>
