@@ -48,10 +48,10 @@
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="code">
+                            <input type="text" class="form-control" id="code" name="code">
                         </div>
                         <div class="col-sm-3">
-                            <a href="" class="btn btn-outline-secondary">隨機產生代碼</a>
+                            <button type="button" class="btn btn-outline-secondary" onclick="generateCode()">隨機產生代碼</button>
                         </div>
                     </div>
 
@@ -87,13 +87,13 @@
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">起始日期</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="start_date">
+                            <input type="date" class="form-control" name="start_date" id="start_date">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">結束日期</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="end_date">
+                            <input type="date" class="form-control" name="end_date" id="end_date">
                         </div>
                     </div>
                     <button class="btn btn-outline-secondary" type="submit">送出</button>
@@ -103,6 +103,37 @@
 
         </div>
     </main>
+    <script>
+        //  一鍵生成亂碼
+        function generateCode() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            const length = 8;
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                result += characters[randomIndex];
+            }
+            document.getElementById('code').value = result;
+        }
+
+        // 获取日期选择器
+        const startDateInput = document.getElementById('start_date');
+        const endDateInput = document.getElementById('end_date');
+
+        // 监听 start 日期的变化
+        startDateInput.addEventListener('change', function() {
+            const startDate = startDateInput.value;
+            if (startDate) {
+                // 设置 end 日期选择器的最小值为 start 日期
+                endDateInput.min = startDate;
+            }
+        });
+
+        // 初始设置 end 日期选择器的最小值为 start 日期
+        endDateInput.min = startDateInput.value;
+    </script>
+
+
     <!-- Quill-->
     <script src="../vendor/quill/quill.min.js"></script>
     <!-- Quill init-->

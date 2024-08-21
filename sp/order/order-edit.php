@@ -9,8 +9,7 @@ $id = $_GET["id"];
 // 使用mysql
 require_once("../../db_connect.php");
 
-
-$sql = "SELECT user_order.*,
+$sql = "SELECT *,
  product_list.product_name AS product_name, 
  product_list.price as price,
  product_list.color_id AS color_id, 
@@ -22,7 +21,6 @@ $sql = "SELECT user_order.*,
  pay.name AS pay_name,
  status.name AS status_name,
  color.color AS color
-
  
 FROM user_order 
 JOIN product_list ON user_order.product_id = product_list.id
@@ -38,8 +36,6 @@ $row = $result->fetch_assoc();
 $sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
 $resulorderAll = $conn->query($sqlorderAll);
 $orderCountAll = $resulorderAll->num_rows;
-
-
 
 
 ?>
@@ -74,18 +70,44 @@ $orderCountAll = $resulorderAll->num_rows;
         <main class="main-content">
             <div class="pt-5 px-5 mx-5">
                 <div class="d-flex justify-content-start align-items-center">
-                    <a href="order-list.php" class="btn btn-outline-secondary btn-lg mx-2">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </a>
+                   
                     <p class="m-0 d-inline text-lg text-secondary">訂單明細 /<span class="text-sm">#<?= $_GET["id"] ?></span></p>
                 </div>
 
                 <!-- table-->
                 <div class="py-2 d-flex justify-content-end gap-2">
-                    <a href="" class="btn btn-outline-secondary btn-lg">
-                        編輯
+                    <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-solid fa-arrow-left"></i>
+                        取消
+                    </a>
+                    <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary justify-content-end"> <i class="fa-solid fa-floppy-disk"></i>
+                        儲存
                     </a>
                 </div>
+
+                <div class="d-flex align-items-center justify-content-between p-3 border mb-3 " action="doUpdateOrder.php" method="post">
+                    <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號#<?= $_GET["id"] ?></span></p>
+                    <div class="d-flex align-items-center justify-content-between col-6">
+                        <div>
+                            <p>付款狀態</p>
+                            <select class="form-select" aria-label="Default select example" name="pay">
+                                <option selected><?= $row["pay_name"] ?></option>
+                                <option value="1">未付款</option>
+                                <option value="2">已付款</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>訂單狀態</p>
+                            <select class="form-select" aria-label="Default select example" name="status">
+                                <option selected><?= $row["status_name"] ?></option>
+                                <option value="1">處理中</option>
+                                <option value="2">已完成</option>
+                            </select>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+
+
                 <table class="table "> <!-- table-bordered -->
                     <thead class="table-light">
                         <tr>
@@ -104,7 +126,7 @@ $orderCountAll = $resulorderAll->num_rows;
                             <tr>
                                 <td><?= $row["product_img"] ?></td>
                                 <td><?= $row["product_name"] ?></td>
-                                <td></td>
+                                <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>
                                 <td><?= $row["price"] ?></td>
                                 <?php
@@ -115,7 +137,7 @@ $orderCountAll = $resulorderAll->num_rows;
                             </tr>
                         <?php endif; ?>
                         <tr>
-                            <td colspan="4 border-bottom-none"></td>
+                            <td colspan="4 "></td>
                             <td>訂單總額：</td>
                             <td><?= number_format($subtotal) ?></td>
                         </tr>
