@@ -54,7 +54,7 @@ if ($userCount > 0) {
 
                     </div>
 
-                    <div class="bg-light-subtle bg-opacity-75 shadow-sm rounded mt-3 pe-5 d-flex justify-content-between align-items-center">
+                    <div class="bg-light-subtle bg-opacity-75 shadow-sm rounded mt-4 pe-5 d-flex justify-content-between align-items-center">
                         <?php if ($userCount > 0) : ?>
                             <div class="col-5">
 

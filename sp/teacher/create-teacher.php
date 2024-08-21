@@ -87,7 +87,7 @@
 
                                 <div class=" mb-2 ">
                                     <label class="form-label" for="">選取頭像圖片</label>
-                                    <input type="file" name="pic" class="form-control" required>
+                                    <input type="file" name="pic" id="imgUpload" class=" form-control" required onchange="previewImg()">
                                 </div>
 
                             </div>
@@ -95,7 +95,9 @@
 
                                 <div class="w-25">
                                     <div class="ratio ratio-1x1 w-50 ">
-                                        <img class="object-fit-cover" src="./upload/<?= $row["name"] ?>" alt="">
+
+                                        <img id="imgPreviewArea" class="object-fit-cover shadow-sm bg-secondary-subtle imgPreviewArea" src="./upload/picture.svg" alt="頭像圖片">
+
                                     </div>
                                 </div>
                                 <div class="">
@@ -108,15 +110,29 @@
 
                         </form>
 
-
-
-
-
                     </div>
                 </div>
             </div>
     </main>
     <?php include("./js.php") ?>
+
+    <script>
+        function previewImg() {
+            let file = document.getElementById('imgUpload').files[0];
+            let preview = document.getElementById('imgPreviewArea');
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "./upload/picture.svg"; // 如果沒有選擇新圖片，保留預設圖片
+            }
+        }
+    </script>
 </body>
 
 </html>
