@@ -7,7 +7,7 @@ if (!isset($_GET["id"])) {
 $id = $_GET["id"];
 
 // 使用mysql
-require_once("../../../db_connect.php");
+require_once("../../db_connect.php");
 
 
 $sql = "SELECT user_order.*,
@@ -112,7 +112,7 @@ $orderCountAll = $resulorderAll->num_rows;
                         </tr>
                     <?php endif; ?>
                     <tr>
-                        <td colspan="4 border-bottom-none"></td>
+                        <td colspan="4 "></td>
                         <td >訂單總額：</td>
                         <td><?= number_format($subtotal) ?></td>
                     </tr>

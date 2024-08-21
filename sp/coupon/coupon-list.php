@@ -55,44 +55,46 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
     <!-- table-->
-    <table class="table border text-center"> <!-- table-bordered -->
-      <thead>
-
-        <tr>
+    <table class="table border text-center "> <!-- table-bordered -->
+      <thead class="">
+        <tr class="">
           <th></th>
           <th>活動名稱</th>
           <th>折扣代碼</th>
           <th>促銷期限</th>
           <th>折扣方式</th>
+          <th>折扣額度</th>
           <th>使用次數</th>
           <th>狀態</th>
-          <th>領取/使用紀錄</th>
+          <!-- <th>領取/使用紀錄</th> -->
           <th>編輯</th>
           <th>刪除</th>
         </tr>
 
       </thead>
-      <tbody>
+      <tbody class="">
         <?php foreach ($rows as $row) : ?>
 
-          <tr>
+          <tr class="">
             <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
             <td><?= $row["name"] ?></td>
             <td><?= $row["code"] ?></td>
-            <td><?= $row["start_date"] ?>~<?= $row["end_date"] ?></td>
+            <td><?= $row["start_date"] ?><br><?= $row["end_date"] ?></td>
             <td><?= $row["status_id"] ?></td>
+            <td><?=$row["discount_value"]?></td>
             <td><?= $row["maximum"] ?></td>
             <td>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"><!-- 鎖死disabled -->
               </div>
             </td>
+            
 
-            <td class=" ">
+            <!-- <td class=" ">
               <a href="coupon.php" class="btn btn-outline-secondary btn-md">
                 <i class="fa-regular fa-eye"></i>
               </a>
-            </td>
+            </td> -->
             <td>
               <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
                 <i class="fa-regular fa-pen-to-square"></i>

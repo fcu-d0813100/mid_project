@@ -66,6 +66,9 @@ if ($couponCount > 0) {
         <div class="row mt-3 justify-content-center">
             <div class="col-6">
                 <?php if ($couponCount > 0) : ?>
+                    <?php
+                $start = isset($_GET["start"]) ? $_GET["start"] : $today;
+                ?>
                     <form action="doUpdateCoupon.php" method="post">
                         <input type="hidden" name="id" value="<?= $row["id"] ?>">
                         <div class="mb-3 row">
@@ -79,9 +82,6 @@ if ($couponCount > 0) {
                             <input type="hidden" class="form-control" name="code" value="<?= $row["code"] ?>">
                             <div class="col-sm-7">
                                 <?= $row["code"] ?>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="" class="btn btn-outline-secondary">隨機產生代碼</a>
                             </div>
                         </div>
 
