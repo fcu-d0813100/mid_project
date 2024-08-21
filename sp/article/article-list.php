@@ -118,13 +118,12 @@ $articleCount = $articleCountAll;
           </div>
 
         </div>
-        <!-- add button -->
 
       </div>
     </div>
     <hr>
     <!-- table-->
-    <div class="table-responsive small">
+    <div class="table-responsive large">
 
       <div class="d-flex justify-content-between">
         <?php if ($articleCount > 0):
@@ -151,34 +150,24 @@ $articleCount = $articleCountAll;
         <thead>
           <tr>
             <th scope="col" class="col-1">編號
-              <!-- <div class="btn-group">
-                <a href="javascript:void(0)" onclick="sortTable(1)" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-up-long"></i></a>
-                <a href="javascript:void(0)" onclick="sortTable(2)" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-down-long"></i></a>
-              </div> -->
             </th>
             <th scope="col" class="col-1">品牌</th>
             <th scope="col" class="col-1">類型</th>
             <th scope="col" class="col-3">標題</th>
             <th scope="col">圖片</th>
             <th scope="col" class="col-2">發布時間
-              <!-- <a href="javascript:void(0)" onclick="sortTable(3)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a>
-              <a href="javascript:void(0)" onclick="sortTable(4)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a> -->
-
             </th>
             <th scope="col" class="col-2">動作</th>
           </tr>
         </thead>
         <tbody>
-
           <?php foreach ($rows as $row) : ?>
             <tr class="align-middle dataList">
               <td><?= $row["id"] ?></td>
               <td><?= $row["brand_name"] ?></td>
               <td><?= $row["type_name"] ?></td>
               <td class="article-title"><?= $row["title"] ?></td>
-
               <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
-
               <td><?= $row["launched_date"] ?></td>
               <td class="gap-3">
                 <a href="article-review.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
@@ -200,8 +189,8 @@ $articleCount = $articleCountAll;
     <?php endif; ?>
     </div>
     <?php if (isset($_GET["p"])): ?>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination d-flex justify-content-end">
           <?php for ($i = 1; $i <= $total_page; $i++): ?>
             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
               <a class="page-link" href="article-list.php?p=<?= $i ?>&order=<?= $order ?>">

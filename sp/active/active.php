@@ -6,9 +6,7 @@ $sqlAll = "SELECT * FROM active WHERE valid=1";
 $resultALL = $conn->query($sqlAll);
 $activeCountAll = $resultALL->num_rows;
 
-
-
-
+$now = date('Y-m-d H:i:s');
 
 $page = 1; //頁數
 $startItem = 0;
@@ -77,7 +75,7 @@ $userCount = $result->num_rows;
 
   <main class="main-content ">
     <div class="d-flex justify-content-between align-items-start mt-3">
-      <p class="m-0 d-inline text-lg text-secondary">活動管理 /<span class="text-sm">活動列表</span></p>
+      <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-dark">活動管理 </a> /<span class="text-sm">活動列表</span></p>
 
       <form action="" class="align-self-center " style="width: 600px;">
         <div class="input-group mb-3">
@@ -100,7 +98,8 @@ $userCount = $result->num_rows;
     <?php if ($activeCountAll):
       $rows = $result->fetch_all(MYSQLI_ASSOC); ?>
       <div class="text-md">共有<?= $activeCountAll;
-                              var_dump($where_clause); ?> 筆活動</div>
+                              //var_dump($where_clause); 
+                              ?> 筆活動</div>
 
       <div class="table-responsive large">
         <table class="table table-striped table-md" id="datatable">
@@ -173,21 +172,42 @@ $userCount = $result->num_rows;
                   <?= $row["address"] ?>
                 </td>
                 <td>
-                  <span class=" rounded-pill bg-success p-2 text-white">報名中</span>
-                  <span class=" rounded-pill bg-danger p-2 text-white">已截止</span>
-                  <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
-                  <span class=" rounded-pill bg-secondary p-2 text-white">已結束</span>
+                  <?php
+                  // 计算7天前的时间
+                  $startAt = $row["start_at"];
+                  // 将字符串转换为 DateTime 对象
+                  $applyTime = new DateTime($startAt);
+                  // 使用 modify 减去7天
+                  $applyTime->modify('-7 days');
+                  // 将 $applyTime 格式化为字符串
+                  $applyTimeFor = $applyTime->format('Y-m-d H:i:s');
+                  ?>
+                  <?php if ($row["currentAPP"] === $row["maxAPP"]): ?>
+                    <span class=" rounded-pill p-2 text-white" style="background-color: orange;">已額滿</span>
+                  <?php endif; ?>
+                  <?php if ($now < $applyTimeFor) : ?>
+                    <span class=" rounded-pill bg-success p-2 text-white">報名中</span>
+                  <?php elseif ($now < $row["start_at"] && $now > $applyTimeFor) : ?>
+                    <span class=" rounded-pill bg-secondary p-2 text-white">已截止</span>
+                  <?php elseif ($now > $row["start_at"] && $now < $row["end_at"]) : ?>
+                    <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
+                  <?php else : ?>
+                    <span class=" rounded-pill bg-danger p-2 text-white">已結束</span>
+                  <?php endif; ?>
+
                 </td>
 
+
                 <td><?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?></td>
+
                 <td>
                   <a href="active-info.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-eye"></i>
                   </a>
-                  <a href="active-edit.php" class="btn btn-outline-secondary btn-lg">
+                  <a href="active-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-pen-to-square"></i>
                   </a>
-                  <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-lg">
+                  <a href="doDeleteActive.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-trash-can"></i>
                   </a>
                 </td>
