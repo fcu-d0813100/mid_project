@@ -51,79 +51,89 @@ if ($userCount > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <?php include("css.php") ?>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="py-2">
-            <a class="btn btn-outline-secondary" href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long"></i></a>
+    <?php include("../../nav1.php") ?>
+    <main class="main-content ">
+        <div class="d-flex justify-content-between align-items-start mt-3">
+            <p class="m-0 d-inline text-lg text-secondary">會員管理 /<span class="text-sm">會員列表</span></p>
         </div>
-        <div class="row ">
-            <div class="col-lg-4">
-                <?php if ($userCount > 0) : ?>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>ID</th>
-                            <td><?= $row["id"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>帳號</th>
-                            <td><?= $row["account"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>姓名</th>
-                            <td>
-                                <?= $row["name"] ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>性別</th>
-                            <td> <?= ($row["gender"] == 1) ? '男' : '女' ?></td>
-                        </tr>
-                        <tr>
-                            <th>會員等級</th>
-                            <td><?= $row["level_name"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>聯絡電話</th>
-                            <td>
-                                <?= $row["phone"] ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>生日</th>
-                            <td>
-                                <?= $row["birthday"] ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>信箱</th>
-                            <td>
-                                <?= $row["email"] ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>地址</th>
-                            <td>
-                                <?= $row["address"] ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>註冊時間</th>
-                            <td>
-                                <?= $row["created_at"] ?>
-                            </td>
-                        </tr>
+        <div class="container">
+            <div class="py-2">
+                <a class="btn btn-outline-secondary" href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long"></i></a>
+            </div>
+            <div class="row ">
+                <div class="col-lg-4">
+                    <?php if ($userCount > 0) : ?>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>ID</th>
+                                <td><?= $row["id"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>帳號</th>
+                                <td><?= $row["account"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>姓名</th>
+                                <td>
+                                    <?= $row["name"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>性別</th>
+                                <td> <?= ($row["gender"] == 1) ? '男' : '女' ?></td>
+                            </tr>
+                            <tr>
+                                <th>會員等級</th>
+                                <td><?= $row["level_name"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>聯絡電話</th>
+                                <td>
+                                    <?= $row["phone"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>生日</th>
+                                <td>
+                                    <?= $row["birthday"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>信箱</th>
+                                <td>
+                                    <?= $row["email"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>地址</th>
+                                <td>
+                                    <?= $row["address"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>註冊時間</th>
+                                <td>
+                                    <?= $row["created_at"] ?>
+                                </td>
+                            </tr>
 
-                    </table>
-                    <h2>會員照片</h2>
-                    <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
-                    <div class="">
-                        <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary"><i class="fa-solid fa-user-pen"></i></a>
-                    </div>
+                        </table>
+                        <h2>會員照片</h2>
+                        <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
+                        <div class="">
+                            <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary"><i class="fa-solid fa-user-pen"></i></a>
+                        </div>
 
-                    <!-- <h2 class="h3 mt-3">收藏商品</h2> -->
-                    <!-- <?php if ($resultFavotire->num_rows > 0) : ?> 
+                        <!-- <h2 class="h3 mt-3">收藏商品</h2> -->
+                        <!-- <?php if ($resultFavotire->num_rows > 0) : ?> 
                         <ul>
                             <?php foreach ($rowProducts as $product) : ?>
                                 <li><a href="/product/product.php?id=<?= $product["product_id"] ?>"></a><?= $product["product_name"] ?></li>
@@ -132,13 +142,16 @@ if ($userCount > 0) {
                     <?php else : ?>
                         尚未收藏商品
                     <?php endif; ?> -->
-                <?php else : ?>
-                    使用者不存在
-                <?php endif; ?>
+                    <?php else : ?>
+                        使用者不存在
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
 
+    </main>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/front.js"></script>
 </body>
 
 </html>

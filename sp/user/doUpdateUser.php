@@ -8,7 +8,6 @@ if (!isset($_POST["name"])) {
     exit;
 }
 
-
 $id = $_POST["id"];
 $name = $_POST["name"];
 $gender = $_POST["gender"];
@@ -29,6 +28,6 @@ if ($conn->query($sql) === TRUE) {
     echo "更新資料錯誤: " . $conn->error;
 }
 
-header("location: user-edit.php?id=$id");
+header("location: user.php?id=$id");
 
 $conn->close();
