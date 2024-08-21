@@ -106,7 +106,7 @@ $userCount = $result->num_rows;
         <table class="table table-striped table-md" id="datatable">
           <thead>
             <tr>
-              <th scope="col" style="width: 100px;">
+              <th scope="col" style="width: 105px;">
                 <span style="background-color: none;">ID</span>
                 <?php if (isset($_GET["p"])) : ?>
                   <a

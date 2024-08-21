@@ -82,9 +82,10 @@ $orderCountAll = $resulorderAll->num_rows;
 
                 <!-- table-->
                 <div class="py-2 d-flex justify-content-end gap-2">
-                    <a href="order-edit.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-regular fa-pen-to-square"></i>
+                    <a href="" class="btn btn-outline-secondary btn-lg">
                         編輯
                     </a>
+
                     <a href="doDeleteOrder.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-regular fa-trash-can"></i>
                         刪除
                     </a>
@@ -103,9 +104,9 @@ $orderCountAll = $resulorderAll->num_rows;
                         </div>
                         <div></div>
                     </div>
+
+
                 </div>
-
-
                 <table class="table "> <!-- table-bordered -->
                     <thead class="table-light">
                         <tr>
@@ -124,7 +125,7 @@ $orderCountAll = $resulorderAll->num_rows;
                             <tr>
                                 <td><?= $row["product_img"] ?></td>
                                 <td><?= $row["product_name"] ?></td>
-                                <td><?= $row["color"] ?></td>
+                                <td></td>
                                 <td><?= $row["amount"] ?></td>
                                 <td><?= $row["price"] ?></td>
                                 <?php
@@ -135,7 +136,7 @@ $orderCountAll = $resulorderAll->num_rows;
                             </tr>
                         <?php endif; ?>
                         <tr>
-                            <td colspan="4 "></td>
+                            <td colspan="4 border-bottom-none"></td>
                             <td>訂單總額：</td>
                             <td><?= number_format($subtotal) ?></td>
                         </tr>
