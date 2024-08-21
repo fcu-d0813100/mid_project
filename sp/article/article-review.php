@@ -64,7 +64,7 @@ $conn->close();
     <?php include("../../nav1.php") ?>
     <main class="main-content container">
         <div class="d-flex justify-content-between align-items-start">
-            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">文章編輯</span></p>
+            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">檢視文章</span></p>
         </div>
         <hr>
         <!-- table-->
@@ -75,7 +75,8 @@ $conn->close();
             <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                 <i class="fa-regular fa-pen-to-square"></i>
             </a>
-            <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+            <a href="javascript:void(0);" class="btn btn-outline-secondary btn-lg"
+                onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>
