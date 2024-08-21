@@ -1,5 +1,5 @@
 <?php
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
 
 // 確定當前頁碼，並確保它是有效的整數
 $page = isset($_GET["p"]) ? (int)$_GET["p"] : 1;
