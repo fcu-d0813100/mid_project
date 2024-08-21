@@ -74,10 +74,10 @@ $orderCountAll = $resulorderAll->num_rows;
         <main class="main-content">
             <div class="pt-5 px-5 mx-5">
                 <div class="d-flex justify-content-start align-items-center">
-                    <a href="order-list.php" class="btn btn-outline-secondary btn-lg mx-2">
+                    <a href="order-list.php" class="btn btn-outline-secondary btn-md mx-2">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
-                    <p class="m-0 d-inline text-lg text-secondary">訂單明細 /<span class="text-sm">#<?= $_GET["id"] ?></span></p>
+                    <p class="m-0 d-inline text-lg text-secondary">訂單明細 </p>
                 </div>
 
                 <!-- table-->
@@ -91,7 +91,7 @@ $orderCountAll = $resulorderAll->num_rows;
                 </div>
 
                 <div class="d-flex align-items-center justify-content-between p-3 border mb-3">
-                    <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號#<?= $_GET["id"] ?></span></p>
+                    <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號 # <?= $row["number"] ?></span></p>
                     <div class="d-flex align-items-center justify-content-between col-6">
                         <div>
                             <p>付款狀態</p>

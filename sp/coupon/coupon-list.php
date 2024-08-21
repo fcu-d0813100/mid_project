@@ -88,7 +88,7 @@ $result = $conn->query($sql);
         <!-- 日期篩選 -->
         <?php if (!isset($_GET["product"]) && !isset($_GET["user"]) && !isset($_GET["start_date"])): ?>
           <div class="mx-3 my-2 py-2">
-            <form action="">
+            <form action="" method="post">
               <?php
               $today = date('Y-m-d');
               $start = isset($_GET["start"]) ? $_GET["start"] : $today;
@@ -145,7 +145,8 @@ $result = $conn->query($sql);
 
           </thead>
           <tbody class="">
-            <?php foreach ($rows as $row) : ?>
+            <?php
+            foreach ($rows as $row) : ?>
               <tr class="">
                 <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
                 <td><?= $row["name"] ?></td>
