@@ -10,6 +10,7 @@ $per_page = 5;
 
 $total_page = ceil($userCountAll / $per_page);
 
+
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
     $sql = "SELECT * FROM teachers WHERE account LIKE '%$search%' AND valid=1 ";
@@ -38,19 +39,40 @@ if (isset($_GET["search"])) {
     $page = $_GET["p"];
     $start_item = ($page - 1) * $per_page;
 
+    // 初始化累加器
+    $totalUserCountAll = 0;
+
     switch ($nation) {
         case 1:
+            // 查詢所有符合條件的資料數量
+            $sqlCount = "SELECT COUNT(*) as count FROM teachers WHERE nation='臺灣' AND valid=1";
+            $resultCount = $conn->query($sqlCount);
+            $row = $resultCount->fetch_assoc();
+            $totalUserCountAll = $row['count'];
+
+            // 分頁查詢
             $sql = "SELECT * FROM teachers WHERE nation='臺灣' AND valid=1 LIMIT $start_item,$per_page";
             break;
         case 2:
+            // 查詢所有符合條件的資料數量
+            $sqlCount = "SELECT COUNT(*) as count FROM teachers WHERE nation!='臺灣' AND valid=1";
+            $resultCount = $conn->query($sqlCount);
+            $row = $resultCount->fetch_assoc();
+            $totalUserCountAll = $row['count'];
+
+            // 分頁查詢
             $sql = "SELECT * FROM teachers WHERE nation!='臺灣' AND valid=1 LIMIT $start_item,$per_page";
             break;
         default:
             header("location:teachers.php?p=1&order=1");
-            break;
+            exit; // 確保腳本在錯誤的情況下停止執行
     }
+
+    // 執行分頁查詢
     $resultAll = $conn->query($sql);
-    $userCountAll = $resultAll->num_rows;
+
+    // 現在 $totalUserCountAll 包含了所有符合 nation 條件的教師數量
+    // $resultAll 包含了分頁後的教師資料
 } else {
     header("location:teachers.php?p=1&order=1");
     // $sql = "SELECT * FROM teachers WHERE valid=1 LIMIT $start_item,$per_page ";
@@ -63,6 +85,10 @@ $result = $conn->query($sql);
 
 if (isset($_GET["search"])) {
     $userCount = $result->num_rows;
+    // 累加結果行數
+
+} elseif (isset($_GET["p"]) && isset($_GET["nation"])) {
+    $userCount = $totalUserCountAll;
 } else {
     $userCount = $userCountAll;
 };
@@ -91,6 +117,10 @@ if (isset($_GET["search"])) {
                 <div class="col-10">
                     <div>
                         <h1 class="h2 mt-5 pt-5 mb-3">師資列表</h1>
+
+
+
+
                         <div class="py-3">
                             <form action="">
                                 <div class="input-group">
@@ -165,7 +195,9 @@ if (isset($_GET["search"])) {
                                     </thead>
                                     <tbody>
 
-                                        <?php foreach ($rows as $teacher): ?>
+
+                                        <?php
+                                        foreach ($rows as $teacher): ?>
                                             <tr>
                                                 <td><?= $teacher["id"] ?></td>
                                                 <td><?= $teacher["name"] ?></td>
@@ -193,29 +225,34 @@ if (isset($_GET["search"])) {
 
                         <div class="d-flex justify-content-between">
 
+
                             <?php if (isset($_GET["p"])) : ?>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                                            <li class="page-item 
-                                        <?php if ($page == $i)
-                                                echo "active";
-                                        ?>
-                                        "><a class="page-link px-3" href="teachers.php?p=<?= $i ?>
-                                        <?php if (isset($_GET['order'])): ?>
-                                            &order=<?= $order ?>
-                                        <?php endif; ?>
-                                        <?php if (isset($_GET['nation'])): ?>
-                                            &nation=<?= $nation ?>
-                                        <?php endif; ?>">
+
+                                        <?php
+
+                                        $ttpage = ceil($userCount / $per_page);
+                                        for ($i = 1; $i <= $ttpage; $i++): ?>
+                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                                                <a class="page-link px-3" href="teachers.php?p=<?= $i ?>
+                                                <?php if (isset($_GET['order'])): ?>
+                                                    &order=<?= $order ?>
+                                                <?php endif; ?>
+                                                <?php if (isset($_GET['nation'])): ?>
+                                                    &nation=<?= $nation ?>
+                                                <?php endif; ?>">
                                                     <?= $i ?>
-                                                </a></li>
+                                                </a>
+                                            </li>
                                         <?php endfor; ?>
                                     </ul>
                                 </nav>
+
                             <?php endif; ?>
 
                             <?php if ($userCount > 0) : ?>
+
                                 <p class=" m-0 text-end">共有 <?= $userCount ?> 位老師</p>
                             <?php else : ?>
                                 目前沒有使用者
