@@ -96,7 +96,7 @@
                                 <div class="w-25">
                                     <div class="ratio ratio-1x1 w-50 ">
 
-                                        <img id="imgPreviewArea" class="object-fit-cover shadow-sm bg-secondary-subtle imgPreviewArea" src="./upload/picture.svg" alt="頭像圖片">
+                                        <img id="imgPreviewArea" class="rounded object-fit-cover shadow-sm bg-secondary-subtle imgPreviewArea" src="./upload/picture.svg" alt="頭像圖片">
 
                                     </div>
                                 </div>
