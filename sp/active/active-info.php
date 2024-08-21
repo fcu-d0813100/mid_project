@@ -52,7 +52,8 @@ $row = $result->fetch_assoc();
                 <a href="active.php" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <a href="doDeleteActive.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+                <a href="javascript:void(0);" class="btn btn-outline-secondary btn-lg"
+                    onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteActive.php?id=<?= $row['id'] ?>'; }">
                     <i class="fa-regular fa-trash-can"></i>
                 </a>
             </div>

@@ -18,7 +18,8 @@ if (isset($_GET["search"])) {
   $sql = "SELECT * FROM active 
           WHERE (brand LIKE '%$search%' 
           OR name LIKE '%$search%' 
-          OR id LIKE '%$search%') 
+          OR id LIKE '%$search%'
+          OR start_at LIKE '%$search%') 
           AND valid = 1";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
   $order = $_GET["order"];
@@ -79,7 +80,7 @@ $userCount = $result->num_rows;
 
       <form action="" class="align-self-center " style="width: 600px;">
         <div class="input-group mb-3">
-          <input type="search" class="form-control border border-dark" placeholder="輸入使用者名稱" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
+          <input type="search" class="form-control border border-dark" placeholder="輸入關鍵字" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
             value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>">
           <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
@@ -207,9 +208,11 @@ $userCount = $result->num_rows;
                   <a href="active-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-pen-to-square"></i>
                   </a>
-                  <a href="doDeleteActive.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+                  <a href="javascript:void(0);" class="btn btn-outline-secondary btn-lg"
+                    onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteActive.php?id=<?= $row['id'] ?>'; }">
                     <i class="fa-regular fa-trash-can"></i>
                   </a>
+
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -232,57 +235,8 @@ $userCount = $result->num_rows;
 
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="../js/front.js"></script> -->
-  <script>
-    const sortButtons = document.querySelectorAll('.sort');
-    sortButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const icon = button.querySelector('i');
+  <!-- <scrip src="../js/front.js"></script> -->
 
-        if (icon.classList.contains('fa-sort-down')) {
-          icon.classList.remove('fa-sort-down');
-          icon.classList.add('fa-sort-up');
-        } else {
-          icon.classList.remove('fa-sort-up');
-          icon.classList.add('fa-sort-down');
-        }
-      });
-    });
-
-
-
-    function searchTable() {
-      // 获取输入框中的搜索关键字
-
-      const input = document.getElementById('searchInput');
-      const filter = input.value.toLowerCase();
-      const table = document.getElementById('datatable');
-      const tr = table.getElementsByTagName('tr');
-
-      console.log(tr);
-
-      // 循环遍历所有表格行
-      for (let i = 1; i < tr.length; i++) { // 跳过表头
-        const tds = tr[i].getElementsByTagName('td');
-        let match = false;
-
-        // 循环遍历当前行中的每个单元格
-        for (let j = 0; j < tds.length; j++) {
-          const td = tds[j];
-          if (td) {
-            // 如果单元格内容包含搜索关键字，则标记为匹配
-            if (td.textContent.toLowerCase().indexOf(filter) > -1) {
-              match = true;
-              break;
-            }
-          }
-        }
-
-        // 如果匹配，显示该行；否则隐藏
-        tr[i].style.display = match ? '' : 'none';
-      }
-    }
-  </script>
 
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
