@@ -27,7 +27,7 @@
             <use xlink:href="#sales-up-1"> </use>
           </svg>師資管理 </a>
         <ul class="collapse list-unstyled " id="teacherDropdown">
-          <li><a class="sidebar-link" href="#">師資列表</a></li>
+          <li><a class="sidebar-link" href="../teacher/teachers.php">師資列表</a></li>
         </ul>
       </li>
       <li class="sidebar-item"><a class="sidebar-link" href="#productDropdown" data-bs-toggle="collapse"
