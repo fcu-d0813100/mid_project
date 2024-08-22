@@ -74,7 +74,7 @@ $orderCountAll = $resulorderAll->num_rows;
         <main class="main-content">
             <div class="pt-5 px-5 mx-5">
                 <div class="d-flex justify-content-start align-items-center">
-                    <a href="order-list.php" class="btn btn-outline-secondary btn-md mx-2">
+                    <a href="order-list.php?p=1" class="btn btn-outline-secondary btn-md mx-2">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                     <p class="m-0 d-inline text-lg text-secondary">訂單明細 </p>
@@ -82,13 +82,32 @@ $orderCountAll = $resulorderAll->num_rows;
 
                 <!-- table-->
                 <div class="py-2 d-flex justify-content-end gap-2">
-                    <a href="" class="btn btn-outline-secondary btn-lg">
-                        編輯
+                    <a href="order-edit.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary p-2">
+                    <i class="fa-regular fa-pen-to-square"></i> 編輯
                     </a>
 
-                    <a href="doDeleteOrder.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-regular fa-trash-can"></i>
+
+                     <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-secondary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($_GET["id"]) ?> ">
+                    <i class="fa-regular fa-trash-can"></i> 刪除
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content ">
+                        <div class="modal-body">
+                          <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                          <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <!-- <a href="doDeleteOrder.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-regular fa-trash-can"></i>
                         刪除
-                    </a>
+                    </a> -->
                 </div>
 
                 <div class="d-flex align-items-center justify-content-between p-3 border mb-3">
@@ -166,6 +185,50 @@ $orderCountAll = $resulorderAll->num_rows;
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
             integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </header>
+
+
+    <script>
+        // 儲存刪除 URL 的變量
+        let deleteUrl = '';
+
+        // 當點擊觸發 Modal 的按鈕時，儲存刪除 URL
+        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+            button.addEventListener('click', function() {
+                deleteUrl = 'doDeleteOrder.php?id=' + encodeURIComponent(this.getAttribute('data-id'));
+            });
+        });
+
+        // 當點擊“確定”按鈕時，執行刪除操作
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (deleteUrl) {
+                window.location.href = deleteUrl;
+            }
+        });
+
+
+
+        const sortButtons = document.querySelectorAll('.sort');
+        sortButtons.forEach(button => {
+            button.addEventListener('click', () => {
+
+                const icon = button.querySelector('i');
+
+
+                if (icon.classList.contains('fa-sort-down')) {
+
+                    icon.classList.remove('fa-sort-down');
+                    icon.classList.add('fa-sort-up');
+                } else {
+
+                    icon.classList.remove('fa-sort-up');
+                    icon.classList.add('fa-sort-down');
+                }
+            });
+        });
+    </script>
+
+
+
 </body>
 
 </html>

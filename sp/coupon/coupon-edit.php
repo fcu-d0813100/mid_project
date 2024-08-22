@@ -91,7 +91,6 @@ if ($couponCount > 0) {
                                 <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
                                 <div class="col-sm-10">
                                     <select class="form-select" name="type_id" aria-label="Default select example">
-                                    
                                         <option value="1" <?= $row["type_id"] == "1" ? "selected" : "" ?>>百分比%
                                         </option>
                                         <option value="2" <?= $row["type_id"] == "2" ? "selected" : "" ?>>金額
@@ -124,20 +123,27 @@ if ($couponCount > 0) {
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button  class="btn btn-outline-secondary" type="submit">
-                                    <i class="fa-solid fa-floppy-disk"></i>
+
+                                <a href="coupon-list.php?p=1" class="btn btn-outline-secondary p-2 me-2">
+                                    <i class="fa-solid fa-arrow-left"></i> 取消
+                                </a>
+                                <button class="btn btn-outline-secondary p-2 me-2" type="submit">
+                                    <i class="fa-solid fa-floppy-disk"></i> 儲存
                                 </button>
 
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
-                                    <i class="fa-regular fa-trash-can"></i>
+                                <button type="button" class="btn btn-outline-secondary p-2 " data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
+                                    <i class="fa-regular fa-trash-can"></i> 刪除
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hid    den="true">
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hid den="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content ">
                                             <div class="modal-body">
-                                                <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料</h1>
+
+                                                <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料
+                                                    <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i>
+                                                </h1>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -146,9 +152,7 @@ if ($couponCount > 0) {
                                         </div>
                                     </div>
                                 </div>
-                                <a href="coupon-list.php" class="btn btn-outline-secondary ">
-                                    取消
-                                </a>
+
                             </div>
                         </form>
 

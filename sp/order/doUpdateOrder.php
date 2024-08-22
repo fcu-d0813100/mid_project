@@ -8,12 +8,12 @@ if(!isset($_POST["id"])){
 }
 
 $id=$_POST["id"];
-$pay=$_POST["pay"];
-$status=$_POST["status"];
+$pay_id=$_POST["pay_id"];
+$status_id=$_POST["status_id"];
 
 
-$sql="UPDATE user_order SET pay_id='$pay',status_id='$status'
-WHERE id='$id' AND user_order.valid=1" ;
+$sql="UPDATE user_order SET pay_id='$pay_id',status_id='$status_id'
+WHERE id='$id' " ;
 
 if ($conn->query($sql) === TRUE) {
     echo "更新成功";
@@ -21,6 +21,6 @@ if ($conn->query($sql) === TRUE) {
     echo "更新資料錯誤: " . $conn->error;
 }
 
-header("location: order-edit.php?id=$id");
+header("location: order.php?id=$id");
 
 $conn->close();
