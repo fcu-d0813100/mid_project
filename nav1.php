@@ -27,7 +27,7 @@
              <use xlink:href="#sales-up-1"> </use>
            </svg>師資管理 </a>
          <ul class="collapse list-unstyled " id="teacherDropdown">
-           <li><a class="sidebar-link" href="#">師資列表</a></li>
+           <li><a class="sidebar-link" href="../teacher/teachers.php">師資列表</a></li>
          </ul>
        </li>
        <li class="sidebar-item"><a class="sidebar-link" href="#productDropdown" data-bs-toggle="collapse"
@@ -54,7 +54,7 @@
              <use xlink:href="#portfolio-grid-1"> </use>
            </svg>訂單管理 </a>
          <ul class="collapse list-unstyled " id="orderDropdown">
-           <li><a class="sidebar-link" href="../order/order-list.php">訂單列表</a></li>
+           <li><a class="sidebar-link" href="../order/order-list.php?p=1">訂單列表</a></li>
          </ul>
        </li>
        <li class="sidebar-item"><a class="sidebar-link" href="#discountDropdown" data-bs-toggle="collapse"
@@ -63,7 +63,7 @@
              <use xlink:href="#portfolio-grid-1"> </use>
            </svg>優惠管理 </a>
          <ul class="collapse list-unstyled " id="discountDropdown">
-           <li><a class="sidebar-link" href="../coupon/coupon-list.php">優惠券列表</a></li>
+           <li><a class="sidebar-link" href="../coupon/coupon-list.php?p=1">優惠券列表</a></li>
          </ul>
        </li>
 
@@ -77,16 +77,16 @@
        </li>
 
 
-      <li class="sidebar-item"><a class="sidebar-link" href="#eventDropdown" data-bs-toggle="collapse"
-          data-bs-parent="#accordion">
-          <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
-            <use xlink:href="#portfolio-grid-1"> </use>
-          </svg>活動管理 </a>
-        <ul class="collapse list-unstyled " id="eventDropdown">
-          <li><a class="sidebar-link" href="../active/active.php">活動列表</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</aside>
-</div>
+       <li class="sidebar-item"><a class="sidebar-link" href="#eventDropdown" data-bs-toggle="collapse"
+           data-bs-parent="#accordion">
+           <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
+             <use xlink:href="#portfolio-grid-1"> </use>
+           </svg>活動管理 </a>
+         <ul class="collapse list-unstyled " id="eventDropdown">
+           <li><a class="sidebar-link" href="../active/active.php">活動列表</a></li>
+         </ul>
+       </li>
+     </ul>
+   </div>
+ </aside>
+ </div>
