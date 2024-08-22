@@ -2,8 +2,6 @@
 require_once("../../db_connect.php");
 
 ?>
-
-
 <!doctype html>
 <html lang="en">
 
@@ -12,6 +10,7 @@ require_once("../../db_connect.php");
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
     <?php include("css.php") ?>
     <?php include("js.php") ?>
     <style>
@@ -21,141 +20,189 @@ require_once("../../db_connect.php");
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
 
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            box-shadow: 5px #e9ecef;
+        }
+
+        .form-select {
+            border-radius: 8px;
+            box-shadow: 5px #e9ecef;
+        }
+
+        .text-style {
+            font-size: 16px;
+            font-weight: 500;
+            color: #111111;
+        }
+
+        .btn {
+            border-radius: 5px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="py-2">
-            <h1 class="text-center">新增會員資料</h1>
-        </div>
-        <div class="d-flex">
-            <div class="col-lg-5 me-5">
-                <!-- 圖片 -->
+    <?php include("../../nav1.php") ?>
+    <main class="main-content bg-color  mx-2">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <p class="m-0 d-inline text-lg text-secondary">會員管理 /<span class="text-sm">新增會員</span></p>
+            </div>
+            <hr>
+            <form action="doCreateUser.php" method="post" enctype="multipart/form-data">
+                <div class="d-flex">
 
-                <form action="doCreateUser.php" method="post" enctype="multipart/form-data">
-                    <div class="mb-2">
-                        <label for="">
-                            <h2>會員頭像</h2>
-                        </label>
-                        <!-- <div class="row g-3 mt-3 row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-2"> -->
-                        <div class="col">
-                            <div class="ratio ratio-1x1">
-                                <!-- 預設顯示的頭像 -->
-                                <img id="avatarPreview" class="object-fit-cover avatar-preview" src="./upload/avatar01.jpg" alt="會員頭像">
+                    <div class="col-lg-10 me-5">
+
+                        <div class="mb-3 row">
+                            <div class="col">
+                                <label class="form-label text-style" for="account"><span class="text-danger">* </span>帳號</label>
+                                <input type="text" class="form-control" name="account" placeholder="請輸入英文及數字" required>
                             </div>
                         </div>
-                        <!-- </div> -->
+                        <div class=" mb-3 d-flex row">
+
+                            <div class="col">
+                                <label class="form-label text-style" for="password"><span class="text-danger">* </span> 密碼</label>
+                                <input type="password" class="form-control" name="password" placeholder="請輸入密碼" required>
+                            </div>
+                            <div class="col">
+                                <label class="form-label text-style" for="repassword"><span class="text-danger">* </span> 確認密碼</label>
+                                <input type="password" class="form-control" name="repassword" placeholder="請再次輸入密碼" required>
+                            </div>
+
+                        </div>
+
+                        <!--  -->
+                        <div class="mb-3 d-flex row">
+                            <div class="col-5">
+                                <label class="form-label text-style" for="name"><span class="text-danger">*</span>姓名</label>
+                                <input type="text" class="form-control" name="name" placeholder="請輸入真實姓名" required>
+                            </div>
+                            <div class="col-auto">
+                                <label class="form-label text-style" for="gender">性別</label>
+                                <div class="pt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" checked>
+                                        <label class="form-check-label text-style" for="inlineRadio1">男</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="2">
+                                        <label class="form-check-label text-style" for="inlineRadio2">女</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <label class="form-label text-style" for="birthday">生日</label>
+                                <input type="date" class="form-control" name="birthday">
+                            </div>
+
+                        </div>
+                        <div class="mb-3 d-flex row">
+                            <div class="col-3">
+                                <label class="form-label text-style" for="phone">連絡電話</label>
+                                <input type="tel" class="form-control text-style" name="phone">
+                            </div>
+                            <div class="col">
+                                <label class="form-label text-style" for="email">信箱</label>
+                                <input type="email" class="form-control" name="email">
+                            </div>
+
+                            <div class="col-3">
+                                <label class="form-label text-style" for="level_id">會員等級</label>
+                                <select class="form-select text-style" aria-label="Default select example" name="level_id">
+                                    <option value="1">一般會員</option>
+                                    <option value="2">白金會員</option>
+                                    <option value="3">鑽石會員</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-flex row">
+                            <label class="form-label text-style" for="city">地址</label>
+                            <div class="col-3">
+                                <select class="form-select text-style" aria-label="Default select example" name="city">
+                                    <option value="">請選擇縣市</option>
+                                    <option value="臺北市">臺北市</option>
+                                    <option value="新北市">新北市</option>
+                                    <option value="基隆市">基隆市</option>
+                                    <option value="桃園市">桃園市</option>
+                                    <option value="新竹市">新竹市</option>
+                                    <option value="新竹縣">新竹縣</option>
+                                    <option value="苗栗縣">苗栗縣</option>
+                                    <option value="臺中市">臺中市</option>
+                                    <option value="彰化縣">彰化縣</option>
+                                    <option value="南投縣">南投縣</option>
+                                    <option value="嘉義市">嘉義市</option>
+                                    <option value="嘉義縣">嘉義縣</option>
+                                    <option value="臺南市">臺南市</option>
+                                    <option value="高雄市">高雄市</option>
+                                    <option value="屏東縣">屏東縣</option>
+                                    <option value="宜蘭縣">宜蘭縣</option>
+                                    <option value="花蓮縣">花蓮縣</option>
+                                    <option value="臺東縣">臺東縣</option>
+                                    <option value="澎湖縣">澎湖縣</option>
+                                    <option value="金門縣">金門縣</option>
+                                    <option value="連江縣">連江縣</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" name="streetAddress" placeholder="請輸入完整地址">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 d-flex align-items-center">
+                            <!-- 上傳區塊 -->
+                            <label for="form-label text-style">上傳會員頭像</label>
+                            <div class="col">
+                                <input type="file" id="avatarUpload" name="meupload" class="form-control" onchange="previewAvatar()">
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-dark" onclick="resetAvatar()"><i class="fa-solid fa-rotate-right"></i></button>
+                            </div>
+                        </div>
+
+
+                        <div class="d-grid gap-2 d-flex justify-content-end">
+                            <a class="btn btn-dark px-5 align-self-center mx-3" href="users.php" title="回會員管理列表">返回</a>
+                            <button type="submit" class="btn btn-dark px-5">送出</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 me-3">
+                        <!-- 圖片 -->
+
+
+                        <div class="mb-2">
+
+                            <!-- <div class="row g-3 mt-3 row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-2"> -->
+                            <div class="col">
+                                <div class="ratio ratio-1x1 mb-3">
+                                    <!-- 預設顯示的頭像 -->
+                                    <img id="avatarPreview" class="object-fit-cover avatar-preview" src="./upload/avatar01.jpg" alt="會員頭像">
+                                </div>
+
+
+                                <p class="text-center text-lg text-secondary">會員頭像</p>
+
+
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- 上傳區塊 -->
-                    <div class="mb-2">
-                        <label for="">上傳會員照片</label>
-                        <input type="file" id="avatarUpload" name="meupload" class="form-control" onchange="previewAvatar()">
-                        <button type="button" class="btn btn-secondary mt-2" onclick="resetAvatar()">取消上傳</button>
-                        <!-- <input type="file" id="avatarUpload" name="meupload" class="form-control" required onchange="previewAvatar()"> -->
-                        <!-- <button type="submit" class="btn btn-primary mt-2">上傳頭像</button> -->
-                    </div>
-            </div>
+                </div>
+            </form>
 
-            <div class="col-lg-5 ms-5">
-
-                <div class="mb-2">
-                    <label class="form-label" for="name"><span class="text-danger">*</span>帳號</label>
-                    <input type="text" class="form-control" name="account" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="name"><span class="text-danger">*</span>密碼</label>
-                    <input type="password" class="form-control" name="password" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="name"><span class="text-danger">*</span>確認密碼</label>
-                    <input type="password" class="form-control" name="repassword" placeholder="請再次輸入密碼" required>
-                </div>
-
-                <!--  -->
-                <div class="mb-2">
-                    <label class="form-label" for="name"><span class="text-danger">*</span>姓名</label>
-                    <input type="text" class="form-control" name="name" required>
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label" for="name">性別</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" checked>
-                        <label class="form-check-label" for="inlineRadio1">男</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="2">
-                        <label class="form-check-label" for="inlineRadio2">女</label>
-                    </div>
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label" for="phone">連絡電話</label>
-                    <input type="tel" class="form-control" name="phone">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="birthday">生日</label>
-                    <input type="date" class="form-control" name="birthday">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="email">信箱</label>
-                    <input type="email" class="form-control" name="email">
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label" for="city">地址</label>
-                    <div class="">
-                        <select class="form-select " aria-label="Default select example" name="city">
-                            <option value="">請選擇縣市</option>
-                            <option value="臺北市">臺北市</option>
-                            <option value="新北市">新北市</option>
-                            <option value="基隆市">基隆市</option>
-                            <option value="桃園市">桃園市</option>
-                            <option value="新竹市">新竹市</option>
-                            <option value="新竹縣">新竹縣</option>
-                            <option value="苗栗縣">苗栗縣</option>
-                            <option value="臺中市">臺中市</option>
-                            <option value="彰化縣">彰化縣</option>
-                            <option value="南投縣">南投縣</option>
-                            <option value="嘉義市">嘉義市</option>
-                            <option value="嘉義縣">嘉義縣</option>
-                            <option value="臺南市">臺南市</option>
-                            <option value="高雄市">高雄市</option>
-                            <option value="屏東縣">屏東縣</option>
-                            <option value="宜蘭縣">宜蘭縣</option>
-                            <option value="花蓮縣">花蓮縣</option>
-                            <option value="臺東縣">臺東縣</option>
-                            <option value="澎湖縣">澎湖縣</option>
-                            <option value="金門縣">金門縣</option>
-                            <option value="連江縣">連江縣</option>
-                        </select>
-                        <input type="text" class="form-control mt-2" name="streetAddress">
-                    </div>
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label" for="level_id">會員等級</label>
-                    <select class="form-control" name="level_id">
-                        <option value="1">一般會員</option>
-                        <option value="2">VIP</option>
-                        <!-- <option value="3">取消管理員</option> -->
-                    </select>
-                </div>
-
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-primary align-self-center me-md-2" href="users.php" title="回會員管理列表">返回</a>
-                    <button type="submit" class="btn btn-primary">送出</button>
-                </div>
-            </div>
         </div>
-        </form>
-
-    </div>
-
+    </main>
 </body>
 <script>
     function previewAvatar() {
@@ -179,6 +226,8 @@ require_once("../../db_connect.php");
         document.getElementById('avatarPreview').src = "./upload/avatar01.jpg"; // 重置頭像預覽
     }
 </script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../js/front.js"></script>
 
 
 </html>

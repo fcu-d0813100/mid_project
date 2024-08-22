@@ -44,8 +44,12 @@ if ($userCount != 0) {
     $_SESSION["user"] = [
         "account" => $user["account"],
         "name" => $user["name"],
+        "gender" => $user["gender"],
+        "birthday" => $user["birthday"],
         "email" => $user["email"],
-        "phone" => $user["phone"]
+        "phone" => $user["phone"],
+        "address" => $user["address"],
+
     ];
 
     header("location:users.php");
