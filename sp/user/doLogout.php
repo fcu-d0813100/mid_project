@@ -4,3 +4,5 @@ session_start();
 
 unset($_SESSION["user"]);
 header("location: sign-in.php");
+
+$conn->close();

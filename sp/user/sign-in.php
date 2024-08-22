@@ -121,7 +121,7 @@ if (isset($_SESSION["user"])) {
                 </form>
             <?php endif; ?>
             <div class="mt-4 text-muted">
-                © 2017–2024
+                © 2010-2024 Makeup
             </div>
         </div>
 
