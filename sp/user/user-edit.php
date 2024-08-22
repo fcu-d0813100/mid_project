@@ -162,23 +162,22 @@ if ($userCount > 0) {
                         </div>
                     </div>
 
-                    <div class="mt-0 ms-2">
+                    <div class="row mt-0 ms-2">
                         <!-- 上傳區塊 -->
                         <label for="form-label text-style">編輯頭像</label>
                         <div class="col-3">
                             <input type="file" id="avatarUpload" name="meupload" class="form-control" onchange="previewAvatar()">
                         </div>
-                        <div class="col-auto">
+                        <div class="col-1">
                             <button type="button" class="btn btn-dark" onclick="resetAvatar()"><i class="fa-solid fa-rotate-right"></i></button>
                         </div>
                     </div>
-
                     <div class="mt-4">
                         <div class="d-flex justify-content-between">
-                            <button class="btn btn-outline-secondary"
-                                type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
+                            <button class="btn btn-dark"
+                                type="submit"><i class="fa-solid fa-floppy-disk px-2"></i>儲存</button>
                             <a class="btn btn-danger" href="#" onclick="return confirmDelete(<?= $row['id'] ?>)">
-                                <i class="fa-regular fa-trash-can"></i>
+                                <i class="fa-regular fa-trash-can px-2"></i>停權
                             </a>
                         </div>
                 </form>
