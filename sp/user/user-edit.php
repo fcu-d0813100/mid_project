@@ -75,7 +75,7 @@ if ($userCount > 0) {
                 <div class="col-lg-4">
                     <h1>修改會員資料</h1>
                     <?php if ($userCount > 0) : ?>
-                        <form action="doUpdateUser.php" method="post">
+                        <form action="doUpdateUser.php" method="post" enctype="multipart/form-data">
                             <table class="table table-bordered">
                                 <input type="hidden" name="id"
                                     value="<?= $row["id"] ?>">
@@ -152,8 +152,20 @@ if ($userCount > 0) {
                                 </tr>
 
                             </table>
+
+                            <div class="row mb-3 d-flex align-items-center">
+                                <!-- 上傳區塊 -->
+                                <label for="form-label text-style">上傳會員頭像</label>
+                                <div class="col">
+                                    <input type="file" id="avatarUpload" name="meupload" class="form-control" onchange="previewAvatar()">
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-dark" onclick="resetAvatar()"><i class="fa-solid fa-rotate-right"></i></button>
+                                </div>
+                            </div>
+
                             <h2>會員照片</h2>
-                            <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid">
+                            <img src="./upload/<?= $row["member_img"] ?>" alt="" class="img-fluid" id="avatarPreview">
                             <div class="">
                                 <div class="d-flex justify-content-between">
                                     <button class="btn btn-outline-secondary"
@@ -170,6 +182,30 @@ if ($userCount > 0) {
             </div>
         </div>
     </main>
+
+    <script>
+        function previewAvatar() {
+            let file = document.getElementById('avatarUpload').files[0];
+            let preview = document.getElementById('avatarPreview');
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "./upload/<?= $row["member_img"] ?>"; // 如果沒有選擇新圖片，保留預設圖片
+            }
+        }
+
+        // function resetAvatar() {
+        //     document.getElementById('avatarUpload').value = ""; // 清空檔案
+        //     document.getElementById('avatarPreview').src = "./upload/avatar01.jpg"; // 重置頭像預覽
+        // }
+    </script>
+
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
 </body>

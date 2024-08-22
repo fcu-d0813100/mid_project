@@ -96,7 +96,6 @@ if (isset($_GET["search"])) {
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
 </head>
 
 <body>
@@ -128,7 +127,7 @@ if (isset($_GET["search"])) {
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center col-md-4">
-                    <p class="h5">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
+                    <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
                 </div>
 
 
