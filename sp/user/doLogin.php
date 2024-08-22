@@ -49,7 +49,6 @@ if ($userCount != 0) {
         "email" => $user["email"],
         "phone" => $user["phone"],
         "address" => $user["address"],
-
     ];
 
     header("location:users.php");

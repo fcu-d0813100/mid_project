@@ -87,12 +87,17 @@ if (isset($_GET["search"])) {
     <meta name="robots" content="noindex">
     <?php include("css.php") ?>
 
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+    </style>
 
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
-    <main class="main-content bg-light">
+    <main class="main-content">
         <div class="mx-2">
             <div class="row d-flex justify-content-between">
                 <div class="mt-3 col-md-3">
@@ -110,13 +115,24 @@ if (isset($_GET["search"])) {
                     <form action="">
                         <div class="input-group">
                             <input type="search" class="form-control" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋ID、姓名關鍵字">
-                            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i>搜尋</button>
+                            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             <?php if (isset($_GET["search"])) : ?>
-                                <a class="btn btn-dark ms-1" href="users.php" title="回到會員列表"><i class="fa-solid fa-rotate-right"></i></a>
+                                <a class="btn btn-dark" href="users.php" title="回到會員列表"><i class="fa-solid fa-rotate-right"></i></a>
                             <?php endif; ?>
                         </div>
                     </form>
                 </div>
+
+                <?php if (isset($_GET["search"])): ?>
+                    <div class="d-flex justify-content-center align-items-center col-md-4">
+                        <p class="text-md">共有<?= $userCount ?>筆會員資料</p>
+                    </div>
+                <?php else: ?>
+                    <div class="d-flex justify-content-center align-items-center col-md-4">
+                        <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
+                    </div>
+                <?php endif; ?>
+
 
 
                 <?php if (isset($_GET["search"])): ?>
@@ -132,7 +148,7 @@ if (isset($_GET["search"])) {
                     <div class="d-flex justify-content-end col-md-4">
                         <div class="btn-group">
                             <!-- 排序ID(由小到大)由大到小 利用order by -->
-                            <a class="btn btn-dark mx-1"
+                            <a class="btn btn-dark mx-1 "
                                 <?php if ($order == 1) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=1">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
                             <a class="btn btn-dark "
@@ -154,9 +170,8 @@ if (isset($_GET["search"])) {
 
         ?>
 
-
-            <table class="table table-hover text-center">
-                <thead>
+            <table class="table table-hover text-center align-middle mt-3 ">
+                <thead class="">
                     <tr>
                         <th>ID</th>
                         <th>姓名</th>
@@ -166,7 +181,7 @@ if (isset($_GET["search"])) {
                         <th>信箱</th>
                         <th>註冊時間</th>
                         <th>會員等級</th>
-                        <th>檢視及編輯</th>
+                        <th>檢視 <span></span> <span></span><span></span>編輯</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -208,10 +223,9 @@ if (isset($_GET["search"])) {
                         </li>
                     </ul>
                 </nav>
-
             <?php endif; ?>
         <?php else : ?>
-            搜尋不到會員資料
+            搜尋不到資料
         <?php endif; ?>
         </div>
     </main>

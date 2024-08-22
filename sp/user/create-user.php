@@ -6,7 +6,7 @@ require_once("../../db_connect.php");
 <html lang="en">
 
 <head>
-    <title>Create User</title>
+    <title>新增會員</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -50,7 +50,7 @@ require_once("../../db_connect.php");
 
 <body>
     <?php include("../../nav1.php") ?>
-    <main class="main-content bg-color  mx-2">
+    <main class="main-content mx-2">
         <div class="container py-5">
             <div class="row d-flex justify-content-center align-items-center">
                 <p class="m-0 d-inline text-lg text-secondary">會員管理 /<span class="text-sm">新增會員</span></p>
