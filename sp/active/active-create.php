@@ -26,7 +26,7 @@
 
         <main class="main-content">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-secondary">活動列表 /<span class="text-sm">活動編輯</span></p>
+                <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-dark">活動列表 </a> /<span class="text-sm">活動編輯</span></p>
             </div>
             <hr>
             <!-- table-->

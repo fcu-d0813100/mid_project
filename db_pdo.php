@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'product_management';
+$dbname = 'mid_project';
 $username = 'admin';  // 根據你的設置
 $password = '12345';      // 根據你的設置
 
@@ -11,4 +11,3 @@ try {
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
-?>
