@@ -82,7 +82,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>活動管理 </a>
         <ul class="collapse list-unstyled " id="eventDropdown">
-          <li><a class="sidebar-link" href="../active/active.php">活動管理</a></li>
+          <li><a class="sidebar-link" href="../active/active.php">活動列表</a></li>
         </ul>
       </li>
     </ul>
