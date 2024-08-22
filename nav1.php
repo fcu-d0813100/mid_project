@@ -63,7 +63,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>優惠管理 </a>
         <ul class="collapse list-unstyled " id="discountDropdown">
-          <li><a class="sidebar-link" href="../coupon/coupon-list.php">優惠券列表</a></li>
+          <li><a class="sidebar-link" href="../coupon/coupon-list.php?p=1">優惠券列表</a></li>
         </ul>
       </li>
 

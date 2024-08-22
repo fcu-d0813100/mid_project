@@ -95,10 +95,10 @@
                                 <input type="date" class="form-control" name="end_date" id="end_date">
                             </div>
                         </div>
-                        <a href="coupon-list.php" class="btn btn-outline-secondary " title="回優惠券列表">
-                            <i class="fa-solid fa-arrow-left"></i>取消
+                        <a href="coupon-list.php?p=1" class="btn btn-outline-secondary p-2 me-3" title="回優惠券列表">
+                            <i class="fa-solid fa-arrow-left"></i> 取消
                         </a>
-                        <button class="btn btn-outline-secondary" type="submit">送出</button>
+                        <button class="btn btn-outline-secondary p-2" type="submit"><i class="fa-solid fa-file-import "></i> 送出</button>
                     </form>
                 </div>
 

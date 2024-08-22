@@ -18,7 +18,9 @@ $sql = "SELECT *,
  users.email AS user_email, 
  users.phone AS user_phone, 
  users.address AS user_address,
+ pay.id AS pay_id,
  pay.name AS pay_name,
+ status.id AS status_id,
  status.name AS status_name,
  color.color AS color
  
@@ -33,9 +35,10 @@ WHERE user_order.id='$id' AND user_order.valid=1
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-$sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
-$resulorderAll = $conn->query($sqlorderAll);
-$orderCountAll = $resulorderAll->num_rows;
+
+// $sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
+// $resulorderAll = $conn->query($sqlorderAll);
+// $orderCountAll = $resulorderAll->num_rows;
 
 
 ?>
@@ -68,62 +71,62 @@ $orderCountAll = $resulorderAll->num_rows;
         <?php include("../../nav1.php") ?>
 
         <main class="main-content">
-            <div class="pt-5 px-5 mx-5">
-                <div class="d-flex justify-content-start align-items-center">
+            <form action="doUpdateOrder.php" method="post">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <div class="pt-5 px-5 mx-5">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <p class="m-0 d-inline text-lg text-secondary">訂單明細</p>
+                    </div>
 
-                    <p class="m-0 d-inline text-lg text-secondary">訂單明細 /<span class="text-sm">#<?= $_GET["id"] ?></span></p>
-                </div>
-                <form action="doUpdateOrder.php" method="post">
                     <!-- table-->
                     <div class="py-2 d-flex justify-content-end gap-2">
-                        <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-solid fa-arrow-left"></i>
+                        <a href="order.php?id=<?= $id ?>" class="btn btn-outline-secondary p-2"> <i class="fa-solid fa-arrow-left"></i>
                             取消
                         </a>
-                        <button class="btn btn-outline-secondary" type="submit">
+                        <button class="btn btn-outline-secondary p-2" type="submit">
                             <i class="fa-solid fa-floppy-disk"></i> 儲存
                         </button>
-                        <!-- <a href="order.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary justify-content-end" type="submit"> <i class="fa-solid fa-floppy-disk"></i>
-                            儲存
-                        </a> -->
                     </div>
 
                     <div class="d-flex align-items-center justify-content-between p-3 border mb-3 ">
-                        <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號#<?= $_GET["id"] ?></span></p>
+                        <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號#<?= $row["number"] ?></span></p>
                         <div class="d-flex align-items-center justify-content-between col-6">
+
                             <div>
-                                <p>付款狀態</p>
-                                <select class="form-select" aria-label="Default select example" name="pay">
-                                    <option value="1" <?= $row["pay_id"] == 1 ? 'selected' : '' ?>>未付款</option>
-                                    <option value="2" <?= $row["pay_id"] == 2 ? 'selected' : '' ?>>已付款</option>
+                                <label for="name">付款狀態</label>
+                                <select class="form-select" aria-label="Default select example" name="pay_id">
+                                    <option value="1" <?= $row["pay_id"] == "1" ? 'selected' : '' ?>>未付款</option>
+                                    <option value="2" <?= $row["pay_id"] == "2" ? 'selected' : '' ?>>已付款</option>
                                 </select>
                             </div>
                             <div>
-                                <p>訂單狀態</p>
-                                <select class="form-select" aria-label="Default select example" name="status">
-                                    <option value="1" <?= $row["status_id"] == 1 ? 'selected' : '' ?>>處理中</option>
-                                    <option value="2" <?= $row["status_id"] == 2 ? 'selected' : '' ?>>已完成</option>
+                                <label for="name">訂單狀態</label>
+                                <select class="form-select" aria-label="Default select example" name="status_id">
+                                    <option value="1" <?= $row["status_id"] == "1" ? 'selected' : '' ?>>處理中</option>
+                                    <option value="2" <?= $row["status_id"] == "2" ? 'selected' : '' ?>>已完成</option>
                                 </select>
                             </div>
                             <div></div>
                         </div>
                     </div>
-                </form>
 
-                <table class="table "> <!-- table-bordered -->
-                    <thead class="table-light">
-                        <tr>
-                            <th>商品圖片</th>
-                            <th>名稱</th>
-                            <th>規格</th>
-                            <th>數量</th>
-                            <th>價格</th>
-                            <th>小計</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $total = 0;
-                        if ($orderCountAll > 0) : ?>
+
+                    <table class="table "> <!-- table-bordered -->
+                        <thead class="table-light">
+                            <tr>
+                                <th>商品圖片</th>
+                                <th>名稱</th>
+                                <th>規格</th>
+                                <th>數量</th>
+                                <th>價格</th>
+                                <th>小計</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $total = 0;
+                            // if ($orderCountAll > 0) : 
+                            ?>
                             <tr>
                                 <td><?= $row["product_img"] ?></td>
                                 <td><?= $row["product_name"] ?></td>
@@ -136,30 +139,29 @@ $orderCountAll = $resulorderAll->num_rows;
                                 ?>
                                 <td class="text-start"><?= number_format($subtotal) ?></td>
                             </tr>
-                        <?php endif; ?>
-                        <tr>
-                            <td colspan="4 "></td>
-                            <td>訂單總額：</td>
-                            <td><?= number_format($subtotal) ?></td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <?php
+                            // endif; 
+                            ?>
+                            <tr>
+                                <td colspan="4 "></td>
+                                <td>訂單總額：</td>
+                                <td><?= number_format($subtotal) ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-
-
-
-                <div class="d-flex align-items-center justify-content-start mt-5">
-                    <div class="col-3">
-                        <p class=" d-inline text-lg text-secondary border-bottom">會員資料</p>
-                        <h5 class="mt-2 text-secondary">姓名：<?= $row["user_name"] ?></h5>
-                        <h5 class="text-secondary">Email：<?= $row["user_email"] ?></h5>
-                        <h5 class="text-secondary">手機：<?= $row["user_phone"] ?></h5>
-                        <h5 class="text-secondary">地址：<?= $row["user_address"] ?></h5>
+                    <div class="d-flex align-items-center justify-content-start mt-5">
+                        <div class="col-3">
+                            <p class=" d-inline text-lg text-secondary border-bottom">會員資料</p>
+                            <h5 class="mt-2 text-secondary">姓名：<?= $row["user_name"] ?></h5>
+                            <h5 class="text-secondary">Email：<?= $row["user_email"] ?></h5>
+                            <h5 class="text-secondary">手機：<?= $row["user_phone"] ?></h5>
+                            <h5 class="text-secondary">地址：<?= $row["user_address"] ?></h5>
+                        </div>
                     </div>
+
                 </div>
-
-            </div>
-
+            </form>
         </main>
 
         <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

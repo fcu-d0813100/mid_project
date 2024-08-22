@@ -18,4 +18,4 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-header("location: coupon-list.php");
+header("location: coupon-list.php?p=1");

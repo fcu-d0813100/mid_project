@@ -36,7 +36,7 @@ if (isset($_GET["search_type"]) || isset($_GET["date"]) || isset($_GET["start"])
         $search = $conn->real_escape_string($_GET["search"]);
         if ($searchType == "1") {
             // 搜尋訂單編號
-            $whereClause .= " AND user_order.id LIKE '%$search%'";
+            $whereClause .= " AND user_order.number LIKE '%$search%'";
         } elseif ($searchType == "2") {
             // 搜尋訂購者名稱
             $whereClause .= " AND users.name LIKE '%$search%'";
@@ -122,12 +122,12 @@ $result = $conn->query($sql);
     <?php include("../../nav1.php") ?>
 
     <main class="main-content">
-        <div class="pt-4 px-5">
+        <div class="pt-5 px-5">
             <div class="d-flex justify-content-between align-items-start ">
                 <!-- 返回 order-list 的按鈕 -->
-                <?php if (isset($_GET["date"]) || isset($_GET["user"]) || isset($_GET["product"])) : ?>
+                <?php if (isset($_GET["date"]) || isset($_GET["user"])) : ?>
                     <div class="col-auto">
-                        <a class="btn btn-primary" href="order-list.php"><i class="fa-solid fa-left-long"></i></a>
+                        <a class="btn btn-primary" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
                     </div>
                 <?php endif; ?>
 
@@ -196,7 +196,7 @@ $result = $conn->query($sql);
                             <div class="row g-2">
                                 <?php if (isset($_GET["start"])) : ?>
                                     <div class="col-auto">
-                                        <a class="btn btn-primary" href="order-list.php"><i class="fa-solid fa-left-long"></i></a>
+                                        <a class="btn btn-primary" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
                                     </div>
                                 <?php endif; ?>
                                 <div class="col-auto">
@@ -256,7 +256,10 @@ $result = $conn->query($sql);
                                 <td class=""><?= number_format($subtotal) ?></td>
 
                                 <!-- class="btn btn-outline-secondary " -->
-                                <td><a class="btn btn-outline-secondary " href="order.php?id=<?= $order["id"] ?>"><i class="fa-solid fa-file-lines "></i></a>
+                                <td>
+                                    <a class="btn btn-outline-secondary " href="order.php?id=<?= $order["id"] ?>">
+                                        <i class="fa-solid fa-file-lines "></i>
+                                    </a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
@@ -268,7 +271,7 @@ $result = $conn->query($sql);
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content ">
                                                 <div class="modal-body">
-                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料</h1>
+                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>

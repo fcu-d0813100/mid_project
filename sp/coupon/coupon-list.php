@@ -4,6 +4,12 @@ require_once("../../db_connect.php");
 
 
 // 
+$whereClause = "WHERE coupon_list.valid = 1 ";
+
+$sqlorderAll = "SELECT * FROM coupon_list WHERE valid = 1";
+$resulorderAll = $conn->query($sqlorderAll);
+$couponCountAll = $resulorderAll->num_rows;
+
 $page = isset($_GET["p"]) ? intval($_GET["p"]) : 1;
 $per_page = 6;
 $start_item = ($page - 1) * $per_page;
@@ -27,10 +33,12 @@ if (isset($_GET["start_date"])) {
 
 
 
+
+
 $sql = "SELECT coupon_list.*, type.name AS type_name 
         FROM coupon_list 
         JOIN type ON coupon_list.type_id = type.id
-        WHERE coupon_list.valid = 1
+        $whereClause
         ORDER BY coupon_list.id DESC
         LIMIT $start_item, $per_page";
 $result = $conn->query($sql);
@@ -86,9 +94,9 @@ $result = $conn->query($sql);
       <div class="select d-flex align-items-center justify-content-end border-start border-end">
 
         <!-- 日期篩選 -->
-        <?php if (!isset($_GET["product"]) && !isset($_GET["user"]) && !isset($_GET["start_date"])): ?>
+        <?php if (!isset($_GET["start_date"])): ?>
           <div class="mx-3 my-2 py-2">
-            <form action="" method="post">
+            <form action="">
               <?php
               $today = date('Y-m-d');
               $start = isset($_GET["start"]) ? $_GET["start"] : $today;
@@ -183,7 +191,7 @@ $result = $conn->query($sql);
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content ">
                         <div class="modal-body">
-                          <h1 class="modal-title py-3" id="exampleModalLabel">確定要刪除此筆資料</h1>
+                          <h1 class="modal-title py-3" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -192,12 +200,6 @@ $result = $conn->query($sql);
                       </div>
                     </div>
                   </div>
-
-                  <!-- <a href="doDeleteCoupon.php?id=<?= urlencode($row["id"]) ?>"
-                    class="btn btn-outline-secondary"
-                    onclick="return confirmDelete()">
-                    <i class="fa-regular fa-trash-can"></i>
-                  </a> -->
                   <!-- <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary ">
                     <i class="fa-regular fa-trash-can"></i>
                   </a> -->
@@ -209,20 +211,18 @@ $result = $conn->query($sql);
         </table>
         <nav aria-label="Page navigation example ">
           <ul class="pagination justify-content-center mt-5">
-
-            <?php for ($i = 1; $i <= $total_Page; $i++) : ?>
-              <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link " href="coupon-list.php?p=<?= $i ?>"><?= $i ?></a>
-              </li>
-            <?php endfor; ?>
+            <?php if (isset($_GET["p"])): ?>
+              <?php for ($i = 1; $i <= $total_Page; $i++) : ?>
+                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                  <a class="page-link " href="coupon-list.php?p=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            <?php endif; ?>
           </ul>
         </nav>
       <?php else : ?>
         目前沒有優惠券
       <?php endif; ?>
-
-
-
     </div>
 
   </main>
