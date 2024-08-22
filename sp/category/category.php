@@ -77,7 +77,7 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>文章列表</title>
+  <title>品項管理</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
@@ -95,10 +95,12 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
     <div class="container">
-      <h3>品項管理</h3>
+      <div class="py-3">
+        <p class="m-0 d-inline text-lg text-secondary">類別管理 /<span class="text-sm">品項管理</span></p>
+      </div>
       <div class="py-2">
-        <?php if ($search) : ?>
-          <a class="btn btn-primary" href="category.php"><i class="fa-solid fa-left-long"></i></a>
+        <?php if (!empty($_GET["search"]) && empty($_GET["main_category_id"]) && empty($_GET["order"])) : ?>
+          <a class="btn btn-primary" href="category.php" title="回列表"><i class="fa-solid fa-left-long"></i> 返回列表</a>
         <?php endif; ?>
 
       </div>
@@ -112,31 +114,34 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
         </form>
       </div>
       <div class="py-2">
-        <form action="" method="get">
-          <div class="input-group">
-            <select class="form-control" name="main_category_id" onchange="this.form.submit()">
-              <option value="0" <?= $main_category_id == 0 ? 'selected' : '' ?>>全部分類</option>
-              <?php while ($category = $main_categories->fetch_assoc()) : ?>
-                <option value="<?= $category['id'] ?>" <?= $main_category_id == $category['id'] ? 'selected' : '' ?>>
-                  <?= htmlspecialchars($category['name']) ?>
-                </option>
-              <?php endwhile; ?>
-            </select>
-            <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
-            <input type="hidden" name="order" value="<?php echo $order; ?>">
-          </div>
-        </form>
+
       </div>
       <div class="py-2 d-flex justify-content-between">
-        <a class="btn btn-primary" href="create-category.php"><i class="fa-solid fa-plus"></i>新增類別</a>
-        <div class="btn-group">
-          <a class="btn btn-primary <?= ($order == 1) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=1&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
-            <i class="fa-solid fa-arrow-down-1-9"></i> ID正序
-          </a>
-          <a class="btn btn-primary <?= ($order == 2) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=2&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
-            <i class="fa-solid fa-arrow-down-9-1"></i> ID倒序
-          </a>
-          <!-- Add more sorting options here if needed -->
+        <a class="btn btn-primary" href="create-category.php"><i class="fa-solid fa-plus"></i>新增品項</a>
+        <div class="d-flex justify-content-between">
+          <form action="" method="get">
+            <div class="input-group">
+              <select class="form-control" name="main_category_id" onchange="this.form.submit()">
+                <option value="0" <?= $main_category_id == 0 ? 'selected' : '' ?>>全部分類</option>
+                <?php while ($category = $main_categories->fetch_assoc()) : ?>
+                  <option value="<?= $category['id'] ?>" <?= $main_category_id == $category['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($category['name']) ?>
+                  </option>
+                <?php endwhile; ?>
+              </select>
+              <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
+              <input type="hidden" name="order" value="<?php echo $order; ?>">
+            </div>
+          </form>
+          <div class="btn-group">
+            <a class="btn btn-primary <?= ($order == 1) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=1&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
+              <i class="fa-solid fa-arrow-down-1-9"></i> ID正序
+            </a>
+            <a class="btn btn-primary <?= ($order == 2) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=2&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
+              <i class="fa-solid fa-arrow-down-9-1"></i> ID倒序
+            </a>
+            <!-- Add more sorting options here if needed -->
+          </div>
         </div>
       </div>
       <?php if ($subCountAll > 0) :
@@ -178,12 +183,13 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
           </nav>
         <?php endif; ?>
       <?php else : ?>
-        目前沒有此類別
+        <div class="py-3">
+          目前沒有此品項
+        </div>
       <?php endif; ?>
     </div>
   </main>
-
-
+  <?php $conn->close(); ?>
   </div>
 
 
@@ -204,5 +210,3 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
 </body>
 
 </html>
-
-<?php $conn->close(); ?>

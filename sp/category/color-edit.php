@@ -1,67 +1,38 @@
 <?php
 require_once("./productdb_connect.php");
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if (!isset($_GET["id"])) {
+    echo "請正確帶入 get id 變數";
+    exit;
+};
 
-if ($id <= 0) {
-    die("无效的 ID");
-}
 
-// 获取当前颜色信息
-$sql = "SELECT color.id, product.product_name, color.color, color.stock, color.product_id
-        FROM color
-        JOIN product ON color.product_id = product.id
+$id = $_GET["id"];
+
+$sql = "SELECT color.id, color.product_id, color.color, color.stock, product_list.product_name
+        FROM color 
+        JOIN product_list ON color.product_id = product_list.id
         WHERE color.id = $id";
 
 $result = $conn->query($sql);
-
-if ($result) {
-    $color = $result->fetch_assoc();
-} else {
-    die("Error: " . $conn->error);
+if ($result->num_rows === 0) {
+    die("找不到該商品");
 }
 
-// 获取所有唯一的产品列表
-$searchKeyword = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+$color = $result->fetch_assoc();
 
-$sql = "SELECT id, product_name FROM product WHERE product_name LIKE '%$searchKeyword%' ORDER BY product_name";
-$result = $conn->query($sql);
 
-// 处理重复的产品名称
-$uniqueProducts = [];
-while ($row = $result->fetch_assoc()) {
-    $productName = htmlspecialchars($row['product_name']);
-    if (!isset($uniqueProducts[$productName])) {
-        $uniqueProducts[$productName] = $row['id'];
-    }
-}
 
-// 处理 POST 请求
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $color_name = $conn->real_escape_string($_POST['color']);
-    $stock = (int)$_POST['stock'];
-    $product_id = (int)$_POST['product_id'];
-
-    if ($color_name && $stock >= 0 && $product_id > 0) {
-        $update_sql = "UPDATE color SET color = '$color_name', stock = $stock, product_id = $product_id WHERE id = $id";
-        if ($conn->query($update_sql)) {
-            header("Location: color.php");
-            exit();
-        } else {
-            die("Error: " . $conn->error);
-        }
-    } else {
-        $error_message = "所有字段都必须填写且库存量必须是非负整数";
-    }
-}
 ?>
+
+
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>色號庫存</title>
+    <title>品項管理</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -78,43 +49,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
-        <div class="container">
-            <h3>編輯</h3>
-            <form action="" method="post">
-                <?php if (isset($error_message)) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?= htmlspecialchars($error_message) ?>
-                    </div>
-                <?php endif; ?>
-                <div class="mb-3">
-
-                    <p class="form-control-plaintext">色號編號：<?= htmlspecialchars($color['id']) ?></p>
-                </div>
-                <div class="mb-3">
-                    <label for="product_id" class="form-label">產品名稱</label>
-                    <select id="product_id" name="product_id" class="form-select" required>
-                        <?php foreach ($uniqueProducts as $productName => $productId) : ?>
-                            <option value="<?= $productId ?>" <?= ($productId == $color['product_id']) ? 'selected' : '' ?>>
-                                <?= $productName ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="color" class="form-label">色號</label>
-                    <input type="text" id="color" name="color" class="form-control" value="<?= htmlspecialchars($color['color']) ?>" required>
-                </div>
-                <div class="mb-3">
-                    <label for="stock" class="form-label">庫存量</label>
-                    <input type="number" id="stock" name="stock" class="form-control" value="<?= htmlspecialchars($color['stock']) ?>" required min="0">
-                </div>
-                <button type="submit" class="btn btn-primary">保存</button>
-                <a class="btn btn-secondary" href="color.php">取消</a>
+        <div class="container ">
+            <div class="py-3">
+                <p class="m-0 d-inline text-lg text-secondary">編輯修改 /<span class="text-sm">色號及庫存</span></p>
+            </div>
+            <form class="mt-3" action="doUpdateColor.php" method="get">
+                <input type="hidden" name="id" value="<?= $color['id'] ?>">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>商品編號：</th>
+                            <td><?= $color['id'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>商品名稱：</th>
+                            <td><?= $color['product_name'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>色號：</th>
+                            <td> <input type="text" name="color" value="<?= $color['color'] ?>" class="form-control" min="0" required></td>
+                        </tr>
+                        <tr>
+                            <th>庫存：</th>
+                            <td>
+                                <input type="number" name="stock" value="<?= $color['stock'] ?>" class="form-control" min="0" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">送出</button>
+                <a class="btn btn-secondary" href="color.php">返回</a>
             </form>
         </div>
     </main>
-
-
+    <?php $conn->close(); ?>
     </div>
 
 
@@ -135,4 +103,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 
 </html>
-<?php $conn->close(); ?>
