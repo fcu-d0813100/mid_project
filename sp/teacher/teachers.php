@@ -13,7 +13,14 @@ $total_page = ceil($userCountAll / $per_page);
 
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
-    $sql = "SELECT * FROM teachers WHERE account LIKE '%$search%' AND valid=1 ";
+    $sqlCount = "SELECT COUNT(*) as count FROM teachers WHERE account LIKE '%$search%' AND valid=1 ";
+
+    $resultCount = $conn->query($sqlCount);
+    $row = $resultCount->fetch_assoc();
+    $userCount = $row['count'];  // 搜尋結果的總數量
+
+    // 分頁查詢
+    $sql = "SELECT * FROM teachers WHERE account LIKE '%$search%' AND valid=1 LIMIT $start_item, $per_page";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
@@ -242,6 +249,21 @@ if (isset($_GET["search"])) {
                                                 <?php if (isset($_GET['nation'])): ?>
                                                     &nation=<?= $nation ?>
                                                 <?php endif; ?>">
+                                                    <?= $i ?>
+                                                </a>
+                                            </li>
+                                        <?php endfor; ?>
+                                    </ul>
+                                </nav>
+                            <?php elseif (isset($_GET["p"]) && isset($_GET["search"])) : ?>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <?php
+                                        $ttpage = ceil($userCount / $per_page);
+                                        for ($i = 1; $i <= 2; $i++): ?>
+                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                                                <a class="page-link px-3" href="teachers.php?p=<?= $i ?>
+                                                &search=<?php $search ?>">
                                                     <?= $i ?>
                                                 </a>
                                             </li>
