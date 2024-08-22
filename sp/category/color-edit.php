@@ -1,5 +1,6 @@
 <?php
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
 
 if (!isset($_GET["id"])) {
     echo "請正確帶入 get id 變數";

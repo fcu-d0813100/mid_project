@@ -1,6 +1,6 @@
 <?php
 
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
 
 if (!isset($_GET["category"]) || !isset($_GET["main_category_id"])) {
     echo "請循正常管道進入此頁";

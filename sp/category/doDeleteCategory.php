@@ -1,5 +1,6 @@
 <?php
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
 
 // 確保傳遞的ID有效
 $id = isset($_GET["id"]) ? (int)$_GET["id"] : 0;

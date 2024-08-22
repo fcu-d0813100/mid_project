@@ -1,5 +1,6 @@
 <?php
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
 
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
