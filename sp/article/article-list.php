@@ -112,19 +112,16 @@ $articleCount = $articleCountAll;
         <!-- sort search -->
         <form action="">
           <div class="input-group">
-            <input type="search" class="form-control border border-dark" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?> " placeholder="搜尋標題">
-            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="search" class="form-control  border-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : ""?>" placeholder="搜尋標題">
+            <button class="btn btn-outline-secondary border-start-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </form>
         <div>
-
           <!-- add button -->
           <div class="text-end">
             <a href="article-create.php" class="btn btn-outline-secondary btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
           </div>
-
         </div>
-
       </div>
     </div>
     <hr>
@@ -136,54 +133,38 @@ $articleCount = $articleCountAll;
           $rows = $result->fetch_all(MYSQLI_ASSOC) ?>
           共有<?= $articleCount ?> 則文章
           <!-- sort button -->
-          <div class="btn-group btn-group-md ">
+          <div class="btn-group btn-group-md">
             <!-- 排序ID(由小到大)由大到小 利用order by -->
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 1) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary border-end-0<?php if ($order == 1) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=1">按編號<i class="fa-solid fa-arrow-up-long"></i></a>
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 2) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary border-end-0<?php if ($order == 2) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=2">按編號<i class="fa-solid fa-arrow-down-long"></i></a>
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 3) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary border-end-0<?php if ($order == 3) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=3">按發布時間<i class="fa-solid fa-arrow-up-long"></i></a>
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 4) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary <?php if ($order == 4) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=4">按發布時間<i class="fa-solid fa-arrow-down-long"></i></a>
           </div>
       </div>
       <table class="table table-striped table-md text-md">
         <thead>
           <tr>
-            <th scope="col" class="col-1">編號
-              <!-- <div class="btn-group">
-                <a href="javascript:void(0)" onclick="sortTable(1)" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-up-long"></i></a>
-                <a href="javascript:void(0)" onclick="sortTable(2)" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-down-long"></i></a>
-              </div> -->
-            </th>
+            <th scope="col" class="col-1">編號</th>
             <th scope="col" class="col-1">品牌</th>
             <th scope="col" class="col-1">類型</th>
             <th scope="col" class="col-3">標題</th>
             <th scope="col">圖片</th>
-            <th scope="col" class="col-2">發布時間
-              <!-- <a href="javascript:void(0)" onclick="sortTable(3)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a>
-              <a href="javascript:void(0)" onclick="sortTable(4)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a> -->
-
-            </th>
+            <th scope="col" class="col-2">發布時間</th>
             <th scope="col" class="col-2">動作</th>
           </tr>
         </thead>
         <tbody>
-
           <?php foreach ($rows as $row) : ?>
             <tr class="align-middle dataList">
               <td><?= $row["id"] ?></td>
               <td><?= $row["brand_name"] ?></td>
               <td><?= $row["type_name"] ?></td>
               <td class="article-title"><?= $row["title"] ?></td>
-
               <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
-
               <td><?= $row["launched_date"] ?></td>
               <td class="gap-3">
                 <a href="article-review.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
