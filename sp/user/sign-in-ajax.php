@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION["user"])) {
-    header("location: dashboard.php");
+    header("location: users.php");
     exit;
 }
 
@@ -18,7 +18,7 @@ if (isset($_SESSION["user"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <?php
-    include("../../css.php");
+    include("css.php");
     ?>
     <style>
         body {
@@ -69,11 +69,11 @@ if (isset($_SESSION["user"])) {
                 <div class="input-area">
                     <div class="form-floating">
                         <input type="text" class="form-control" placeholder="name@example.com" id="account">
-                        <label for="floatingInput">Account</label>
+                        <label for="floatingInput">帳號</label>
                     </div>
                     <div class="form-floating">
                         <input type="password" class="form-control" id="password" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                        <label for="floatingPassword">密碼</label>
                     </div>
                 </div>
                 <?php if (isset($_SESSION["error"]["message"])) : ?>
@@ -90,7 +90,7 @@ if (isset($_SESSION["user"])) {
                     </label>
                 </div>
                 <div class="d-grid">
-                    <button class="btn btn-primary" type="submit" id="signIn">Sign in</button>
+                    <button class="btn btn-primary" type="submit" id="signIn">登入</button>
                 </div>
             <?php endif; ?>
             <div class="mt-4 text-muted">
@@ -135,7 +135,7 @@ if (isset($_SESSION["user"])) {
                     }
                     if (status == 1) {
                         alert(response.message);
-                        location.href = "dashboard.php"
+                        location.href = "users.php"
                         return;
                     }
 

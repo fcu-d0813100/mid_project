@@ -81,6 +81,11 @@ $articleCount = $articleCountAll;
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous" />
   <!-- theme stylesheet-->
   <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
   <!-- Custom stylesheet - for your changes-->
@@ -106,44 +111,36 @@ $articleCount = $articleCountAll;
         <!-- sort search -->
         <form action="">
           <div class="input-group">
-            <input type="search" class="form-control border border-dark" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?> " placeholder="搜尋標題">
-            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="search" class="form-control  border-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : ""?>" placeholder="搜尋標題">
+            <button class="btn btn-outline-secondary border-start-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </form>
         <div>
-
           <!-- add button -->
           <div class="text-end">
             <a href="article-create.php" class="btn btn-outline-secondary btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
           </div>
-
         </div>
-        <!-- add button -->
-
       </div>
     </div>
     <hr>
     <!-- table-->
-    <div class="table-responsive small">
+    <div class="table-responsive large">
 
       <div class="d-flex justify-content-between">
         <?php if ($articleCount > 0):
           $rows = $result->fetch_all(MYSQLI_ASSOC) ?>
           共有<?= $articleCount ?> 則文章
           <!-- sort button -->
-          <div class="btn-group btn-group-md ">
+          <div class="btn-group btn-group-md">
             <!-- 排序ID(由小到大)由大到小 利用order by -->
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 1) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary border-end-0<?php if ($order == 1) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=1">按編號<i class="fa-solid fa-arrow-up-long"></i></a>
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 2) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary border-end-0<?php if ($order == 2) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=2">按編號<i class="fa-solid fa-arrow-down-long"></i></a>
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 3) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary border-end-0<?php if ($order == 3) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=3">按發布時間<i class="fa-solid fa-arrow-up-long"></i></a>
-            <a class="btn btn-outline-secondary"
-              <?php if ($order == 4) echo "active" ?>
+            <a class="btn btn-outline-secondary border-secondary <?php if ($order == 4) echo "active" ?> "
               href="article-list.php?p=<?= $page ?>&order=4">按發布時間<i class="fa-solid fa-arrow-down-long"></i></a>
           </div>
       </div>
@@ -169,16 +166,13 @@ $articleCount = $articleCountAll;
           </tr>
         </thead>
         <tbody>
-
           <?php foreach ($rows as $row) : ?>
             <tr class="align-middle dataList">
               <td><?= $row["id"] ?></td>
               <td><?= $row["brand_name"] ?></td>
               <td><?= $row["type_name"] ?></td>
               <td class="article-title"><?= $row["title"] ?></td>
-
               <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
-
               <td><?= $row["launched_date"] ?></td>
               <td class="gap-3">
                 <a href="article-review.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
@@ -187,7 +181,8 @@ $articleCount = $articleCountAll;
                 <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
                   <i class="fa-regular fa-pen-to-square"></i>
                 </a>
-                <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
+                <a href="javascript:void(0);" class="btn btn-outline-secondary btn-md"
+                  onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
                   <i class="fa-regular fa-trash-can"></i>
                 </a>
               </td>
@@ -200,8 +195,8 @@ $articleCount = $articleCountAll;
     <?php endif; ?>
     </div>
     <?php if (isset($_GET["p"])): ?>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination d-flex justify-content-end">
           <?php for ($i = 1; $i <= $total_page; $i++): ?>
             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
               <a class="page-link" href="article-list.php?p=<?= $i ?>&order=<?= $order ?>">
@@ -212,20 +207,7 @@ $articleCount = $articleCountAll;
       </nav>
     <?php endif; ?>
   </main>
-
-
   </div>
-
-
-  <script>
-    function sortTable(orderType) {
-      var page = <?= $page ?>;
-      var url = "article-list.php?p=" + page + "&order=" + orderType;
-      window.location.href = url;
-    }
-  </script>
-
-
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"

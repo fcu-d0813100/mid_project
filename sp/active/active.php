@@ -6,9 +6,7 @@ $sqlAll = "SELECT * FROM active WHERE valid=1";
 $resultALL = $conn->query($sqlAll);
 $activeCountAll = $resultALL->num_rows;
 
-
-
-
+$now = date('Y-m-d H:i:s');
 
 $page = 1; //頁數
 $startItem = 0;
@@ -20,7 +18,8 @@ if (isset($_GET["search"])) {
   $sql = "SELECT * FROM active 
           WHERE (brand LIKE '%$search%' 
           OR name LIKE '%$search%' 
-          OR id LIKE '%$search%') 
+          OR id LIKE '%$search%'
+          OR start_at LIKE '%$search%') 
           AND valid = 1";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
   $order = $_GET["order"];
@@ -77,13 +76,13 @@ $userCount = $result->num_rows;
 
   <main class="main-content ">
     <div class="d-flex justify-content-between align-items-start mt-3">
-      <p class="m-0 d-inline text-lg text-secondary">活動管理 /<span class="text-sm">活動列表</span></p>
+      <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-dark">活動管理 </a> /<span class="text-sm">活動列表</span></p>
 
       <form action="" class="align-self-center " style="width: 600px;">
         <div class="input-group mb-3">
-          <input type="search" class="form-control border border-dark" placeholder="輸入使用者名稱" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
+          <input type="search" class="form-control border border-secondary" placeholder="輸入使用者名稱" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
             value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>">
-          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <button class="btn btn-outline-secondary border-start-0" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
       </form>
 
@@ -100,13 +99,14 @@ $userCount = $result->num_rows;
     <?php if ($activeCountAll):
       $rows = $result->fetch_all(MYSQLI_ASSOC); ?>
       <div class="text-md">共有<?= $activeCountAll;
-                              var_dump($where_clause); ?> 筆活動</div>
+                              //var_dump($where_clause); 
+                              ?> 筆活動</div>
 
       <div class="table-responsive large">
         <table class="table table-striped table-md" id="datatable">
           <thead>
             <tr>
-              <th scope="col" style="width: 100px;">
+              <th scope="col" style="width: 105px;">
                 <span style="background-color: none;">ID</span>
                 <?php if (isset($_GET["p"])) : ?>
                   <a
@@ -173,23 +173,46 @@ $userCount = $result->num_rows;
                   <?= $row["address"] ?>
                 </td>
                 <td>
-                  <span class=" rounded-pill bg-success p-2 text-white">報名中</span>
-                  <span class=" rounded-pill bg-danger p-2 text-white">已截止</span>
-                  <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
-                  <span class=" rounded-pill bg-secondary p-2 text-white">已結束</span>
+                  <?php
+                  // 计算7天前的时间
+                  $startAt = $row["start_at"];
+                  // 将字符串转换为 DateTime 对象
+                  $applyTime = new DateTime($startAt);
+                  // 使用 modify 减去7天
+                  $applyTime->modify('-7 days');
+                  // 将 $applyTime 格式化为字符串
+                  $applyTimeFor = $applyTime->format('Y-m-d H:i:s');
+                  ?>
+                  <?php if ($row["currentAPP"] === $row["maxAPP"]): ?>
+                    <span class=" rounded-pill p-2 text-white" style="background-color: orange;">已額滿</span>
+                  <?php endif; ?>
+                  <?php if ($now < $applyTimeFor) : ?>
+                    <span class=" rounded-pill bg-success p-2 text-white">報名中</span>
+                  <?php elseif ($now < $row["start_at"] && $now > $applyTimeFor) : ?>
+                    <span class=" rounded-pill bg-secondary p-2 text-white">已截止</span>
+                  <?php elseif ($now > $row["start_at"] && $now < $row["end_at"]) : ?>
+                    <span class=" rounded-pill bg-warning p-2 text-white">進行中</span>
+                  <?php else : ?>
+                    <span class=" rounded-pill bg-danger p-2 text-white">已結束</span>
+                  <?php endif; ?>
+
                 </td>
 
+
                 <td><?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?></td>
+
                 <td>
                   <a href="active-info.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-eye"></i>
                   </a>
-                  <a href="active-edit.php" class="btn btn-outline-secondary btn-lg">
+                  <a href="active-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
                     <i class="fa-regular fa-pen-to-square"></i>
                   </a>
-                  <a href="doDeleteActive.php" class="btn btn-outline-secondary btn-lg">
+                  <a href="javascript:void(0);" class="btn btn-outline-secondary btn-lg"
+                    onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteActive.php?id=<?= $row['id'] ?>'; }">
                     <i class="fa-regular fa-trash-can"></i>
                   </a>
+
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -212,57 +235,8 @@ $userCount = $result->num_rows;
 
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="../js/front.js"></script> -->
-  <script>
-    const sortButtons = document.querySelectorAll('.sort');
-    sortButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const icon = button.querySelector('i');
+  <!-- <scrip src="../js/front.js"></script> -->
 
-        if (icon.classList.contains('fa-sort-down')) {
-          icon.classList.remove('fa-sort-down');
-          icon.classList.add('fa-sort-up');
-        } else {
-          icon.classList.remove('fa-sort-up');
-          icon.classList.add('fa-sort-down');
-        }
-      });
-    });
-
-
-
-    function searchTable() {
-      // 获取输入框中的搜索关键字
-
-      const input = document.getElementById('searchInput');
-      const filter = input.value.toLowerCase();
-      const table = document.getElementById('datatable');
-      const tr = table.getElementsByTagName('tr');
-
-      console.log(tr);
-
-      // 循环遍历所有表格行
-      for (let i = 1; i < tr.length; i++) { // 跳过表头
-        const tds = tr[i].getElementsByTagName('td');
-        let match = false;
-
-        // 循环遍历当前行中的每个单元格
-        for (let j = 0; j < tds.length; j++) {
-          const td = tds[j];
-          if (td) {
-            // 如果单元格内容包含搜索关键字，则标记为匹配
-            if (td.textContent.toLowerCase().indexOf(filter) > -1) {
-              match = true;
-              break;
-            }
-          }
-        }
-
-        // 如果匹配，显示该行；否则隐藏
-        tr[i].style.display = match ? '' : 'none';
-      }
-    }
-  </script>
 
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"

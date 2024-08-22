@@ -8,7 +8,6 @@ if (!isset($_POST["name"])) {
     exit;
 }
 
-
 $id = $_POST["id"];
 $name = $_POST["name"];
 $gender = $_POST["gender"];
@@ -17,30 +16,50 @@ $phone = $_POST["phone"];
 $birthday = $_POST["birthday"];
 $email = $_POST["email"];
 $address = $_POST["address"];
+// $member_img = $_POST["member_img"];
 
-// 目前頁面有問題
-
-
-// $sql = "UPDATE users SET level_id = '".$_POST['level_id']."' WHERE user_id = '".$_POST['user_id']."'";
-
-// $sql = "UPDATE users SET gender = '$gender' WHERE user_id = '".$_POST['user_id']."'";
-
-// $sql = "UPDATE users SET name='$name',gender='$gender' ,phone='$phone',  birthday='$birthday', email='$email' , address='$address', level_id = '" . $_POST['level_id'] . "' WHERE id=$id";
 
 $sql = "UPDATE users SET name = '$name', gender = '$gender', level_id = '$level_id', phone = '$phone', birthday = '$birthday', email = '$email', address = '$address' WHERE id = '$id'";
 
-// $sql = "UPDATE users SET  name='$name',gender='$gender' ,phone='$phone',  birthday='$birthday', email='$email' , address='$address', level_id = '" . $_POST['level_id'] . "' WHERE id=$id";
-
-// (account, password, name ,gender, phone,birthday, email,address,created_at,level_id, valid)
-// VALUES ('$account', '$password', '$name','$gender' ,'$phone','$birthday', '$email','$address','$level_id',1)";
-
-
 if ($conn->query($sql) === TRUE) {
-    echo "更新成功";
+    // $last_id = $conn->insert_id;
+    // echo "新資料輸入成功, id 為 $last_id";
+    // 插入圖片
+    if ($_FILES["meupload"]["error"] == 0) {
+        $filename = $_FILES["meupload"]["name"];
+        $fileInfo = pathinfo($filename);
+        $extension = $fileInfo["extension"];
+        $newFilename = time() . ".$extension";
+
+        if (move_uploaded_file($_FILES["meupload"]["tmp_name"], "./upload/" . $newFilename)) {
+            $sql = "UPDATE users SET member_img = '$newFilename' WHERE id = $id";
+            if ($conn->query($sql) === TRUE) {
+                header("Location: user.php?id=$id"); // 跳轉到上傳成功頁面
+                exit;
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+
+            echo "圖片上傳成功";
+        } else {
+            echo "圖片上傳失敗";
+        }
+    }
+
+    // header("Location: users.php");
+    exit;
 } else {
-    echo "更新資料錯誤: " . $conn->error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-header("location: user-edit.php?id=$id");
+
+
+// if ($conn->query($sql) === TRUE) {
+//     echo "更新成功";
+// } else {
+//     echo "更新資料錯誤: " . $conn->error;
+// }
+
+header("location: user.php?id=$id");
 
 $conn->close();

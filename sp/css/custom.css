@@ -17,14 +17,14 @@
 .input-group {
   width: 300px;
 }
-.search-form{
+.search-form {
   padding-left: 11.75rem;
 }
-.align-middle>.ratio-4x3 {
-  width: 200px; 
-  background-color: rgb(205, 226, 255);
-}
 
+.align-middle > .ratio-4x3 {
+  width: 200px;
+  /* background-color: rgb(205, 226, 255); */
+}
 .activePic {
   width: 400px;
   height: auto;

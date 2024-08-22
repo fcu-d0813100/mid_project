@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <?php include("../../css.php") ?>
+    <?php include("css.php") ?>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
         </div>
         <button class="btn btn-primary" type="button" id="send">送出</button>
     </div>
-    <?php include("../js.php") ?>
+    <?php include("js.php") ?>
     <script>
         const account = document.querySelector("#account");
         const password = document.querySelector("#password");

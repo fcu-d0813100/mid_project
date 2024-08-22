@@ -1,6 +1,84 @@
 <?php
 
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
+// 确定当前页码，并确保它是有效的整数
+$page = isset($_GET["p"]) ? (int)$_GET["p"] : 1;
+$page = $page > 0 ? $page : 1; // 确保页码不为负数
+$per_page = 12; // 每页显示的项目数量
+$start_item = ($page - 1) * $per_page;
+
+// 确定排序方式
+$order = isset($_GET["order"]) ? (int)$_GET["order"] : 1;
+$filterLowStock = isset($_GET["low_stock"]) ? (int)$_GET["low_stock"] : 0; // 新增筛选库存过低的条件
+
+switch ($order) {
+    case 1:
+        $order_clause = "ORDER BY color.id ASC";
+        break;
+    case 2:
+        $order_clause = "ORDER BY color.id DESC";
+        break;
+    default:
+        $order_clause = "ORDER BY color.id ASC";
+        break;
+}
+
+// 搜索关键字
+$search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : '';
+$product_id = isset($_GET["product_id"]) ? (int)$_GET["product_id"] : 0;
+
+// 计算符合搜索条件的总库存量
+$sqlTotalStock = "SELECT SUM(stock) as total_stock FROM color
+                   JOIN product_list ON color.product_id = product_list.id
+                   WHERE (color.color LIKE '%$search%' OR product.product_name LIKE '%$search%')
+                   AND ($product_id = 0 OR color.product_id = $product_id)
+                   AND color.deleted_at IS NULL";
+
+// 根据搜索关键字和产品 ID 修改 SQL 查询
+if ($search || $product_id || $filterLowStock) {
+    $sqlAll = "SELECT COUNT(*) as total FROM color
+               JOIN product_list ON color.product_id = product.id
+               WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+               AND ($product_id = 0 OR color.product_id = $product_id)
+               AND color.deleted_at IS NULL";
+
+    if ($filterLowStock) {
+        $sqlAll .= " AND color.stock < 30";
+    }
+
+    $sql = "SELECT color.id, product.product_name, color.color, color.stock
+            FROM color
+            JOIN product_list ON color.product_id = product.id
+            WHERE (color.color LIKE '%$search%' OR product.product_name LIKE '%$search%')
+            AND ($product_id = 0 OR color.product_id = $product_id)
+            AND color.deleted_at IS NULL";
+
+    if ($filterLowStock) {
+        $sql .= " AND color.stock < 30";
+    }
+
+    $sql .= " $order_clause
+              LIMIT $start_item, $per_page";
+} else {
+    $sqlAll = "SELECT COUNT(*) as total FROM color
+               JOIN product_list ON color.product_id = product.id
+               WHERE color.deleted_at IS NULL";
+
+    $sql = "SELECT color.id, product.product_name, color.color, color.stock
+            FROM color
+            JOIN product_list ON color.product_id = product.id
+            WHERE color.deleted_at IS NULL";
+
+    if ($filterLowStock) {
+        $sqlAll .= " AND color.stock < 30";
+        $sql .= " AND color.stock < 30";
+    }
+
+    $sql .= " $order_clause
+              LIMIT $start_item, $per_page";
+}
+
 
 $itemsPerPage = 20;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
