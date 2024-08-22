@@ -80,9 +80,9 @@ $userCount = $result->num_rows;
 
       <form action="" class="align-self-center " style="width: 600px;">
         <div class="input-group mb-3">
-          <input type="search" class="form-control border border-dark" placeholder="輸入關鍵字" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
+          <input type="search" class="form-control border border-secondary" placeholder="輸入使用者名稱" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
             value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>">
-          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <button class="btn btn-outline-secondary border-start-0" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
       </form>
 
