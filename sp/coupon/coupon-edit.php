@@ -34,17 +34,7 @@ if ($couponCount > 0) {
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Quill CSS-->
-    <link rel="stylesheet" href="../vendor/quill/quill.core.css">
-    <link rel="stylesheet" href="../vendor/quill/quill.snow.css">
+    <?php include("./css.php") ?>
 </head>
 
 <body>
@@ -52,15 +42,15 @@ if ($couponCount > 0) {
     <main class="main-content">
         <div class="mt-5 mx-5">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-secondary">優惠券管理 /<span class="text-sm">修改優惠券</span></p>
+                <p class="m-0 d-inline text-secondary h2">優惠券管理 <span class="text-sm fs-5"> / 修改優惠券</span></p>
             </div>
             <hr>
             <!-- table-->
 
 
 
-            <div class="row mt-3 justify-content-center">
-                <div class="col-6 mt-5">
+            <div class="row mt-5  justify-content-center">
+                <div class="col-8 mt-5 pt-3">
                     <?php if ($couponCount > 0) : ?>
 
                         <form action="doUpdateCoupon.php" method="post">
@@ -122,17 +112,17 @@ if ($couponCount > 0) {
                                     <input type="date" class="form-control" name="end_date" value="<?= $row["end_date"] ?>">
                                 </div>
                             </div>
-                            <div class="text-end">
+                            <div class="text-end ">
 
-                                <a href="coupon-list.php?p=1" class="btn btn-outline-secondary p-2 me-2">
+                                <a href="coupon-list.php?p=1" class="btn btn-dark p-2 me-2 mt-3">
                                     <i class="fa-solid fa-arrow-left"></i> 取消
                                 </a>
-                                <button class="btn btn-outline-secondary p-2 me-2" type="submit">
+                                <button class="btn btn-dark p-2 me-2 mt-3" type="submit">
                                     <i class="fa-solid fa-floppy-disk"></i> 儲存
                                 </button>
 
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-outline-secondary p-2 " data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
+                                <button type="button" class="btn btn-outline-danger p-2 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
                                     <i class="fa-regular fa-trash-can"></i> 刪除
                                 </button>
                                 <!-- Modal -->
@@ -147,7 +137,7 @@ if ($couponCount > 0) {
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                                <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                                                <button type="button" class="btn btn-dark" id="confirmDelete">確定</button>
                                             </div>
                                         </div>
                                     </div>
