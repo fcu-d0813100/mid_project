@@ -109,7 +109,9 @@ require_once("../../db_connect.php");
                         <div class="mb-3 d-flex row">
                             <div class="col-3">
                                 <label class="form-label text-style" for="phone">連絡電話</label>
-                                <input type="tel" class="form-control text-style" name="phone">
+                                <input type="tel" class="form-control text-style" pattern="\d{10}"
+                                    name="phone">
+                                <!-- 正規表達式讓他十碼 -->
                             </div>
                             <div class="col">
                                 <label class="form-label text-style" for="email">信箱</label>
@@ -130,7 +132,7 @@ require_once("../../db_connect.php");
                             <label class="form-label text-style" for="city">地址</label>
                             <div class="col-3">
                                 <select class="form-select text-style" aria-label="Default select example" name="city">
-                                    <option value="">請選擇縣市</option>
+                                    <option value="" disabled selected>請選擇縣市</option>
                                     <option value="臺北市">臺北市</option>
                                     <option value="新北市">新北市</option>
                                     <option value="基隆市">基隆市</option>

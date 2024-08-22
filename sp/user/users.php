@@ -129,29 +129,19 @@ if (isset($_GET["search"])) {
                     </div>
                 <?php else: ?>
                     <div class="d-flex justify-content-center align-items-center col-md-4">
-                        <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
+                        <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共<?= $userCount ?>筆</p>
                     </div>
                 <?php endif; ?>
-
-
-
-                <?php if (isset($_GET["search"])): ?>
-                    <div class="d-flex justify-content-center align-items-center col-md-4">
-                        <p class="text-md">共 <?= $userCount ?>筆</p>
-                    </div>
-                <?php else: ?>
-                    <div class="d-flex justify-content-center align-items-center col-md-4">
-                        <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
-                    </div>
-                <?php endif; ?>
-                <?php if (isset($_GET["p"])): ?>
+                <?php if (isset($_GET["search"]) || isset($_GET["p"])):
+                    $order = isset($_GET['order']) ? $_GET['order'] : 1; ?>
+                    <!-- 讓他先有個值:1 搜尋時篩選的按鈕也能存在 -->
                     <div class="d-flex justify-content-end col-md-4">
                         <div class="btn-group">
                             <!-- 排序ID(由小到大)由大到小 利用order by -->
-                            <a class="btn btn-dark mx-1 "
+                            <a class="btn btn-dark mx-1"
                                 <?php if ($order == 1) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=1">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                            <a class="btn btn-dark "
+                            <a class="btn btn-dark"
                                 <?php if ($order == 2) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=2">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
                             <a class="btn btn-dark mx-1"

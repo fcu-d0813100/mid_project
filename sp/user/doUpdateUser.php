@@ -46,7 +46,7 @@ if ($conn->query($sql) === TRUE) {
         }
     }
 
-    // header("Location: users.php");
+    header("Location: user.php?id=$id");
     exit;
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
