@@ -85,16 +85,8 @@ if (isset($_GET["search"])) {
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
+    <?php include("css.php") ?>
 
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -107,7 +99,7 @@ if (isset($_GET["search"])) {
                     <p class="m-0 d-inline text-lg text-secondary">會員管理 /<span class="text-sm">會員列表</span></p>
                 </div>
                 <div class="mt-3 col-md-3 d-flex justify-content-end pe-5">
-                    <a class="btn btn-primary" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
+                    <a class="btn btn-dark" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
                 </div>
             </div>
             <hr>
@@ -118,9 +110,9 @@ if (isset($_GET["search"])) {
                     <form action="">
                         <div class="input-group">
                             <input type="search" class="form-control" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋ID、姓名關鍵字">
-                            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i>搜尋</button>
+                            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass pe-2"></i>搜尋</button>
                             <?php if (isset($_GET["search"])) : ?>
-                                <a class="btn btn-primary ms-1" href="users.php" title="回到會員列表"><i class="fa-solid fa-rotate-right"></i></a>
+                                <a class="btn btn-dark ms-1" href="users.php" title="回到會員列表"><i class="fa-solid fa-rotate-right"></i></a>
                             <?php endif; ?>
                         </div>
                     </form>
@@ -135,16 +127,16 @@ if (isset($_GET["search"])) {
                     <div class="d-flex justify-content-end col-md-4">
                         <div class="btn-group">
                             <!-- 排序ID(由小到大)由大到小 利用order by -->
-                            <a class="btn btn-primary mx-1"
+                            <a class="btn btn-dark mx-1"
                                 <?php if ($order == 1) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=1">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                            <a class="btn btn-primary "
+                            <a class="btn btn-dark "
                                 <?php if ($order == 2) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=2">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                            <a class="btn btn-primary mx-1"
+                            <a class="btn btn-dark mx-1"
                                 <?php if ($order == 3) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=3">會員等級<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                            <a class="btn btn-primary"
+                            <a class="btn btn-dark"
                                 <?php if ($order == 4) echo "active" ?>
                                 href="users.php?p=<?= $page ?>&order=4">會員等級<i class="fa-solid fa-arrow-down-wide-short"></i></a>
 
@@ -184,9 +176,9 @@ if (isset($_GET["search"])) {
                             <td><?= $user["created_at"] ?></td>
                             <td><?= $user["level_name"] ?></td>
                             <td class="text-md">
-                                <a class="btn btn-primary text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
+                                <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
                                 </a>
-                                <a class="btn btn-primary text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                             </td>
                         </tr>
 
