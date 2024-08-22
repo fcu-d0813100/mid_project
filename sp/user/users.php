@@ -118,11 +118,16 @@ if (isset($_GET["search"])) {
                     </form>
                 </div>
 
-                <div class="d-flex justify-content-center align-items-center col-md-4">
-                    <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
-                </div>
 
-
+                <?php if (isset($_GET["search"])): ?>
+                    <div class="d-flex justify-content-center align-items-center col-md-4">
+                        <p class="text-md">共 <?= $userCount ?>筆</p>
+                    </div>
+                <?php else: ?>
+                    <div class="d-flex justify-content-center align-items-center col-md-4">
+                        <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共 <?= $userCount ?>筆</p>
+                    </div>
+                <?php endif; ?>
                 <?php if (isset($_GET["p"])): ?>
                     <div class="d-flex justify-content-end col-md-4">
                         <div class="btn-group">
