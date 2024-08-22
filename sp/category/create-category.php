@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>文章列表</title>
+    <title>新增品項</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -22,15 +22,16 @@
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container">
-            <div class="py-2">
-                <a class="btn btn-primary" href="category.php" title="回管理列表"><i class="fa-solid fa-left-long"></i></a>
+            <div class="py-3">
+                <p class="m-0 d-inline text-lg text-secondary">新增品項 /<span class="text-sm">品項管理</span></p>
             </div>
+
             <form action="doCreateCategory.php" method="get">
                 <div class="mb-2">
                     <label class="form-label" for="name"><span class="text-danger">*</span>品項名稱</label>
                     <input type="text" class="form-control" name="category" required>
                 </div>
-                <div class="mb-2">
+                <div class="mb-3">
                     <label class="form-label" for="name"><span class="text-danger">*</span>部位分類</label>
                     <select class="form-select" name="main_category_id" id="">
                         <option value="1">面部彩妝</option>
@@ -39,7 +40,11 @@
                         <option value="4">唇部彩妝</option>
                     </select>
                 </div>
-                <button class="btn btn-primary " type="submit">送出</button>
+                <div class="py-2">
+                    <button class="btn btn-primary " type="submit">送出</button>
+                    <a class="btn btn-secondary" href="category.php" title="回管理列表">返回</a>
+                </div>
+
             </form>
         </div>
     </main>

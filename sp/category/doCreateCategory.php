@@ -18,7 +18,7 @@ $result = $conn->query($sqlCheck);
 $categoryCount = $result->num_rows;
 
 if ($categoryCount > 0) {
-    echo "該品項已存在";
+    echo "<script>alert('該品項已存在'); window.location.href='create-category.php';</script>";
     exit;
 }
 
