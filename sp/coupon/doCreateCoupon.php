@@ -18,13 +18,14 @@ if (!isset($_POST["name"])) {
 //     exit;
 // }
 
-$sqlCheck="SELECT *FROM coupon_list WHERE code ='$code'";
-$result=$conn->query($sqlCheck);
-$couponCount=$result->num_rows;
-if($couponCount>0){
-    echo "優惠券已存在";
-    exit;
-}
+// $sqlCheck="SELECT *FROM coupon_list WHERE code ='$code'";
+// $result=$conn->query($sqlCheck);
+// $couponCount=$result->num_rows;
+// if($couponCount>0){
+//     echo "優惠券已存在";
+//     exit;
+// }
+
 // echo $userCount;
 // exit;
 
@@ -35,15 +36,17 @@ if($couponCount>0){
 // }
 
 $id=$_POST["id"];
+$type_id = $_POST["type_id"];
 $name=$_POST["name"];
 $minimum_amount=$_POST["minimum_amount"];
 $discount_value=$_POST["discount_value"];
+$code=$_POST["code"];
 $maximum=$_POST["maximum"];
 $start_date=$_POST["start_date"];
 $end_date=$_POST["end_date"];
 
-$sql = "INSERT INTO coupon_list (name,minimum_amount,maximum, start_date, end_date,discount_value,valid)
-	VALUES ('$name','$minimum_amount','$maximum', '$start_date', '$end_date','$discount_value',1)";
+$sql = "INSERT INTO coupon_list (name,minimum_amount,maximum, start_date, end_date,discount_value,code,valid,type_id)
+	VALUES ('$name','$minimum_amount','$maximum', '$start_date', '$end_date','$discount_value','$code',1,'$type_id')";
 
 // echo $sql;
 // exit;
