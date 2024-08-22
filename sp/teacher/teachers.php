@@ -11,8 +11,10 @@ $per_page = 5;
 $total_page = ceil($userCountAll / $per_page);
 
 
-if (isset($_GET["search"])) {
+if (isset($_GET["p"]) && isset($_GET["search"])) {
     $search = $_GET["search"];
+    $page = $_GET["p"];
+    $start_item = ($page - 1) * $per_page;
     $sqlCount = "SELECT COUNT(*) as count FROM teachers WHERE account LIKE '%$search%' AND valid=1 ";
 
     $resultCount = $conn->query($sqlCount);
@@ -91,7 +93,7 @@ $result = $conn->query($sql);
 
 
 if (isset($_GET["search"])) {
-    $userCount = $result->num_rows;
+    $userCount = $userCount;
     // 累加結果行數
 
 } elseif (isset($_GET["p"]) && isset($_GET["nation"])) {
@@ -129,14 +131,19 @@ if (isset($_GET["search"])) {
 
 
                         <div class="py-3">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="search" class="form-control focus-ring focus-ring-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋教師">
-                                    <button class="btn btn-dark" type="submit">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </button>
-                                </div>
-                            </form>
+                            <?php if (isset($_GET["p"])):
+                                $p = $_GET["p"];
+                            ?>
+                                <form action="">
+                                    <div class="input-group">
+                                        <input type="hidden" name="p" value="1">
+                                        <input type="search" class="form-control focus-ring focus-ring-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋教師">
+                                        <button class="btn btn-dark" type="submit">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            <?php endif; ?>
                         </div>
 
                         <div class="py-3 mt-2 mb-1 d-flex justify-content-between">
@@ -155,31 +162,34 @@ if (isset($_GET["search"])) {
                                 <?php if (isset($_GET["p"])): ?>
 
                                     <a class="btn btn-dark me-2
-                                        <?php if ($order == 1) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=1">
+    <?php if ($order == 1) echo "active" ?>" href="teachers.php?p=1&order=1">
                                         <i class="py-1 fa-solid fa-list-ol me-2"></i>ID
                                     </a>
 
                                     <div class="btn-group me-2">
                                         <a class="btn btn-dark border-end 
-                                        <?php if ($nation == 1) echo "active" ?>" href="teachers.php?p=<?= $page ?>&nation=1">
+    <?php if ($nation == 1) echo "active" ?>" href="teachers.php?p=1&nation=1">
                                             <i class="py-1 fa-solid fa-location-dot me-2"></i>國內
                                         </a>
                                         <a class="btn btn-dark border-start
-                                        <?php if ($nation == 2) echo "active" ?>" href="teachers.php?p=<?= $page ?>&nation=2">
+    <?php if ($nation == 2) echo "active" ?>" href="teachers.php?p=1&nation=2">
                                             <i class="py-1 fa-solid fa-earth-americas me-2"></i>國際
                                         </a>
                                     </div>
+
                                     <div class="btn-group">
                                         <a class="btn btn-dark border-end
-                                        <?php if ($order == 2) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=2">
+    <?php if ($order == 2) echo "active" ?>" href="teachers.php?p=1&order=2">
                                             <i class="py-1 fa-solid fa-arrow-down-1-9 me-2"></i>年資
                                         </a>
                                         <a class="btn btn-dark border-start
-                                        <?php if ($order == 3) echo "active" ?>" href="teachers.php?p=<?= $page ?>&order=3">
+    <?php if ($order == 3) echo "active" ?>" href="teachers.php?p=1&order=3">
                                             <i class="py-1 fa-solid fa-arrow-down-9-1 me-2"></i>年資
                                         </a>
                                     </div>
+
                                 <?php endif; ?>
+
                             </div>
                         </div>
                         <div>
@@ -233,7 +243,7 @@ if (isset($_GET["search"])) {
                         <div class="d-flex justify-content-between">
 
 
-                            <?php if (isset($_GET["p"])) : ?>
+                            <?php if (isset($_GET["p"]) && !isset($_GET["search"])) : ?>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
 
@@ -259,11 +269,11 @@ if (isset($_GET["search"])) {
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <?php
-                                        $ttpage = ceil($userCount / $per_page);
-                                        for ($i = 1; $i <= 2; $i++): ?>
+                                        $serpage = ceil($userCount / $per_page);
+                                        for ($i = 1; $i <= $serpage; $i++): ?>
                                             <li class="page-item <?php if ($page == $i) echo "active"; ?>">
                                                 <a class="page-link px-3" href="teachers.php?p=<?= $i ?>
-                                                &search=<?php $search ?>">
+                                                &search=<?= $search ?>">
                                                     <?= $i ?>
                                                 </a>
                                             </li>
