@@ -7,7 +7,7 @@ if (!isset($_GET["id"])) {
 
 $id = $_GET["id"];
 
-require_once("/xampp/htdocs/mid_project/db_connect.php");
+require_once("../../db_connect.php");
 
 $sql = "SELECT 
     article.*,  

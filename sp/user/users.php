@@ -152,7 +152,7 @@ if (isset($_GET["search"])) {
 
             <table class="table table-hover text-center">
                 <thead>
-                    <tr>
+                    <tr class=" align-middle">
                         <th>ID</th>
                         <th>姓名</th>
                         <th>性別</th>
@@ -166,7 +166,7 @@ if (isset($_GET["search"])) {
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $user) : ?>
-                        <tr>
+                        <tr class=" align-middle">
                             <td><?= $user["id"] ?></td>
                             <td><?= $user["name"] ?></td>
                             <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>

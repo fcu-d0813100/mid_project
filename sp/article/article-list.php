@@ -1,5 +1,5 @@
 <?php
-require_once("/xampp/htdocs/mid_project/db_connect.php");
+require_once("../../db_connect.php");
 
 // 獲取文章總數
 $sqlAll = "SELECT * FROM article WHERE valid=1";
@@ -111,7 +111,7 @@ $articleCount = $articleCountAll;
         <!-- sort search -->
         <form action="">
           <div class="input-group">
-            <input type="search" class="form-control  border-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : ""?>" placeholder="搜尋標題">
+            <input type="search" class="form-control  border-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋標題">
             <button class="btn btn-outline-secondary border-start-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </form>
