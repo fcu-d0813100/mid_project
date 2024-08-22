@@ -1,17 +1,7 @@
- <!-- <?php
-      // session_start();
-      // if (!isset($_SESSION["user"])) {
-      //   header("location: sign-in.php");
-      //   exit;
-      // }
-      ?> -->
-
-
  <!-- Header    -->
  <header class="main-header d-flex justify-content-between bg-dark align-items-center fixed-top shadow ">
    <a class="brand bg-black text-white text-decoration-none d-block" href="">後台管理系統</a>
    <div class="d-flex align-items-center text-white text-md">
-     <!-- Hi！<?= $_SESSION["user"]["name"] ?> -->
      <!--登入後能顯示使用者名稱 -->
      <a class="btn btn-dark me-3" href="./doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
    </div>
@@ -86,16 +76,17 @@
          </ul>
        </li>
 
-       <li class="sidebar-item"><a class="sidebar-link" href="#eventDropdown" data-bs-toggle="collapse"
-           data-bs-parent="#accordion">
-           <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
-             <use xlink:href="#portfolio-grid-1"> </use>
-           </svg>活動管理 </a>
-         <ul class="collapse list-unstyled " id="eventDropdown">
-           <li><a class="sidebar-link" href="../active/active.php">活動管理</a></li>
-         </ul>
-       </li>
-     </ul>
-   </div>
- </aside>
- </div>
+
+      <li class="sidebar-item"><a class="sidebar-link" href="#eventDropdown" data-bs-toggle="collapse"
+          data-bs-parent="#accordion">
+          <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
+            <use xlink:href="#portfolio-grid-1"> </use>
+          </svg>活動管理 </a>
+        <ul class="collapse list-unstyled " id="eventDropdown">
+          <li><a class="sidebar-link" href="../active/active.php">活動列表</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</aside>
+</div>

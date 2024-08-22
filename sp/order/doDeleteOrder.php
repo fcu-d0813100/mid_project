@@ -8,7 +8,7 @@ if (!isset($_GET["id"])) {
 }
 $id=$_GET["id"];
 
-$sql="UPDATE coupon_list SET valid =0 WHERE id=$id";
+$sql="UPDATE user_order SET valid =0 WHERE id=$id";
 
 if ($conn->query($sql) === TRUE) {
     echo "刪除成功";
@@ -18,4 +18,4 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-header("location: coupon-list.php?p=1");
+header("location: order-list.php?p=1");

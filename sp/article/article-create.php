@@ -53,7 +53,7 @@ $types = $resultTypes->fetch_all(MYSQLI_ASSOC);
     <?php include("../../nav1.php") ?>
     <main class="main-content container">
         <div class="d-flex justify-content-between align-items-start">
-            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">文章編輯</span></p>
+            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">新增文章</span></p>
         </div>
         <hr>
         <!-- table-->
