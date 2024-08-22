@@ -1,5 +1,6 @@
 <?php
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
 
 if (!isset($_GET["id"]) || !isset($_GET["stock"]) || !isset($_GET["color"])) {
     echo "請正確帶入所有必要的變數";

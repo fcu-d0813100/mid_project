@@ -1,5 +1,6 @@
 <?php
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
 
 if (!isset($_GET["id"])) {
     echo "請循正常管道進入此頁";

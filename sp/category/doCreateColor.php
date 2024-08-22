@@ -1,6 +1,7 @@
 <?php
 
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
+
 
 
 if (isset($_GET['color']) && isset($_GET['stock']) && isset($_GET['product_id'])) {
