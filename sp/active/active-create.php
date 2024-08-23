@@ -81,7 +81,9 @@
                                 <th>活動日期</th>
                                 <td>
                                     <div class="mb-2">
+                                        <label for="" class="mb-2">輸入活動開始日期時間: </label>
                                         <input type="datetime-local" id="" class="form-control mb-2" name="start_at">
+                                        <label for="" class="mb-2">輸入活動結束日期時間: </label>
                                         <input type="datetime-local" id="" class="form-control" name="end_at">
                                     </div>
                                 </td>
@@ -102,7 +104,7 @@
 
                                         <div class="col-6">
 
-                                            <label for="" class="mb-2">報名最大人數 :</label>
+                                            <label for="" class="mb-2">設定報名最大人數 :</label>
                                             <div class="">
                                                 <input type="number" id="" class="form-control" name="maxAPP">
                                             </div>
