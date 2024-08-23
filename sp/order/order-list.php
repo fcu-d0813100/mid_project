@@ -30,6 +30,7 @@ $start_item = ($page - 1) * $per_page;
 $total_Page = ceil($orderCountAll / $per_page);
 $searchType = isset($_GET["search_type"]) ? $_GET["search_type"] : '';
 
+
 // 篩選條件
 if (isset($_GET["search_type"]) || isset($_GET["date"]) || isset($_GET["start"]) || isset($_GET["end"]) || isset($_GET["pay"]) || isset($_GET["status"])) {
     if (isset($_GET["search"]) && !empty($_GET["search"])) {
@@ -90,7 +91,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title>訂單列表</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -146,19 +147,20 @@ $result = $conn->query($sql);
                 <div class="select d-flex align-items-center justify-content-between border-start border-end ">
                     <form class="d-flex my-3 " method="GET">
 
-                        <div class="col-5 ">
-                            <select class="form-select rounded-start mx-2 " name="search_type" aria-label="Default select example">
-                                <option selected>搜尋</option>
-                                <option value="1" <?php if ($searchType == "1") echo "selected"; ?>>訂單編號</option>
-                                <option value="2" <?php if ($searchType == "2") echo "selected"; ?>>訂購者名稱</option>
-                            </select>
-                        </div>
 
-                        <div class="col-8 me-1">
-                            <div class="input-group ">
-                                <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="搜尋">
-                                <button class="btn btn-dark rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
+                    <div class="col-5 ">
+                        <select class="form-select rounded-start mx-2" name="search_type" aria-label="Default select example">
+                            <option selected>關鍵字搜尋</option>
+                            <option value="1" <?php if ($searchType == "1") echo "selected"; ?>>訂單編號</option>
+                            <option value="2" <?php if ($searchType == "2") echo "selected"; ?>>訂購者名稱</option>
+                        </select>
+                    </div>
+
+                    <div class="col-8 me-1">
+                        <div class="input-group ">
+                            <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="編號/訂購者名稱">
+                            <button class="btn btn-primary rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+
                         </div>
 
                     </form>
@@ -255,6 +257,9 @@ $result = $conn->query($sql);
                                                 </div>
                                             </div>
                                         </div>
+
+
+
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -294,6 +299,7 @@ $result = $conn->query($sql);
                 <?php endif; ?>
             </div>
         </div>
+
     </main>
 
 

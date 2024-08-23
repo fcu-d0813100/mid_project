@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title>新增優惠券</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -19,6 +19,9 @@
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content">
+
+
+
         <div class="container">
             <div class="mt-5 mx-5">
                 <div class="d-flex justify-content-between align-items-start">
@@ -29,6 +32,7 @@
                 <hr>
                 <!-- table-->
                 <div class="py-2 d-flex justify-content-end gap-2">
+
 
                 </div>
 

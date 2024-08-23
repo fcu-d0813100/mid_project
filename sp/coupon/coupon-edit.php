@@ -30,7 +30,7 @@ if ($couponCount > 0) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title>編輯優惠券</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -44,7 +44,11 @@ if ($couponCount > 0) {
             <div class="mt-5 ">
                 <div class="d-flex justify-content-between align-items-start">
 
-                    <p class="m-0 d-inline  h2">修改優惠券</p>
+
+                <p class="m-0 d-inline  h2">編輯優惠券</p>
+
+
+
 
                 </div>
                 <hr>
@@ -52,9 +56,13 @@ if ($couponCount > 0) {
 
 
 
+
+
+
                 <div class="row mt-5  justify-content-center">
                     <div class="col-10 mt-5 pt-3">
                         <?php if ($couponCount > 0) : ?>
+
 
                             <form action="doUpdateCoupon.php" method="post">
                                 <div>

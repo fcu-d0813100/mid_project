@@ -2,24 +2,24 @@
 // 使用mysql
 require_once("../../db_connect.php");
 
-
-// 
 $whereClause = "WHERE coupon_list.valid = 1 ";
 
-$sqlorderAll = "SELECT * FROM coupon_list WHERE valid = 1";
-$resulorderAll = $conn->query($sqlorderAll);
-$couponCountAll = $resulorderAll->num_rows;
+$sqlpayAll = "SELECT * FROM coupon_list WHERE type_id = 1 AND valid = 1";
+$resultype1All = $conn->query($sqlpayAll);
+$type1CountAll = $resultype1All->num_rows;
 
-$page = isset($_GET["p"]) ? intval($_GET["p"]) : 1;
-$per_page = 6;
-$start_item = ($page - 1) * $per_page;
+$sqlpayAll = "SELECT * FROM coupon_list WHERE type_id = 2 AND valid = 1";
+$resultype2All = $conn->query($sqlpayAll);
+$type2CountAll = $resultype2All->num_rows;
 
 // 總數量查詢
 $sqlAll = "SELECT * FROM coupon_list WHERE valid = 1";
 $resulAll = $conn->query($sqlAll);
 $couponCountAll = $resulAll->num_rows;
 
-// 總頁數
+$page = isset($_GET["p"]) ? intval($_GET["p"]) : 1;
+$per_page = 6;
+$start_item = ($page - 1) * $per_page;
 $total_Page = ceil($couponCountAll / $per_page);
 
 if (isset($_GET["start_date"])) {
@@ -31,19 +31,40 @@ if (isset($_GET["start_date"])) {
   $whereClause .= "AND coupon_list.start_date BETWEEN '$start' AND '$end'";
 }
 
+// 类型过滤
+$type_id = isset($_GET["type_id"]) ? intval($_GET["type_id"]) : null;
+if ($type_id) {
+    $whereClause .= " AND coupon_list.type_id = $type_id";
+}
 
+// if (isset($_GET["type_id"]) && $_GET["type_id"] == 1) {
+//   $whereClause .= " AND coupon_list.type_id = 1";
+//   $total_Page = ceil($type1CountAll / $per_page);
+// } elseif (isset($_GET["type_id"]) && $_GET["type_id"] == 2) {
+//   $whereClause .= " AND coupon_list.type_id = 2";
+//   $total_Page = ceil($type2CountAll / $per_page);
+// }
 
+// 搜索
+$search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : "";
+if (!empty($search)) {
+    $whereClause .= " AND coupon_list.name LIKE '%$search%'";
+}
 
+// if (isset($_GET["search"]) && !empty($_GET["search"])) {
+//   $search = $conn->real_escape_string($_GET["search"]);
+//   $whereClause .= " AND coupon_list.name LIKE '%$search%' ";
+//   $sqlCount = "SELECT COUNT(*) as total FROM coupon_list $whereClause";
+//   $stmtCount = $conn->prepare($sqlCount);
+// }
 
 $sql = "SELECT coupon_list.*, type.name AS type_name 
         FROM coupon_list 
         JOIN type ON coupon_list.type_id = type.id
         $whereClause
-        ORDER BY coupon_list.id DESC
+        ORDER BY coupon_list.start_date DESC
         LIMIT $start_item, $per_page";
 $result = $conn->query($sql);
-
-
 
 ?>
 
@@ -54,7 +75,7 @@ $result = $conn->query($sql);
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bootstrap Dashboard</title>
+  <title>優惠券列表</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
@@ -64,6 +85,9 @@ $result = $conn->query($sql);
 <body>
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
+
+
+
     <div class="container">
       <div class="mt-5">
         <div class="d-flex justify-content-between align-items-start mt-3">
@@ -116,8 +140,10 @@ $result = $conn->query($sql);
                     <button type="submit" class="btn btn-dark ">
                       <i class="fa-solid fa-filter"></i>
                     </button>
+
                   </div>
                 </div>
+
               </form>
             </div>
           <?php endif; ?>
@@ -219,6 +245,7 @@ $result = $conn->query($sql);
           目前沒有優惠券
         <?php endif; ?>
       </div>
+
     </div>
   </main>
 
