@@ -34,7 +34,7 @@ if (isset($_GET["start_date"])) {
 // 类型过滤
 $type_id = isset($_GET["type_id"]) ? intval($_GET["type_id"]) : null;
 if ($type_id) {
-    $whereClause .= " AND coupon_list.type_id = $type_id";
+  $whereClause .= " AND coupon_list.type_id = $type_id";
 }
 
 // if (isset($_GET["type_id"]) && $_GET["type_id"] == 1) {
@@ -48,7 +48,7 @@ if ($type_id) {
 // 搜索
 $search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : "";
 if (!empty($search)) {
-    $whereClause .= " AND coupon_list.name LIKE '%$search%'";
+  $whereClause .= " AND coupon_list.name LIKE '%$search%'";
 }
 
 // if (isset($_GET["search"]) && !empty($_GET["search"])) {
@@ -105,14 +105,21 @@ $result = $conn->query($sql);
         <div class="col-12  text-end">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="coupon-list.php?p=1">全部 <?= $couponCountAll ?></a>
+              <a class="nav-link  <?php if (!isset($_GET["type_id"])) echo "active" ?>" aria-current="page" href="coupon-list.php?p=1">全部 <?= $couponCountAll ?></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link <?php if (isset($_GET["type_id"]) && $_GET["type_id"] == 1) echo "active" ?> " href="coupon-list.php?p=1&type_id=1">百分比% <?= $type1CountAll  ?></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link <?php if (isset($_GET["type_id"]) && $_GET["type_id"] == 2) echo "active" ?> " href="coupon-list.php?p=1&type_id=2">金額 <?= $type2CountAll  ?></a>
             </li>
           </ul>
         </div>
 
+        <!-- 日期篩選 -->
         <div class="select d-flex align-items-center justify-content-end border-start border-end bg-white">
-
-          <!-- 日期篩選 -->
           <?php if (!isset($_GET["start_date"])): ?>
             <div class="mx-3 my-2 py-2 ">
               <form action="">
@@ -236,6 +243,16 @@ $result = $conn->query($sql);
                 <?php for ($i = 1; $i <= $total_Page; $i++) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link " href="coupon-list.php?p=<?= $i ?>"><?= $i ?></a>
+                  </li>
+                <?php endfor; ?>
+              <?php endif; ?>
+
+
+              <?php if (isset($_GET["p"]) && isset($_GET["type_id"]) && $_GET["type_id"]=1): ?>
+                <?php $staPage = ceil($type1CountAll / $per_page);
+                  for ($i = 1; $i <= $total_Page; $i++) : ?>
+                  <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link " href="coupon-list.php?p=<?= $i ?>&type_id=1"><?= $i ?></a>
                   </li>
                 <?php endfor; ?>
               <?php endif; ?>

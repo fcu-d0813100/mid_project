@@ -12,8 +12,6 @@ require_once("../../db_connect.php");
 $sql = "SELECT *,
  product_list.product_name AS product_name, 
  product_list.price as price,
- product_list.color_id AS color_id, 
- product_list.images_id AS product_img,
  users.name AS user_name, 
  users.email AS user_email, 
  users.phone AS user_phone, 
@@ -22,18 +20,19 @@ $sql = "SELECT *,
  pay.name AS pay_name,
  status.id AS status_id,
  status.name AS status_name,
- color.color AS color
+ color.mainimage AS mainimage
  
 FROM user_order 
 JOIN product_list ON user_order.product_id = product_list.id
 JOIN users ON user_order.user_id = users.id
 JOIN pay ON user_order.pay_id = pay.id
 JOIN status ON user_order.status_id = status.id
-JOIN color ON product_list.color_id = color.id 
+JOIN color ON product_list.id = color.product_id 
 WHERE user_order.id='$id' AND user_order.valid=1
 ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+print_r($row);
 
 
 // $sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
@@ -128,7 +127,7 @@ $row = $result->fetch_assoc();
                             // if ($orderCountAll > 0) : 
                             ?>
                             <tr>
-                                <td><?= $row["product_img"] ?></td>
+                                <td><?= $row["mainimage"] ?></td>
                                 <td><?= $row["product_name"] ?></td>
                                 <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>
