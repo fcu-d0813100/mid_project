@@ -36,7 +36,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>商品管理 </a>
         <ul class="collapse list-unstyled " id="productDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../product/product_list.php">商品管理</a></li>
         </ul>
       </li>
       <li class="sidebar-item"><a class="sidebar-link" href="#categoryDropdown" data-bs-toggle="collapse"
@@ -54,7 +54,7 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>訂單管理 </a>
         <ul class="collapse list-unstyled " id="orderDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../order/order-list.php">訂單列表</a></li>
         </ul>
       </li>
       <li class="sidebar-item"><a class="sidebar-link" href="#discountDropdown" data-bs-toggle="collapse"
@@ -63,30 +63,30 @@
             <use xlink:href="#portfolio-grid-1"> </use>
           </svg>優惠管理 </a>
         <ul class="collapse list-unstyled " id="discountDropdown">
-          <li><a class="sidebar-link" href="#">Bootstrap tables</a></li>
+          <li><a class="sidebar-link" href="../coupon/coupon-list.php">優惠券列表</a></li>
         </ul>
       </li>
 
-      <li class="sidebar-item"><a class="sidebar-link" href="#articleDropdown" data-bs-toggle="collapse">
-          <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
-            <use xlink:href="#portfolio-grid-1"> </use>
-          </svg>文章管理 </a>
-        <ul class="collapse list-unstyled " id="articleDropdown">
-          <li><a class="sidebar-link" href="../article/article-list.php">文章列表</a></li>
-          <li><a class="sidebar-link" href="../article/article-list.php">文章類型</a></li>
-        </ul>
-      </li>
+       <li class="sidebar-item"><a class="sidebar-link" href="#articleDropdown" data-bs-toggle="collapse">
+           <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
+             <use xlink:href="#portfolio-grid-1"> </use>
+           </svg>文章管理 </a>
+         <ul class="collapse list-unstyled " id="articleDropdown">
+           <li><a class="sidebar-link" href="../article/article-list.php">文章列表</a></li>
+         </ul>
+       </li>
 
-      <li class="sidebar-item"><a class="sidebar-link" href="#eventDropdown" data-bs-toggle="collapse"
-          data-bs-parent="#accordion">
-          <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
-            <use xlink:href="#portfolio-grid-1"> </use>
-          </svg>活動管理 </a>
-        <ul class="collapse list-unstyled " id="eventDropdown">
-          <li><a class="sidebar-link" href="../active/active.php">活動管理</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</aside>
-</div>
+
+       <li class="sidebar-item"><a class="sidebar-link" href="#eventDropdown" data-bs-toggle="collapse"
+           data-bs-parent="#accordion">
+           <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
+             <use xlink:href="#portfolio-grid-1"> </use>
+           </svg>活動管理 </a>
+         <ul class="collapse list-unstyled " id="eventDropdown">
+           <li><a class="sidebar-link" href="../active/active.php">活動列表</a></li>
+         </ul>
+       </li>
+     </ul>
+   </div>
+ </aside>
+ </div>

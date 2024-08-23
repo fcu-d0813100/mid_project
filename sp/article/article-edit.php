@@ -7,7 +7,7 @@ if (!isset($_GET["id"])) {
 
 $id = $_GET["id"];
 
-require_once("/xampp/htdocs/mid_project/db_connect.php");
+require_once("../../db_connect.php");
 
 $sql = "SELECT 
     article.*,  
@@ -54,55 +54,56 @@ $conn->close();
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <?php include("./css.php") ?>
+
     <!-- Quill CSS-->
     <link rel="stylesheet" href="../vendor/quill/quill.core.css">
     <link rel="stylesheet" href="../vendor/quill/quill.snow.css">
+    <style>
+        .main-content {
+            padding-left: 200px;
+        }
+    </style>
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content container">
         <div class="d-flex justify-content-between align-items-start">
-            <p class="m-0 d-inline text-lg text-secondary">文章列表 /<span class="text-sm">文章編輯</span></p>
+            <p class="m-0 mt-3 d-inline h2">文章列表 <span class="text-sm fs-5"> / 編輯文章</span></p>
         </div>
         <hr>
         <!-- table-->
         <div class="py-2 d-flex justify-content-end gap-2">
-            <a href="article-list.php" class="btn btn-outline-secondary btn-lg">
+            <a href="article-list.php" class="btn btn-dark">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <a href="doDeleteArticle.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-lg">
+            <a href="javascript:void(0);" class="btn btn-outline-danger"
+                onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </div>
 
         <div class="row mt-3">
             <div class="col-lg">
-                <form action="doUpdateArticle.php" method="post">
+                <form action="doUpdateArticle.php" method="post" enctype="multipart/form-data">
                     <?php if ($articleCount > 0) : ?>
                         <table class="table table-bordered">
                             <input type="hidden" name="id" value="<?= $row["id"] ?>">
                             <tr>
-                                <th class="col-2">編號</th>
+                                <th class="col-1">編號</th>
                                 <td><?= $row["id"] ?></td>
                             </tr>
                             <!-- 品牌 -->
                             <tr class="form-label">
                                 <th>品牌</th>
                                 <td class="d-flex gap-3">
-                                    <?php 
-                                    $selected_brand_id =$row["brand_id"];
+                                    <?php
+                                    $selected_brand_id = $row["brand_id"];
                                     foreach ($brands as $brand) : ?>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="brand" id="<?= $brand["name"] ?>" value="<?= $brand["id"] ?>" <?php if ($brand["id"] == $selected_brand_id) echo 'checked'; ?> >
+                                            <input class="form-check-input" type="radio" name="brand" id="<?= $brand["name"] ?>" value="<?= $brand["id"] ?>" <?php if ($brand["id"] == $selected_brand_id) echo 'checked'; ?>>
                                             <label class="form-check-label" for="<?= $brand["name"] ?>">
                                                 <?= $brand["name"] ?>
                                             </label>
@@ -114,10 +115,10 @@ $conn->close();
                             <tr class="form-label">
                                 <th>類型</th>
                                 <td class="d-flex gap-3">
-                                    <?php  $selected_type_id =$row["type_id"];
+                                    <?php $selected_type_id = $row["type_id"];
                                     foreach ($types as $type) : ?>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="type" id="<?= $type["name"] ?>" value="<?= $type["id"] ?>" <?php if ($type["id"] == $selected_type_id) echo 'checked'; ?> >
+                                            <input class="form-check-input" type="radio" name="type" id="<?= $type["name"] ?>" value="<?= $type["id"] ?>" <?php if ($type["id"] == $selected_type_id) echo 'checked'; ?>>
                                             <label class="form-check-label" for="<?= $type["name"] ?>">
                                                 <?= $type["name"] ?>
                                             </label>
@@ -156,8 +157,8 @@ $conn->close();
                     <?php endif; ?>
 
             </div>
-            <div class="text-end">
-                <button type="submit" class="btn btn-outline-secondary btn-lg">儲存</button>
+            <div class="text-end ">
+                <button type="submit" class="btn btn-dark mb-4 px-3">儲存</button>
             </div>
             </form>
         </div>
