@@ -132,6 +132,10 @@ $countResult = $conn->query($countSql);
 $totalRecords = $countResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRecords / $itemsPerPage);
 
+
+$totalStockResult = $conn->query($sqlTotalStock);
+$totalStock = $totalStockResult->fetch_assoc()['total_stock'];
+
 ?>
 
 <!doctype html>
@@ -190,6 +194,7 @@ $totalPages = ceil($totalRecords / $itemsPerPage);
                 </div>
             </div>
 
+            <div>共有 <?= $totalStock ?> 個庫存</div>
 
             <?php if ($colorCount > 0) :
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
