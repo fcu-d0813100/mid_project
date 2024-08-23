@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION["user"])) {
-    header("location:dashboard.php");
+    header("location:users.php");
     exit;
 }
 // 登入的狀態下就不會看到sign-in頁面
@@ -11,26 +11,49 @@ if (isset($_SESSION["user"])) {
 <html lang="en">
 
 <head>
-    <title>Sign in</title>
+    <title>LOGIN</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+    <!-- 字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
     <?php
-    include("../../css.php");
+    include("css.php");
     ?>
     <style>
+        nav {
+            height: 100px;
+            width: 100%;
+            background-color: #111111;
+
+        }
+
+        footer {
+            height: 100px;
+            width: 100%;
+            background-color: #111111;
+        }
+
+        .login-text {
+            font-family: "DM Serif Display", serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 100px;
+            margin-bottom: 30px;
+        }
+
         body {
-            background: url("../images/bg.jpg") center center/cover;
+            background-color: #f5f5f5;
         }
 
         .sign-in-panel {
             width: 280px;
         }
 
-        .logo {
-            height: 64px;
-        }
 
         .input-area {
             .form-floating:first-child {
@@ -58,22 +81,25 @@ if (isset($_SESSION["user"])) {
 </head>
 
 <body>
+
+
     <div class="vh-100 d-flex justify-content-center align-items-center">
+
         <div class="sign-in-panel">
             <img class="logo mb-3" src="/assets/images/site-logo.png" alt="">
             <?php if (isset($_SESSION["error"]["times"]) && $_SESSION["error"]["times"] > 5) : ?>
                 輸入錯誤次數多次，請稍後再嘗試登入
             <?php else : ?>
-                <h1 class="h2">Please sign in</h1>
+                <h1 class="login-text">LOGIN</h1>
                 <form action="doLogin.php" method="post">
                     <div class="input-area">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="account">
-                            <label for="floatingInput">Account</label>
+                            <label for="floatingInput">帳號</label>
                         </div>
                         <div class="form-floating">
                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-                            <label for="floatingPassword">Password</label>
+                            <label for="floatingPassword">密碼</label>
                         </div>
                     </div>
                     <?php if (isset($_SESSION["error"]["message"])) : ?>
@@ -90,15 +116,19 @@ if (isset($_SESSION["user"])) {
                         </label>
                     </div>
                     <div class="d-grid">
-                        <button class="btn btn-primary">Sign in</button>
+                        <button class="btn btn-dark py-2">登入</button>
                     </div>
                 </form>
             <?php endif; ?>
             <div class="mt-4 text-muted">
-                © 2017–2024
+                © 2010-2024 Makeup
             </div>
         </div>
+
     </div>
+
+
+
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
