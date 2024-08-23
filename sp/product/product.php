@@ -1,6 +1,5 @@
 <?php
 include('../../db_pdo.php');
-
 // 獲取動態 productId 和 colorId
 $productId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 $colorId = isset($_GET['color_id']) ? (int)$_GET['color_id'] : 1;
