@@ -82,28 +82,28 @@ $orderCountAll = $resulorderAll->num_rows;
                 <!-- table-->
                 <div class="py-2 d-flex justify-content-end gap-2">
                     <a href="order-edit.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary p-2">
-                    <i class="fa-regular fa-pen-to-square"></i> 編輯
+                        <i class="fa-regular fa-pen-to-square"></i> 編輯
                     </a>
 
 
-                     <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-outline-secondary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($_GET["id"]) ?> ">
-                    <i class="fa-regular fa-trash-can"></i> 刪除
-                  </button>
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content ">
-                        <div class="modal-body">
-                          <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-secondary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($_GET["id"]) ?> ">
+                        <i class="fa-regular fa-trash-can"></i> 刪除
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content ">
+                                <div class="modal-body">
+                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                          <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                     <!-- <a href="doDeleteOrder.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-regular fa-trash-can"></i>
                         刪除
                     </a> -->

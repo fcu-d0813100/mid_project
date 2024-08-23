@@ -55,11 +55,11 @@ require_once("../../db_connect.php");
         <div class="container py-5 mt-4">
 
             <div class="row d-flex justify-content-center align-items-center">
-                <p class="m-0 d-inline text-lg text-secondary">會員管理 /<span class="text-sm">新增會員</span></p>
+                <p class="m-0 d-inline h2">會員管理 <span class="text-sm fs-5"> / 新增會員</span></p>
             </div>
             <hr>
             <form action="doCreateUser.php" method="post" enctype="multipart/form-data">
-                <div class="d-flex">
+                <div class="d-flex mt-5">
 
                     <div class="col-lg-10 me-5">
 
@@ -173,7 +173,7 @@ require_once("../../db_connect.php");
                                         <input type="file" id="avatarUpload" name="meupload" class="form-control mt-2" onchange="previewAvatar()">
                                     </div>
                                     <div class="">
-                                        <button type="button" class="btn btn-outline-danger mt-2" onclick="resetAvatar()"><i class="fa-solid fa-rotate-right"></i></button>
+                                        <button type="button" class="btn btn-outline-danger mt-2 ms-3" onclick="resetAvatar()"><i class=" fa-solid fa-rotate-right"></i></button>
                                     </div>
                                 </div>
                             </div>
