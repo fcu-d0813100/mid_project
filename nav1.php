@@ -1,9 +1,10 @@
  <!-- Header    -->
  <header class="main-header d-flex justify-content-between bg-dark align-items-center fixed-top shadow ">
    <a class="brand bg-black text-white text-decoration-none d-block" href="">後台管理系統</a>
-   <div class="d-flex align-items-center text-white text-md">
+   <div class="d-flex align-items-center text-white text-md gap-2">
      <!--登入後能顯示使用者名稱 -->
-     <a class="btn btn-dark me-3" href="./doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
+     <div class="text-md">Hi ! Admin</div>
+     <a class="btn btn-dark me-3" href="../user/doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
    </div>
  </header>
  <!-- Sidebar -->
