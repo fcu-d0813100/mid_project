@@ -23,9 +23,9 @@ body {
   --bs-btn-border-color: var(--primary-color);
   --bs-btn-hover-color: #ffffff;
   --bs-btn-hover-bg: var(--primary-color);
-  --bs-btn-active-border-color: var(--primary-color);
+  --bs-btn-active-border-color: var(--primary-hover-color);
   --bs-btn-hover-border-color: var(--primary-color);
-  --bs-btn-active-bg: var(--primary-color);
+  --bs-btn-active-bg: var(--primary-hover-color);
 }
 
 .pagination {

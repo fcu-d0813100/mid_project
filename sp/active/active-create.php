@@ -8,14 +8,13 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
+    <style>
+        .main-content {
+            padding-left: 200px;
+            padding-right: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,17 +23,17 @@
     <header class="py-4">
         <?php include("../../nav1.php") ?>
 
-        <main class="main-content">
+        <main class="main-content container">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-dark">活動列表 </a> /<span class="text-sm">活動編輯</span></p>
+                <p class="m-0 d-inline text-lg"><a href="active.php" class="text-dark text-decoration-none h2">活動列表 </a><span class="text-sm fs-5"> / 活動編輯</span></p>
             </div>
             <hr>
             <!-- table-->
-            <div class="py-2 d-flex justify-content-between gap-2">
-                <a href="active.php" class="btn btn-outline-secondary btn-lg">
+            <div class="py-3 d-flex justify-content-between gap-2">
+                <a href="active.php" class="btn btn-dark">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
-                <a href="" class="btn btn-outline-secondary btn-lg">
+                <a href="" class="btn btn-outline-danger">
                     <i class="fa-regular fa-trash-can"></i>
                 </a>
             </div>
@@ -122,7 +121,7 @@
                             </tr>
                         </table>
                         <div class="text-end">
-                            <button class="btn btn-outline-secondary btn-lg" type="submit">新增</button>
+                            <button class="btn btn-dark" type="submit">新增</button>
                         </div>
                     </form>
                 </div>

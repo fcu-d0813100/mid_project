@@ -86,6 +86,7 @@ $articleCount = $articleCountAll;
   <style>
     .main-content {
       padding-left: 200px;
+      padding-right: 0;
     }
   </style>
 </head>
