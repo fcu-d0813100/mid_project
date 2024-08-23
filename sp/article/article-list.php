@@ -67,8 +67,17 @@ if (isset($_GET["search"])) {
   header("location:article-list.php?p=1&order=1");
 }
 // $rows = $result->fetch_all(MYSQLI_ASSOC);
+
 $result = $conn->query($sql);
-$articleCount = $articleCountAll;
+
+//if有搜尋,$articleCount =num_rows[上面有做篩選]
+if (isset($_GET["search"])) {
+  $articleCount = $result->num_rows;
+  //if not,$articleCount =全部
+} else {
+  $articleCount = $articleCountAll;
+  
+}
 ?>
 
 <!doctype html>
@@ -93,10 +102,10 @@ $articleCount = $articleCountAll;
 
 <body>
   <?php include("../../nav1.php") ?>
-  <main class="container main-content d-flex justify-content-center">
+  <main class=" main-content container d-flex justify-content-center">
     <div class="row">
       <div class="col">
-        <div class="d-flex justify-content-between align-items-start mt-3">
+        <div class=" d-flex justify-content-between align-items-start mt-3">
 
           <div>
             <p class="m-0 d-inline text-lg h2">文章管理 <span class="text-sm fs-5"> / 文章列表</span></p>
@@ -127,7 +136,7 @@ $articleCount = $articleCountAll;
           <div class="d-flex justify-content-between my-3">
             <?php if ($articleCount > 0):
               $rows = $result->fetch_all(MYSQLI_ASSOC) ?>
-              共有<?= $articleCount ?> 則文章
+               第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁<?= $per_page ?>筆，共 <?= $articleCount ?>筆
               <!-- sort button -->
               <div class="btn-group btn-group-md">
                 <!-- 排序ID(由小到大)由大到小 利用order by -->
@@ -144,21 +153,12 @@ $articleCount = $articleCountAll;
           <table class="table table-striped table-md text-md">
             <thead>
               <tr>
-                <th scope="col" class="col-1">編號
-                  <!-- <div class="btn-group">
-                <a href="javascript:void(0)" onclick="sortTable(1)" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-up-long"></i></a>
-                <a href="javascript:void(0)" onclick="sortTable(2)" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-down-long"></i></a>
-              </div> -->
-                </th>
+                <th scope="col" class="col-1">編號</th>
                 <th scope="col" class="col-1">品牌</th>
                 <th scope="col" class="col-1">類型</th>
                 <th scope="col" class="col-3">標題</th>
                 <th scope="col">圖片</th>
-                <th scope="col" class="col-2">發布時間
-                  <!-- <a href="javascript:void(0)" onclick="sortTable(3)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a>
-              <a href="javascript:void(0)" onclick="sortTable(4)" class="btn btn-outline-secondary btn-sm mb-1"><i class="fa-solid fa-sort"></i></a> -->
-
-                </th>
+                <th scope="col" class="col-2">發布時間</th>
                 <th scope="col" class="col-2">動作</th>
               </tr>
             </thead>

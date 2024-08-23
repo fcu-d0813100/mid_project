@@ -26,7 +26,7 @@ if (isset($_SESSION["user"])) {
     ?>
     <style>
         body {
-            background: url(./login_bg/04.jpg) center center;
+            background: url(./login_bg/07.jpg) center center;
             background-size: cover;
         }
 
@@ -131,16 +131,16 @@ if (isset($_SESSION["user"])) {
 
                     <?php
 
-                        unset($_SESSION["error"]["message"]);
-                    endif; ?>
-                    
-                    
-                </form>
-           
+                    unset($_SESSION["error"]["message"]);
+                endif; ?>
+
+
+                    </form>
+
 
 
                     <div class="mt-4 text-muted">
-                        © 2010-2024 Makeup
+                        © 2010-2024 Makeup 後台管理系統
 
                     </div>
             </div>
