@@ -85,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,10 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             top: 0px;
             left: 0px;
             z-index: 10;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-            color: white; /* 白色文字 */
-            border-radius: 5px; /* 圓角 */
-            padding: 5px 10px; /* 內間距 */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* 半透明背景 */
+            color: white;
+            /* 白色文字 */
+            border-radius: 5px;
+            /* 圓角 */
+            padding: 5px 10px;
+            /* 內間距 */
             text-decoration: none;
         }
 
@@ -192,28 +197,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 50px;
             z-index: 10;
         }
+
         .reverse {
             position: absolute;
             left: -270px;
             top: -100px;
         }
+
         #productForm {
             margin-top: 50px;
         }
+
         .descriptiontxt {
-            display:block;
+            display: block;
         }
+
         form {
             position: relative;
             border-top: 1px solid #ccc;
             padding-top: 25px;
         }
+
         #product_name {
             position: absolute;
             top: -60px;
         }
     </style>
 </head>
+
 <body>
     <?php include("../../nav1.php") ?>
     <main class="container">
@@ -236,7 +247,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p><strong>色號&nbsp;:&nbsp;</strong> <span contenteditable="false" id="color_name"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></span></p>
                     <p class="price">價格&nbsp;:&nbsp;<span contenteditable="false" id="price"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?></span> 元</p>
                     <p class="stock">庫存&nbsp;:&nbsp;<span contenteditable="false" id="stock"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?></span> 件</p>
-                    <p><strong><div class="descriptiontxt">商品描述&nbsp;:&nbsp;</div></strong><span contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></span></p>
+                    <p><strong>
+                            <div class="descriptiontxt">商品描述&nbsp;:&nbsp;</div>
+                        </strong><span contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></span></p>
                     <button type="submit" class="save-button"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                 </form>
             </div>
@@ -294,4 +307,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 </body>
+
 </html>
