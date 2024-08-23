@@ -30,24 +30,30 @@ if ($userCount > 0) {
 <html lang="en">
 
 <head>
-    <title><?= $title ?></title>
+    <title>會員資料</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <?php include("css.php") ?>
+
     <style>
         body {
             background-color: #f5f5f5;
         }
+
+        .img-size {
+            max-height: 450px;
+            width: auto;
+        }
     </style>
+
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
-    <main class="main-content mt-5">
-
-        <div class="container  d-flex justify-content-center mt-4">
+    <main class="main-content mt-3">
+        <div class="container d-flex justify-content-center mt-4">
             <div class="col-10">
                 <div class="row mb-2">
                     <div class="d-flex justify-content-between align-items-start mt-3 mb-2">
@@ -59,65 +65,66 @@ if ($userCount > 0) {
                     </div>
                 </div>
 
-                <div class="row d-flex justify-content-between align-items-center mt-4">
+                <div class="rounded mt-4 d-flex justify-content-between align-items-center">
                     <div class="col-5">
-                        <div class="ratio ratio-1x1 ">
-                            <img src="./upload/<?= $row["member_img"] ?>" alt="會員頭像" class="rounded">
+                        <div class="ratio ratio-1x1">
+                            <img src="./upload/<?= $row["member_img"] ?>" alt="會員頭像" class="rounded img-fluid shadow-sm img-size">
                         </div>
+
                     </div>
-                    <div class="col-6 ">
+                    <div class="col-6 me-4">
 
                         <?php if ($userCount > 0) : ?>
-                            <table class="table m-0">
-                                <tr>
-                                    <th>ID</th>
-                                    <td><?= $row["id"] ?></td>
+                            <table class="table rounded align-middle table-light-subtle shadow-sm">
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">ID</th>
+                                    <td class="ps-5"><?= $row["id"] ?></td>
                                 </tr>
-                                <tr>
-                                    <th>帳號</th>
-                                    <td><?= $row["account"] ?></td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">帳號</th>
+                                    <td class="ps-5"><?= $row["account"] ?></td>
                                 </tr>
-                                <tr>
-                                    <th>姓名</th>
-                                    <td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">姓名</th>
+                                    <td class="ps-5">
                                         <?= $row["name"] ?>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>性別</th>
-                                    <td> <?= ($row["gender"] == 1) ? '男' : '女' ?></td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">性別</th>
+                                    <td class="ps-5"> <?= ($row["gender"] == 1) ? '男' : '女' ?></td>
                                 </tr>
-                                <tr>
-                                    <th>會員等級</th>
-                                    <td><?= $row["level_name"] ?></td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">會員等級</th>
+                                    <td class="ps-5"><?= $row["level_name"] ?></td>
                                 </tr>
-                                <tr>
-                                    <th>聯絡電話</th>
-                                    <td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">聯絡電話</th>
+                                    <td class="ps-5">
                                         <?= $row["phone"] ?>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>生日</th>
-                                    <td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">生日</th>
+                                    <td class="ps-5">
                                         <?= $row["birthday"] ?>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>信箱</th>
-                                    <td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">信箱</th>
+                                    <td class="ps-5">
                                         <?= $row["email"] ?>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>地址</th>
-                                    <td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">地址</th>
+                                    <td class="ps-5">
                                         <?= $row["address"] ?>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>註冊時間</th>
-                                    <td>
+                                <tr class="border-bottom">
+                                    <th class="p-3 ps-4">註冊時間</th>
+                                    <td class="ps-5">
                                         <?= $row["created_at"] ?>
                                     </td>
                                 </tr>
@@ -127,7 +134,7 @@ if ($userCount > 0) {
                 </div>
 
 
-                <div class="mt-4">
+                <div class="mt-4 d-flex justify-content-end">
                     <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-dark"><i class="fa-solid fa-user-pen me-1"></i>編輯</a>
 
                 <?php else : ?>

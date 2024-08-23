@@ -82,9 +82,21 @@ $row = $result->fetch_assoc();
                                 </td>
                             </tr>
                             <tr>
-                                <th>活動日期</th>
+                                <th>報名人數/報名上限</th>
+                                <td>
+                                    <?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>活動開始日期時間</th>
                                 <td>
                                     <?= $row["start_at"] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>活動結束日期時間</th>
+                                <td>
+                                    <?= $row["end_at"] ?>
                                 </td>
                             </tr>
                             <tr>
