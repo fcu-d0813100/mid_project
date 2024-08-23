@@ -128,11 +128,24 @@ if (isset($_SESSION["user"])) {
                         <div class="d-grid">
                             <button class="btn btn-dark py-2">登入</button>
                         </div>
-                    </form>
-                <?php endif; ?>
-                <div class="mt-4 text-muted">
-                    © 2017–2024
-                </div>
+
+                    <?php
+                        unset($_SESSION["error"]["message"]);
+                    endif; ?>
+                    <div class="form-check my-3">
+                        <input class="form-check-input" type="checkbox" value="" id="remember">
+                        <label class="form-check-label" for="remember">
+                            Remember Me
+                        </label>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-dark py-2">登入</button>
+                    </div>
+                </form>
+            <?php endif; ?>
+            <div class="mt-4 text-muted">
+                © 2010-2024 Makeup
+
             </div>
         </div>
     </div>

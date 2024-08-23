@@ -2,7 +2,7 @@
  <header class="main-header d-flex justify-content-between bg-dark align-items-center fixed-top shadow ">
    <a class="brand bg-black text-white text-decoration-none d-block" href="">後台管理系統</a>
    <div class="d-flex align-items-center text-white text-md">
-     <!--登入後能顯示使用者名稱 -->
+     <div class="me-3">Hi！Admin</div>
      <a class="btn btn-dark me-3" href="./doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
    </div>
  </header>
@@ -46,7 +46,7 @@
            </svg>類別管理 </a>
          <ul class="collapse list-unstyled " id="categoryDropdown">
            <li><a class="sidebar-link" href="../category/category.php">品項管理</a></li>
-           <li><a class="sidebar-link" href="color.php">色號庫存</a></li>
+           <li><a class="sidebar-link" href="../category/color.php">色號庫存</a></li>
          </ul>
        </li>
        <li class="sidebar-item"><a class="sidebar-link" href="#orderDropdown" data-bs-toggle="collapse">

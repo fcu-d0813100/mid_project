@@ -21,7 +21,9 @@
     <main class="main-content">
         <div class="mt-5 mx-5">
             <div class="d-flex justify-content-between align-items-start">
+
                 <p class="m-0 d-inline  h2">新增優惠券</p>
+
             </div>
             <hr>
             <!-- table-->
@@ -36,13 +38,13 @@
                         <div class="mb-3 row">
                             <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name"  required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="code" name="code">
+                                <input type="text" class="form-control" id="code" name="code"  required>
                             </div>
                             <div class="col-sm-3">
                                 <button type="button" class="btn btn-dark" onclick="generateCode()">隨機產生代碼</button>
@@ -52,7 +54,7 @@
                         <div class="mb-3 row">
                             <label for="name" class="col-sm-2 col-form-label">消費金額</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="minimum_amount">
+                                <input type="text" class="form-control" name="minimum_amount" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -68,20 +70,20 @@
                         <div class="mb-3 row">
                             <label for="name" class="col-sm-2 col-form-label">折扣數</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="discount_value">
+                                <input type="text" class="form-control" name="discount_value"  required>
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="maximum">
+                                <input type="text" class="form-control" name="maximum"  required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="name" class="col-sm-2 col-form-label">起始日期</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" name="start_date" id="start_date">
+                                <input type="date" class="form-control" name="start_date" id="start_date" required>
                             </div>
                         </div>
                         <div class="mb-3 row">

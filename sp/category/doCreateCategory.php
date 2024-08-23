@@ -1,6 +1,6 @@
 <?php
 
-require_once("./productdb_connect.php");
+require_once("../../db_connect.php");
 
 if (!isset($_GET["category"]) || !isset($_GET["main_category_id"])) {
     echo "請循正常管道進入此頁";
@@ -18,7 +18,7 @@ $result = $conn->query($sqlCheck);
 $categoryCount = $result->num_rows;
 
 if ($categoryCount > 0) {
-    echo "該品項已存在";
+    echo "<script>alert('該品項已存在'); window.location.href='create-category.php';</script>";
     exit;
 }
 

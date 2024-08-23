@@ -151,12 +151,12 @@ $result = $conn->query($sql);
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
+                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=1&pay=1">未付款 <?= $payCountAll  ?></a>
                         <!-- p=<?= $_GET["p"] ?>& -->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
+                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=1&status=1">訂單處理中 <?= $statusCountAll ?></a>
                         <!-- p=<?= $_GET["p"] ?>& -->
                     </li>
 
