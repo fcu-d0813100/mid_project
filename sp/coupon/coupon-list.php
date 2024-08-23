@@ -12,6 +12,10 @@ $sqlpayAll = "SELECT * FROM coupon_list WHERE type_id = 2 AND valid = 1";
 $resultype2All = $conn->query($sqlpayAll);
 $type2CountAll = $resultype2All->num_rows;
 
+$sqlsearchAll = "SELECT * FROM coupon_list WHERE name  LIKE '%$search%' AND valid = 1";
+$resulsearcAll = $conn->query($sqlsearchAll);
+$searcCountAll = $resulsearcAll->num_rows;
+
 // 總數量查詢
 $sqlAll = "SELECT * FROM coupon_list WHERE valid = 1";
 $resulAll = $conn->query($sqlAll);
@@ -46,10 +50,20 @@ if ($type_id) {
 // }
 
 // 搜索
+// Sanitize search input
 $search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : "";
 if (!empty($search)) {
-  $whereClause .= " AND coupon_list.name LIKE '%$search%'";
+    $whereClause .= "AND coupon_list.name LIKE '%$search%'";
 }
+// if (isset($_GET["search"])) {
+//   $search = $_GET["search"];
+//   $whereClause .= "AND coupon_list.name LIKE '%$search%'";
+// }
+
+// $search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : "";
+// if (!empty($search)) {
+//   $whereClause .= " AND coupon_list.name LIKE '%$search%'";
+// }
 
 // if (isset($_GET["search"]) && !empty($_GET["search"])) {
 //   $search = $conn->real_escape_string($_GET["search"]);
@@ -118,8 +132,19 @@ $result = $conn->query($sql);
           </ul>
         </div>
 
-        <!-- 日期篩選 -->
-        <div class="select d-flex align-items-center justify-content-end border-start border-end bg-white">
+        <!-- 關鍵字搜尋 -->
+        <div class="select d-flex align-items-center justify-content-between border-start border-end bg-white ps-2">
+          <form class="d-flex my-3 " method="GET">
+            <div class="col-12 me-1">
+              <div class="input-group ">
+                <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="優惠券名稱">
+                <button class="btn btn-dark rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+            </div>
+          </form>
+
+
+          <!-- 日期篩選 -->
           <?php if (!isset($_GET["start_date"])): ?>
             <div class="mx-3 my-2 py-2 ">
               <form action="">
@@ -131,7 +156,7 @@ $result = $conn->query($sql);
                 <div class="row g-2">
                   <?php if (isset($_GET["start"])) : ?>
                     <div class="col-auto">
-                      <a class="btn btn-primary" href="coupon-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
+                      <a class="btn btn-dark" href="coupon-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
                     </div>
                   <?php endif; ?>
                   <div class="col-auto">
@@ -147,10 +172,8 @@ $result = $conn->query($sql);
                     <button type="submit" class="btn btn-dark ">
                       <i class="fa-solid fa-filter"></i>
                     </button>
-
                   </div>
                 </div>
-
               </form>
             </div>
           <?php endif; ?>
@@ -192,6 +215,8 @@ $result = $conn->query($sql);
                   <td><?= $row["type_name"] ?></td>
                   <td><?= $row["discount_value"] ?></td>
                   <td><?= $row["used"] ?>/<?= $row["maximum"] ?></td>
+
+                  <!-- swith按鈕 -->
                   <td>
                     <div class="form-check form-switch">
                       <?php
@@ -202,15 +227,15 @@ $result = $conn->query($sql);
                     </div>
                   </td>
 
+                  <!-- 修改編輯 -->
                   <td>
                     <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger btn-md">
                       <i class="fa-regular fa-pen-to-square"></i>
                     </a>
                   </td>
+
+                  <!-- 刪除警告 modal -->
                   <td>
-
-
-                    <!-- Button trigger modal -->
                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
@@ -228,18 +253,16 @@ $result = $conn->query($sql);
                         </div>
                       </div>
                     </div>
-                    <!-- <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary ">
-                    <i class="fa-regular fa-trash-can"></i>
-                  </a> -->
                   </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
-
           </table>
+
+          <!-- 換頁page -->
           <nav aria-label="Page navigation example ">
             <ul class="pagination justify-content-center mt-5">
-              <?php if (isset($_GET["p"])): ?>
+              <?php if (isset($_GET["p"]) && !isset($_GET["type_id"])): ?>
                 <?php for ($i = 1; $i <= $total_Page; $i++) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link " href="coupon-list.php?p=<?= $i ?>"><?= $i ?></a>
@@ -247,12 +270,32 @@ $result = $conn->query($sql);
                 <?php endfor; ?>
               <?php endif; ?>
 
+              <?php if (isset($_GET["p"]) && isset($_GET["search"])): ?>
+                <?php
+                $searchPage = ceil($searcCountAll / $per_page);
+                for ($i = 1; $i <= $searchPage; $i++): ?>
+                  <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link" href="coupon-list.php?p=<?= $i ?>&search=<?= $_GET["search"] ?>">
+                      <?= $i?>
+                    </a>
+                  </li>
+                <?php endfor; ?>
+              <?php endif; ?>
 
-              <?php if (isset($_GET["p"]) && isset($_GET["type_id"]) && $_GET["type_id"]=1): ?>
-                <?php $staPage = ceil($type1CountAll / $per_page);
-                  for ($i = 1; $i <= $total_Page; $i++) : ?>
+              <?php if (isset($_GET["p"]) && isset($_GET["type_id"]) && $_GET["type_id"] == 1): ?>
+                <?php $type1Page = ceil($type1CountAll / $per_page);
+                for ($i = 1; $i <= $type1Page; $i++) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link " href="coupon-list.php?p=<?= $i ?>&type_id=1"><?= $i ?></a>
+                  </li>
+                <?php endfor; ?>
+              <?php endif; ?>
+
+              <?php if (isset($_GET["p"]) && isset($_GET["type_id"]) && $_GET["type_id"] == 2): ?>
+                <?php $type2Page = ceil($type2CountAll / $per_page);
+                for ($i = 1; $i <= $type2Page; $i++) : ?>
+                  <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <a class="page-link " href="coupon-list.php?p=<?= $i ?>&type_id=2"><?= $i ?></a>
                   </li>
                 <?php endfor; ?>
               <?php endif; ?>
