@@ -8,17 +8,12 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Quill CSS-->
     <link rel="stylesheet" href="../vendor/quill/quill.core.css">
     <link rel="stylesheet" href="../vendor/quill/quill.snow.css">
+
+    <?php include("./css.php") ?>
 </head>
 
 <body>
@@ -26,7 +21,9 @@
     <main class="main-content">
         <div class="mt-5 mx-5">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-secondary">新增優惠券</p>
+
+                <p class="m-0 d-inline  h2">新增優惠券</p>
+
             </div>
             <hr>
             <!-- table-->
@@ -34,8 +31,8 @@
 
             </div>
 
-            <div class="row mt-3 justify-content-center">
-                <div class="col-6 text-end">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-8 text-end mt-5">
                     <form action="doCreateCoupon.php" method="post">
 
                         <div class="mb-3 row">
@@ -50,7 +47,7 @@
                                 <input type="text" class="form-control" id="code" name="code"  required>
                             </div>
                             <div class="col-sm-3">
-                                <button type="button" class="btn btn-outline-secondary" onclick="generateCode()">隨機產生代碼</button>
+                                <button type="button" class="btn btn-dark" onclick="generateCode()">隨機產生代碼</button>
                             </div>
                         </div>
 
@@ -95,10 +92,10 @@
                                 <input type="date" class="form-control" name="end_date" id="end_date">
                             </div>
                         </div>
-                        <a href="coupon-list.php?p=1" class="btn btn-outline-secondary p-2 me-3" title="回優惠券列表">
-                            <i class="fa-solid fa-arrow-left"></i> 取消
+                        <a href="coupon-list.php?p=1" class="btn btn-dark px-3 me-3 mt-3" title="回優惠券列表">
+                            <i class="fa-solid fa-arrow-left  me-2"></i> 取消
                         </a>
-                        <button class="btn btn-outline-secondary p-2" type="submit"><i class="fa-solid fa-file-import "></i> 送出</button>
+                        <button class="btn btn-dark px-3 mt-3" type="submit"><i class="fa-solid fa-file-import me-2"></i> 送出</button>
                     </form>
                 </div>
 

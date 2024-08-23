@@ -191,17 +191,6 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
   </main>
   <?php $conn->close(); ?>
   </div>
-
-
-  <script>
-    function sortTable(orderType) {
-      var page = <?= $page ?>;
-      var url = "article-list.php?p=" + page + "&order=" + orderType;
-      window.location.href = url;
-    }
-  </script>
-
-
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
