@@ -8,31 +8,24 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container">
-            <div class="py-3">
-                <p class="m-0 d-inline text-lg text-secondary">新增品項 /<span class="text-sm">品項管理</span></p>
+            <div class="py-3 mt-5">
+                <p class="m-0 d-inline h2">新增品項 <span class="text-sm fs-5"> / 品項管理</span></p>
             </div>
 
             <form action="doCreateCategory.php" method="get">
                 <div class="mb-2">
-                    <label class="form-label" for="name"><span class="text-danger">*</span>品項名稱</label>
+                    <label class="form-label" for="name"><span class="text-danger">* </span> 品項名稱</label>
                     <input type="text" class="form-control" name="category" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="name"><span class="text-danger">*</span>部位分類</label>
+                    <label class="form-label" for="name"><span class="text-danger">* </span> 部位分類</label>
                     <select class="form-select" name="main_category_id" id="">
                         <option value="1">面部彩妝</option>
                         <option value="2">雙頰彩妝</option>
@@ -41,8 +34,8 @@
                     </select>
                 </div>
                 <div class="py-2">
-                    <button class="btn btn-primary " type="submit">送出</button>
-                    <a class="btn btn-secondary" href="category.php" title="回管理列表">返回</a>
+                    <button class="btn btn-dark me-2" type="submit">送出</button>
+                    <a class="btn btn-dark" href="category.php" title="回管理列表">返回</a>
                 </div>
 
             </form>

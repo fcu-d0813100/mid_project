@@ -51,74 +51,72 @@ $conn->close();
     <!-- Quill CSS-->
     <link rel="stylesheet" href="../vendor/quill/quill.core.css">
     <link rel="stylesheet" href="../vendor/quill/quill.snow.css">
-    <style>
-        .main-content {
-            padding-left: 200px;
-        }
-    </style>
+
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
-    <main class="main-content container">
-        <div class="d-flex justify-content-between align-items-start ">
-            <p class="m-0 mt-3 d-inline h2">文章列表 <span class="text-sm fs-5"> / 檢視文章</span></p>
-        </div>
-        <hr>
-        <!-- table-->
-        <div class="py-2 d-flex justify-content-end gap-2">
-            <a href="article-list.php" class="btn btn-dark ">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-            <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-dark">
-                <i class="fa-regular fa-pen-to-square"></i>
-            </a>
-            <a href="javascript:void(0);" class="btn btn-outline-danger"
-                onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
-                <i class="fa-regular fa-trash-can"></i>
-            </a>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-lg">
-
-                <?php if ($articleCount > 0) : ?>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th class="col-2">編號</th>
-                            <td><?= $row["id"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>品牌</th>
-                            <td><?= $row["brand_name"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>類型</th>
-                            <td><?= $row["type_name"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>標題</th>
-                            <td><?= $row["title"] ?></td>
-                        </tr>
-
-                        <tr>
-                            <th>內容</th>
-                            <td><?= $row["content"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>圖片</th>
-                            <td class="ratio ratio-4x3"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
-                        </tr>
-                        <tr>
-                            <th>發布時間</th>
-                            <td><?= $row["launched_date"] ?></td>
-                        </tr>
-                    </table>
-                <?php else: ?>
-                    文章不存在
-                <?php endif; ?>
+    <main class="main-content ">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-start ">
+                <p class="m-0 mt-3 pt-5 d-inline h2">文章列表 <span class="text-sm fs-5"> / 檢視文章</span></p>
+            </div>
+            <hr>
+            <!-- table-->
+            <div class="py-2 d-flex justify-content-end gap-2">
+                <a href="article-list.php" class="btn btn-dark ">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-dark">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+                <a href="javascript:void(0);" class="btn btn-outline-danger"
+                    onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
+                    <i class="fa-regular fa-trash-can"></i>
+                </a>
             </div>
 
+            <div class="row mt-3">
+                <div class="col-lg">
+
+                    <?php if ($articleCount > 0) : ?>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th class="col-2">編號</th>
+                                <td><?= $row["id"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>品牌</th>
+                                <td><?= $row["brand_name"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>類型</th>
+                                <td><?= $row["type_name"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>標題</th>
+                                <td><?= $row["title"] ?></td>
+                            </tr>
+
+                            <tr>
+                                <th>內容</th>
+                                <td><?= $row["content"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>圖片</th>
+                                <td class="ratio ratio-4x3"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
+                            </tr>
+                            <tr>
+                                <th>發布時間</th>
+                                <td><?= $row["launched_date"] ?></td>
+                            </tr>
+                        </table>
+                    <?php else: ?>
+                        文章不存在
+                    <?php endif; ?>
+                </div>
+
+            </div>
         </div>
     </main>
 

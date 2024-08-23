@@ -38,10 +38,6 @@ if ($userCount > 0) {
     <?php include("css.php") ?>
 
     <style>
-        body {
-            background-color: #f5f5f5;
-        }
-
         .img-size {
             max-height: 450px;
             width: auto;
@@ -57,7 +53,7 @@ if ($userCount > 0) {
             <div class="col-10">
                 <div class="row mb-2">
                     <div class="d-flex justify-content-between align-items-start mt-3 mb-2">
-                        <p class="m-0 d-inline text-lg text-secondary h1">會員管理 <span class="fs-5"> / 會員資料</span></p>
+                        <p class="m-0 d-inline h2">會員管理 <span class="fs-5"> / 會員資料</span></p>
                         <div class="py-2 ">
                             <a class="btn btn-dark " href="users.php" title="回到會員列表"><i class="fa-solid fa-left-long me-1"></i>回到會員列表</a>
 

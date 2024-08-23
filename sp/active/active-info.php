@@ -38,82 +38,84 @@ $row = $result->fetch_assoc();
 <body>
 
 
-    <header class="py-3">
+    <header>
         <?php include("../../nav1.php") ?>
 
-        <main class="main-content container">
-            <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-lg text-dark"><a href="active.php" class="text-dark text-decoration-none h2">活動列表 </a> <span class="text-sm fs-5"> / 活動瀏覽</span></p>
-            </div>
-            <hr>
-            <!-- table-->
-            <div class="py-3 d-flex justify-content-between ">
-                <a href="active.php" class="btn btn-dark">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
-                <a href="javascript:void(0);" class="btn btn-outline-danger"
-                    onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteActive.php?id=<?= $row['id'] ?>'; }">
-                    <i class="fa-regular fa-trash-can"></i>
-                </a>
-            </div>
-            <div>
-            </div>
-            <div class="row">
-                <div class="col-lg">
-                    <?php if ($activeCount > 0): ?>
-                        <table class="table table-bordered">
+        <main class="main-content">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-start pt-3 mt-5">
+                    <p class="m-0 d-inline text-lg text-dark"><a href="active.php" class="text-dark text-decoration-none h2">活動列表 </a> <span class="text-sm fs-5"> / 活動瀏覽</span></p>
+                </div>
+                <hr>
+                <!-- table-->
+                <div class="py-3 d-flex justify-content-between ">
+                    <a href="active.php" class="btn btn-dark">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-outline-danger"
+                        onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteActive.php?id=<?= $row['id'] ?>'; }">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </a>
+                </div>
+                <div>
+                </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <?php if ($activeCount > 0): ?>
+                            <table class="table table-bordered">
 
-                            <tr>
-                                <th>id</th>
-                                <td><?= $row["id"] ?></td>
-                            </tr>
-                            <tr>
-                                <th>圖片</th>
-                                <td>
-                                    <div class="mb-2 ratio ratio-4x3 activePic">
-                                        <img class="object-fit-cover " src="images/<?= $row["image"] ?>" alt="">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>活動名稱</th>
-                                <td>
-                                    <?= $row["name"] ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>報名人數/報名上限</th>
-                                <td>
-                                    <?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>活動開始日期時間</th>
-                                <td>
-                                    <?= $row["start_at"] ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>活動結束日期時間</th>
-                                <td>
-                                    <?= $row["end_at"] ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>地點</th>
-                                <td>
-                                    <?= $row["address"] ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>活動說明</th>
-                                <td>
-                                    <?= $row["description"] ?>
-                                </td>
-                            </tr>
-                        </table>
-                    <?php endif; ?>
+                                <tr>
+                                    <th>id</th>
+                                    <td><?= $row["id"] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>圖片</th>
+                                    <td>
+                                        <div class="mb-2 ratio ratio-4x3 activePic">
+                                            <img class="object-fit-cover " src="images/<?= $row["image"] ?>" alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>活動名稱</th>
+                                    <td>
+                                        <?= $row["name"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>報名人數/報名上限</th>
+                                    <td>
+                                        <?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>活動開始日期時間</th>
+                                    <td>
+                                        <?= $row["start_at"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>活動結束日期時間</th>
+                                    <td>
+                                        <?= $row["end_at"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>地點</th>
+                                    <td>
+                                        <?= $row["address"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>活動說明</th>
+                                    <td>
+                                        <?= $row["description"] ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        <?php endif; ?>
 
+                    </div>
                 </div>
             </div>
         </main>

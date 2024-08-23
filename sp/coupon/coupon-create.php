@@ -19,84 +19,92 @@
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content">
-        <div class="mt-5 mx-5">
-            <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline  h2">新增優惠券</p>
-            </div>
-            <hr>
-            <!-- table-->
-            <div class="py-2 d-flex justify-content-end gap-2">
 
-            </div>
 
-            <div class="row mt-5 justify-content-center">
-                <div class="col-8 text-end mt-5">
-                    <form action="doCreateCoupon.php" method="post">
 
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name"  required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="code" name="code"  required>
-                            </div>
-                            <div class="col-sm-3">
-                                <button type="button" class="btn btn-dark" onclick="generateCode()">隨機產生代碼</button>
-                            </div>
-                        </div>
+        <div class="container">
+            <div class="mt-5 mx-5">
+                <div class="d-flex justify-content-between align-items-start">
 
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">消費金額</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="minimum_amount" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
-                            <div class="col-sm-10">
-                                <select class="form-select" aria-label="Default select example" name="type_id">
-                                    <option value="1">金額</option>
-                                    <option value="2">百分比%</option>
-                                </select>
-                            </div>
-                        </div>
+                    <p class="m-0 d-inline  h2">新增優惠券</p>
 
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">折扣數</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="discount_value"  required>
-                            </div>
-                        </div>
+                </div>
+                <hr>
+                <!-- table-->
+                <div class="py-2 d-flex justify-content-end gap-2">
 
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="maximum"  required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">起始日期</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" name="start_date" id="start_date" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-2 col-form-label">結束日期</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" name="end_date" id="end_date">
-                            </div>
-                        </div>
-                        <a href="coupon-list.php?p=1" class="btn btn-dark px-3 me-3 mt-3" title="回優惠券列表">
-                            <i class="fa-solid fa-arrow-left  me-2"></i> 取消
-                        </a>
-                        <button class="btn btn-dark px-3 mt-3" type="submit"><i class="fa-solid fa-file-import me-2"></i> 送出</button>
-                    </form>
+
                 </div>
 
+                <div class="row mt-5 justify-content-center">
+                    <div class="col-10 text-end mt-5">
+                        <form action="doCreateCoupon.php" method="post">
+
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">折扣代碼</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="code" name="code" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-dark" onclick="generateCode()">隨機產生代碼</button>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">消費金額</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="minimum_amount" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" aria-label="Default select example" name="type_id">
+                                        <option value="1">金額</option>
+                                        <option value="2">百分比%</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">折扣數</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="discount_value" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="maximum" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">起始日期</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="start_date" id="start_date" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="name" class="col-sm-2 col-form-label">結束日期</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="end_date" id="end_date">
+                                </div>
+                            </div>
+                            <a href="coupon-list.php?p=1" class="btn btn-dark px-3 me-3 mt-3" title="回優惠券列表">
+                                <i class="fa-solid fa-arrow-left  me-2"></i> 取消
+                            </a>
+                            <button class="btn btn-dark px-3 mt-3" type="submit"><i class="fa-solid fa-file-import me-2"></i> 送出</button>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </div>
     </main>

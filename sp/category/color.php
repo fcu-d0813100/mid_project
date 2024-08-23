@@ -31,28 +31,25 @@ $product_id = isset($_GET["product_id"]) ? (int)$_GET["product_id"] : 0;
 // 计算符合搜索条件的总库存量
 $sqlTotalStock = "SELECT SUM(stock) as total_stock FROM color
                    JOIN product_list ON color.product_id = product_list.id
-                   WHERE (color.color LIKE '%$search%' OR product.product_name LIKE '%$search%')
-                   AND ($product_id = 0 OR color.product_id = $product_id)
-                   AND color.deleted_at IS NULL";
+                   WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+                   AND ($product_id = 0 OR color.product_id = $product_id)";
 
 // 根据搜索关键字和产品 ID 修改 SQL 查询
 if ($search || $product_id || $filterLowStock) {
     $sqlAll = "SELECT COUNT(*) as total FROM color
-               JOIN product_list ON color.product_id = product.id
+               JOIN product_list ON color.product_id = product_list.id
                WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
-               AND ($product_id = 0 OR color.product_id = $product_id)
-               AND color.deleted_at IS NULL";
+               AND ($product_id = 0 OR color.product_id = $product_id)";
 
     if ($filterLowStock) {
         $sqlAll .= " AND color.stock < 30";
     }
 
-    $sql = "SELECT color.id, product.product_name, color.color, color.stock
+    $sql = "SELECT color.id, product_list.product_name, color.color, color.stock
             FROM color
-            JOIN product_list ON color.product_id = product.id
-            WHERE (color.color LIKE '%$search%' OR product.product_name LIKE '%$search%')
-            AND ($product_id = 0 OR color.product_id = $product_id)
-            AND color.deleted_at IS NULL";
+            JOIN product_list ON color.product_id = product_list.id
+            WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+            AND ($product_id = 0 OR color.product_id = $product_id)";
 
     if ($filterLowStock) {
         $sql .= " AND color.stock < 30";
@@ -62,13 +59,11 @@ if ($search || $product_id || $filterLowStock) {
               LIMIT $start_item, $per_page";
 } else {
     $sqlAll = "SELECT COUNT(*) as total FROM color
-               JOIN product_list ON color.product_id = product.id
-               WHERE color.deleted_at IS NULL";
+               JOIN product_list ON color.product_id = product_list.id ";
 
     $sql = "SELECT color.id, product.product_name, color.color, color.stock
             FROM color
-            JOIN product_list ON color.product_id = product.id
-            WHERE color.deleted_at IS NULL";
+            JOIN product_list ON color.product_id = product_list.id";
 
     if ($filterLowStock) {
         $sqlAll .= " AND color.stock < 30";
@@ -137,6 +132,10 @@ $countResult = $conn->query($countSql);
 $totalRecords = $countResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRecords / $itemsPerPage);
 
+
+$totalStockResult = $conn->query($sqlTotalStock);
+$totalStock = $totalStockResult->fetch_assoc()['total_stock'];
+
 ?>
 
 <!doctype html>
@@ -149,65 +148,63 @@ $totalPages = ceil($totalRecords / $itemsPerPage);
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container">
-            <div class="py-3">
-                <p class="m-0 d-inline text-lg text-secondary">類別管理 /<span class="text-sm">色號及庫存</span></p>
+            <div class="mt-5">
+                <p class="m-0 d-inline h2">類別管理 <span class="text-sm fs-5"> / 色號及庫存</span></p>
             </div>
             <div class="py-2">
                 <?php if (isset($_GET["search"])) : ?>
-                    <a class="btn btn-primary" href="color.php" title="回列表"><i class="fa-solid fa-left-long"></i> 返回列表</a>
+                    <a class="btn btn-dark mb-2" href="color.php" title="回列表"><i class="fa-solid fa-left-long"></i> 返回列表</a>
                 <?php endif; ?>
             </div>
             <form action="">
-                <div class="input-group">
+                <div class="input-group mb-3">
                     <input type="search" class="form-control" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋商品名稱或色號">
-                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </form>
             <div class="py-3 d-flex justify-content-between">
-                <a class="btn btn-primary" href="create-color.php"><i class="fa-solid fa-plus"></i>新增色號及庫存</a>
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="color.php?order=asc<?= isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : '' ?>">
-                        <i class="fa-solid fa-arrow-down-1-9"></i> ID正序
-                    </a>
-                    <a class="btn btn-primary" href="color.php?order=desc<?= isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : '' ?>">
-                        <i class="fa-solid fa-arrow-down-9-1"></i> ID倒序
-                    </a>
-                    <a class="btn btn-secondary" href="color.php<?= isset($_GET['search']) ? '?search=' . urlencode($_GET['search']) . '&low_stock=1' : '?low_stock=1' ?>">
-                        <i class="fa-solid fa-filter"></i>庫存過低
-                    </a>
-                    <a class="btn btn-secondary" href="color.php<?= isset($_GET['search']) ? '?search=' . urlencode($_GET['search']) : '' ?>">
-                        <i class="fa-solid fa-layer-group"></i>全部商品
-                    </a>
+                <a class="btn btn-dark" href="create-color.php"><i class="fa-solid fa-plus me-2"></i>新增色號及庫存</a>
+                <div>
+                    <div class="btn-group me-2">
+                        <a class="btn btn-dark border-end" href="color.php?order=asc<?= isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : '' ?>">
+                            <i class="fa-solid fa-arrow-down-1-9 me-2"></i>ID正序
+                        </a>
+                        <a class="btn btn-dark border-start" href="color.php?order=desc<?= isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : '' ?>">
+                            <i class="fa-solid fa-arrow-down-9-1 me-2"></i>ID倒序
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-dark border-end" href="color.php<?= isset($_GET['search']) ? '?search=' . urlencode($_GET['search']) . '&low_stock=1' : '?low_stock=1' ?>">
+                            <i class="fa-solid fa-filter me-2"></i>庫存過低
+                        </a>
+                        <a class="btn btn-dark border-start" href="color.php<?= isset($_GET['search']) ? '?search=' . urlencode($_GET['search']) : '' ?>">
+                            <i class="fa-solid fa-layer-group me-2"></i>全部商品
+                        </a>
+                    </div>
                 </div>
             </div>
 
+            <div>共有 <?= $totalStock ?> 個庫存</div>
 
             <?php if ($colorCount > 0) :
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
             ?>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead>
                         <tr>
-                            <th>商品編號</th>
-                            <th>商品名稱</th>
-                            <th>色號</th>
-                            <th>庫存</th>
-                            <th>修改刪除</th>
+                            <th class="col-1">商品編號</th>
+                            <th class="col-4">商品名稱</th>
+                            <th class="col-3">色號</th>
+                            <th class="col-2">庫存</th>
+                            <th class="col-2">修改刪除</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -221,8 +218,8 @@ $totalPages = ceil($totalRecords / $itemsPerPage);
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="color-edit.php?id=<?= $color["id"] ?>">修改</a>
-                                    <a class="btn btn-danger" href="doDeleteColor.php?id=<?= $color['id'] ?>"
+                                    <a class="btn btn-outline-danger me-2" href="color-edit.php?id=<?= $color["id"] ?>">修改</a>
+                                    <a class="btn btn-outline-danger" href="doDeleteColor.php?id=<?= $color['id'] ?>"
                                         onclick="return confirm('是否確定刪除?')">刪除</a>
                                 </td>
                             </tr>

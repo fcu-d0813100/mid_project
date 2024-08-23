@@ -81,26 +81,19 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <!-- theme stylesheet-->
-  <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-  <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="../css/custom.css">
-  <!-- font-awsome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <?php include("./css.php") ?>
 </head>
 
 <body>
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
     <div class="container">
-      <div class="py-3">
-        <p class="m-0 d-inline text-lg text-secondary">類別管理 /<span class="text-sm">品項管理</span></p>
+      <div class=" mt-5">
+        <p class="m-0 d-inline h2">類別管理 <span class="text-sm fs-5"> / 品項管理</span></p>
       </div>
       <div class="py-2">
         <?php if (!empty($_GET["search"]) && empty($_GET["main_category_id"]) && empty($_GET["order"])) : ?>
-          <a class="btn btn-primary" href="category.php" title="回列表"><i class="fa-solid fa-left-long"></i> 返回列表</a>
+          <a class="btn btn-dark" href="category.php" title="回列表"><i class="fa-solid fa-left-long"></i> 返回列表</a>
         <?php endif; ?>
 
       </div>
@@ -109,20 +102,20 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
         <form action="" method="get">
           <div class="input-group">
             <input type="search" class="form-control" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="搜尋品項">
-            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </form>
       </div>
       <div class="py-2">
 
       </div>
-      <div class="py-2 d-flex justify-content-between">
-        <a class="btn btn-primary" href="create-category.php"><i class="fa-solid fa-plus"></i>新增品項</a>
+      <div class="py-2 mb-2 d-flex justify-content-between">
+        <a class="btn btn-dark" href="create-category.php"><i class="fa-solid fa-plus me-2"></i>新增品項</a>
         <div class="d-flex justify-content-between">
           <form action="" method="get">
-            <div class="input-group">
+            <div class="me-3">
               <select class="form-control" name="main_category_id" onchange="this.form.submit()">
-                <option value="0" <?= $main_category_id == 0 ? 'selected' : '' ?>>全部分類</option>
+                <option value="0" <?= $main_category_id == 0 ? 'selected' : '' ?>>全部分類 </option>
                 <?php while ($category = $main_categories->fetch_assoc()) : ?>
                   <option value="<?= $category['id'] ?>" <?= $main_category_id == $category['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($category['name']) ?>
@@ -134,10 +127,10 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
             </div>
           </form>
           <div class="btn-group">
-            <a class="btn btn-primary <?= ($order == 1) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=1&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
+            <a class="btn btn-dark border-end <?= ($order == 1) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=1&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
               <i class="fa-solid fa-arrow-down-1-9"></i> ID正序
             </a>
-            <a class="btn btn-primary <?= ($order == 2) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=2&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
+            <a class="btn btn-dark border-start <?= ($order == 2) ? "active" : "" ?>" href="category.php?p=<?= $page ?>&order=2&main_category_id=<?= $main_category_id ?>&search=<?= htmlspecialchars($search) ?>">
               <i class="fa-solid fa-arrow-down-9-1"></i> ID倒序
             </a>
             <!-- Add more sorting options here if needed -->
@@ -148,13 +141,13 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
         $rows = $result->fetch_all(MYSQLI_ASSOC);
       ?>
         共有 <?= $subCountAll ?> 個品項
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-2 text-center">
           <thead>
             <tr>
-              <th>編號</th>
+              <th class="col-1">編號</th>
               <th>部位分類</th>
               <th>品項名稱</th>
-              <th>修改刪除</th>
+              <th class="col-3">修改刪除</th>
             </tr>
           </thead>
           <tbody>
@@ -164,8 +157,8 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
                 <td><?= $category["main_name"] ?></td>
                 <td><?= $category["sub_name"] ?></td>
                 <td>
-                  <a class="btn btn-primary" href="category-edit.php?id=<?= $category["id"] ?>">修改</a>
-                  <a class="btn btn-danger" href="doDeleteCategory.php?id=<?= $category["id"] ?>" onclick="return confirm('是否確定刪除?')">刪除</a>
+                  <a class="btn btn-dark me-3" href="category-edit.php?id=<?= $category["id"] ?>">修改</a>
+                  <a class="btn btn-outline-danger" href="doDeleteCategory.php?id=<?= $category["id"] ?>" onclick="return confirm('是否確定刪除?')">刪除</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -183,9 +176,7 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
           </nav>
         <?php endif; ?>
       <?php else : ?>
-        <div class="py-3">
-          目前沒有此品項
-        </div>
+        <div class="alert alert-warning">沒有找到相關產品</div>
       <?php endif; ?>
     </div>
   </main>

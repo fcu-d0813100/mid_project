@@ -95,23 +95,16 @@ $result = $conn->query($sql);
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
 
     <main class="main-content">
-        <div class="pt-5 px-5">
-            <div class="d-flex justify-content-between align-items-start ">
+        <div class="container">
 
+            <div class="d-flex justify-content-between align-items-start ">
                 <!-- 返回 order-list 的按鈕 -->
                 <?php if (isset($_GET["id"])) : ?>
                     <div class="col-auto">
@@ -121,8 +114,8 @@ $result = $conn->query($sql);
 
                 <!-- header 標題 -->
                 <div class="col">
-                    <p class="m-0 d-inline text-lg text-secondary">訂單管理 /
-                        <span class="text-sm">訂單列表</span>
+                    <p class="m-0 d-inline h2">訂單管理
+                        <span class="text-sm fs-5"> / 訂單列表</span>
                     </p>
                     <hr>
                 </div>
@@ -133,26 +126,24 @@ $result = $conn->query($sql);
                 <ul class="nav nav-tabs">
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
+                        <a class="nav-link text-dark <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
+                        <a class="nav-link text-dark <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
+                        <a class="nav-link text-dark <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
                     </li>
-
                 </ul>
             </div>
 
 
 
             <!-- 關鍵字搜尋 -->
-            <div class="select d-flex align-items-center justify-content-between border-start border-end">
-                <form class="d-flex my-3" method="GET">
-
+            <div class="select d-flex align-items-center justify-content-between border-start border-end ">
+                <form class="d-flex my-3 " method="GET">
                     <div class="col-5 ">
                         <select class="form-select rounded-start mx-2" name="search_type" aria-label="Default select example">
                             <option selected>關鍵字搜尋</option>
@@ -160,15 +151,14 @@ $result = $conn->query($sql);
                             <option value="2" <?php if ($searchType == "2") echo "selected"; ?>>訂購者名稱</option>
                         </select>
                     </div>
-
                     <div class="col-8 me-1">
                         <div class="input-group ">
                             <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="編號/訂購者名稱">
-                            <button class="btn btn-primary rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class="btn btn-dark rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
-
                 </form>
+
 
 
                 <!-- 日期篩選 -->
@@ -183,7 +173,7 @@ $result = $conn->query($sql);
                             <div class="row g-2">
                                 <?php if (isset($_GET["start"])) : ?>
                                     <div class="col-auto">
-                                        <a class="btn btn-primary" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
+                                        <a class="btn btn-dark" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
                                     </div>
                                 <?php endif; ?>
                                 <div class="col-auto">
@@ -196,7 +186,7 @@ $result = $conn->query($sql);
                                     <input type="date" class="form-control" name="end" value="<?= $end ?>" id="end-date">
                                 </div>
                                 <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-dark">
                                         <i class="fa-solid fa-filter"></i>
                                     </button>
                                 </div>
@@ -205,12 +195,11 @@ $result = $conn->query($sql);
                     </div>
                 <?php endif; ?>
             </div>
- 
-            
+
+
             <!-- 列表資料的顯示 -->
             <?php if ($orderCountAll > 0) :
-                $rows = $result->fetch_all(MYSQLI_ASSOC);
-            ?>
+                $rows = $result->fetch_all(MYSQLI_ASSOC); ?>
                 <table class="table border table-hover"> <!-- table-bordered -->
                     <thead class="table-light text-center">
                         <tr>
@@ -239,26 +228,28 @@ $result = $conn->query($sql);
                                 $total += $subtotal
                                 ?>
                                 <td class=""><?= number_format($subtotal) ?></td>
+
+                                <!-- class="btn btn-outline-secondary " -->
                                 <td>
-                                    <a class="btn btn-outline-secondary " href="order.php?id=<?= $order["id"] ?>">
+                                    <a class="btn btn-dark " href="order.php?id=<?= $order["id"] ?>">
                                         <i class="fa-solid fa-file-lines "></i>
                                     </a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
-                                        <i class="fa-solid fa-xmark"></i>
+                                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
+                                        <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content ">
                                                 <div class="modal-body">
-                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要取消此筆訂單 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                                    <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                                                    <button type="button" class="btn btn-dark" id="confirmDelete">確定</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -268,6 +259,8 @@ $result = $conn->query($sql);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
+
 
                 <nav aria-label="Page navigation example ">
                     <ul class="pagination justify-content-center mt-5">
@@ -294,14 +287,15 @@ $result = $conn->query($sql);
                                     <a class="page-link " href="order-list.php?p=<?= $i ?>"><?= $i ?></a>
                                 </li>
                             <?php endfor; ?>
-                            <?php endif; ?>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
 
-                            </ul>
-                        </nav>
-                    <?php else : ?>
-                        目前沒有訂單
-                    <?php endif; ?>
-                </div>
+            <?php else : ?>
+                目前沒有訂單
+            <?php endif; ?>
+
+        </div>
     </main>
 
 
