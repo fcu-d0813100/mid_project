@@ -77,23 +77,23 @@ $result = $conn->query($sql);
         </p>
       </div>
       <hr>
-
+      <div class="text-end">
+      <a class="btn btn-outline-secondary btn-md" href="coupon-create.php">
+        <i class="fa-solid fa-plus">新增</i>
+      </a>
+      </div>
 
       <!-- 照狀態分類 -->
       <div class="col-12 mt-3 text-end">
-        <a class="btn btn-outline-secondary btn-md " href="coupon-create.php">
-          <i class="fa-solid fa-plus">新增</i>
-        </a>
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="coupon-list.php?p=1">全部 </a>
+            <a class="nav-link active" aria-current="page" href="coupon-list.php?p=1">全部 <?= $couponCountAll ?></a>
           </li>
         </ul>
       </div>
 
+      <!-- 日期篩選 -->
       <div class="select d-flex align-items-center justify-content-end border-start border-end">
-
-        <!-- 日期篩選 -->
         <?php if (!isset($_GET["start_date"])): ?>
           <div class="mx-3 my-2 py-2">
             <form action="">
@@ -129,7 +129,7 @@ $result = $conn->query($sql);
       </div>
 
 
-
+      <!-- 優惠券列表 -->
       <?php if ($couponCountAll > 0) :
         $rows = $result->fetch_all(MYSQLI_ASSOC);
       ?>
