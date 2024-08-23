@@ -58,22 +58,15 @@ $result = $conn->query($sql);
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <!-- theme stylesheet-->
-  <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-  <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="../css/custom.css">
-  <!-- font-awsome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <?php include("./css.php") ?>
 </head>
 
 <body>
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
-    <div class="mt-4 mx-5">
+    <div class="mt-5 mx-5">
       <div class="d-flex justify-content-between align-items-start mt-3">
-        <p class="m-0 d-inline text-lg text-secondary">優惠券管理 /<span class="text-sm">優惠券列表</span>
+        <p class="m-0 d-inline  h2">優惠券管理 <span class="text-sm fs-5"> / 優惠券列表</span>
         </p>
       </div>
       <hr>
@@ -81,17 +74,17 @@ $result = $conn->query($sql);
 
       <!-- 照狀態分類 -->
       <div class="col-12 mt-3 text-end">
-        <a class="btn btn-outline-secondary btn-md " href="coupon-create.php">
+        <a class="btn btn-outline-danger btn-md " href="coupon-create.php">
           <i class="fa-solid fa-plus">新增</i>
         </a>
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="coupon-list.php?p=1">全部 </a>
+            <a class="nav-link active " aria-current="page" href="coupon-list.php?p=1">全部 </a>
           </li>
         </ul>
       </div>
 
-      <div class="select d-flex align-items-center justify-content-end border-start border-end">
+      <div class="select d-flex align-items-center justify-content-end border-start border-end bg-white">
 
         <!-- 日期篩選 -->
         <?php if (!isset($_GET["start_date"])): ?>
@@ -114,11 +107,11 @@ $result = $conn->query($sql);
                 <div class="col-auto">
                   ~
                 </div>
-                <div class="col-auto">
+                <div class="col-auto me-3">
                   <input type="date" class="form-control" name="end" value="<?= $end ?>" id="end-date">
                 </div>
                 <div class="col-auto">
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-dark ">
                     <i class="fa-solid fa-filter"></i>
                   </button>
                 </div>
@@ -175,7 +168,7 @@ $result = $conn->query($sql);
                 </td>
 
                 <td>
-                  <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-secondary btn-md">
+                  <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger btn-md">
                     <i class="fa-regular fa-pen-to-square"></i>
                   </a>
                 </td>
@@ -183,7 +176,7 @@ $result = $conn->query($sql);
 
 
                   <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
+                  <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
                     <i class="fa-regular fa-trash-can"></i>
                   </button>
                   <!-- Modal -->
@@ -195,7 +188,7 @@ $result = $conn->query($sql);
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                          <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                          <button type="button" class="btn btn-dark" id="confirmDelete">確定</button>
                         </div>
                       </div>
                     </div>

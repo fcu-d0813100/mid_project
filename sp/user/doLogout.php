@@ -3,4 +3,8 @@
 session_start();
 
 unset($_SESSION["user"]);
-header("location:sign-in.php");
+
+header("location: sign-in.php");
+
+?>
+
