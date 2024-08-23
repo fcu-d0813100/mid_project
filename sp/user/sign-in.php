@@ -53,8 +53,8 @@ if (isset($_SESSION["user"])) {
             text-align: center;
         }
 
-        body {
-            background-color: #f5f5f5;
+        .bg-light {
+            --bs-bg-opacity: .9;
         }
 
         .sign-in-panel {
@@ -93,7 +93,7 @@ if (isset($_SESSION["user"])) {
 
 
     <div class="vh-100 d-flex justify-content-center align-items-center">
-        <div class="bg-white p-5 rounded-5 bg-opacity-75">
+        <div class="bg-light p-5 rounded-4 shadow">
 
             <div class="sign-in-panel mt-3 mb-5">
 

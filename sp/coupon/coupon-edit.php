@@ -42,7 +42,7 @@ if ($couponCount > 0) {
     <main class="main-content">
         <div class="mt-5 mx-5">
             <div class="d-flex justify-content-between align-items-start">
-                <p class="m-0 d-inline text-secondary h2">優惠券管理 <span class="text-sm fs-5"> / 修改優惠券</span></p>
+                <p class="m-0 d-inline  h2">優惠券管理 <span class="text-sm fs-5"> / 修改優惠券</span></p>
             </div>
             <hr>
             <!-- table-->

@@ -66,7 +66,7 @@ $result = $conn->query($sql);
   <main class="main-content ">
     <div class="mt-5 mx-5">
       <div class="d-flex justify-content-between align-items-start mt-3">
-        <p class="m-0 d-inline text-secondary h2">優惠券管理 <span class="text-sm fs-5"> / 優惠券列表</span>
+        <p class="m-0 d-inline  h2">優惠券管理 <span class="text-sm fs-5"> / 優惠券列表</span>
         </p>
       </div>
       <hr>
