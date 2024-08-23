@@ -50,7 +50,7 @@ $row = $result->fetch_assoc();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title>編輯訂單</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -75,7 +75,7 @@ $row = $result->fetch_assoc();
                 <input type="hidden" name="id" value="<?= $id ?>">
                 <div class="pt-5 px-5 mx-5">
                     <div class="d-flex justify-content-start align-items-center">
-                        <p class="m-0 d-inline text-lg text-secondary">訂單明細</p>
+                        <p class="m-0 d-inline text-lg text-secondary">編輯訂單</p>
                     </div>
 
                     <!-- table-->

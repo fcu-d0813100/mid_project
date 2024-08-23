@@ -12,3 +12,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <link rel="stylesheet" href="../css/main.css">
+<style>
+    .nav-link {
+        color: rgb(161, 29, 29);
+    }
+
+    .nav {
+        color: rgb(161, 29, 29);
+        --bs-nav-link-hover-color: rgb(114, 14, 14);
+    }
+
+    .form-check-input:checked {
+        background-color:  #28a745;
+        border-color:  #28a745;
+    }
+</style>

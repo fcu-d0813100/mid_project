@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title>新增優惠券</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -21,9 +21,7 @@
     <main class="main-content">
         <div class="mt-5 mx-5">
             <div class="d-flex justify-content-between align-items-start">
-
                 <p class="m-0 d-inline  h2">新增優惠券</p>
-
             </div>
             <hr>
             <!-- table-->

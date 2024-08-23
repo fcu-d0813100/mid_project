@@ -13,27 +13,26 @@ require_once("../../db_connect.php");
 $sql = "SELECT user_order.*,
  product_list.product_name AS product_name, 
  product_list.price as price,
- product_list.color_id AS color_id, 
- product_list.images_id AS product_img,
  users.name AS user_name, 
  users.email AS user_email, 
  users.phone AS user_phone, 
  users.address AS user_address,
  pay.name AS pay_name,
  status.name AS status_name,
- color.color AS color
+ color.color AS color_name
 
- 
 FROM user_order 
 JOIN product_list ON user_order.product_id = product_list.id
 JOIN users ON user_order.user_id = users.id
 JOIN pay ON user_order.pay_id = pay.id
 JOIN status ON user_order.status_id = status.id
-JOIN color ON product_list.color_id = color.id 
+JOIN color ON product_list.id = color.product_id 
 WHERE user_order.id='$id' AND user_order.valid=1
 ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+
+print_r($row);
 
 $sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
 $resulorderAll = $conn->query($sqlorderAll);
@@ -51,7 +50,7 @@ $orderCountAll = $resulorderAll->num_rows;
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard</title>
+    <title>訂單明細</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -142,9 +141,9 @@ $orderCountAll = $resulorderAll->num_rows;
                         $total = 0;
                         if ($orderCountAll > 0) : ?>
                             <tr>
-                                <td><?= $row["product_img"] ?></td>
-                                <td><?= $row["product_name"] ?></td>
                                 <td></td>
+                                <td><?= $row["product_name"] ?></td>
+                                <td><?= $row["color_name"] ?></td>
                                 <td><?= $row["amount"] ?></td>
                                 <td><?= $row["price"] ?></td>
                                 <?php
