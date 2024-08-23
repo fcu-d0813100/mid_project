@@ -156,7 +156,7 @@ $totalPages = ceil($totalRecords / $itemsPerPage);
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container">
-            <div class="py-3 mt-5">
+            <div class="mt-5">
                 <p class="m-0 d-inline h2">類別管理 <span class="text-sm fs-5"> / 色號及庫存</span></p>
             </div>
             <div class="py-2">

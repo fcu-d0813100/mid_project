@@ -93,7 +93,7 @@ $articleCount = $articleCountAll;
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="d-flex justify-content-between align-items-start pt-5 mt-3">
+          <div class="d-flex justify-content-between align-items-start pt-5 ">
 
             <div>
               <p class="m-0 d-inline text-lg h2">文章管理 <span class="text-sm fs-5"> / 文章列表</span></p>

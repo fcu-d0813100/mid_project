@@ -71,7 +71,7 @@ $userCount = $result->num_rows;
   <main class="main-content d-flex justify-content-center ">
     <div class="container ">
       <div>
-        <div class="d-flex justify-content-between align-items-start mt-3 pt-5 align-middle">
+        <div class="d-flex justify-content-between align-items-start  pt-5 align-middle">
           <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-decoration-none text-dark h2">活動管理 </a> <span class="text-sm fs-5 text-dark"> / 活動列表</span></p>
 
 
