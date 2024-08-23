@@ -130,8 +130,8 @@ if (isset($_SESSION["user"])) {
                         </div>
 
                     <?php
-                        unset($_SESSION["error"]["message"]);
-                    endif; ?>
+                    unset($_SESSION["error"]["message"]);
+                endif; ?>
                     <div class="form-check my-3">
                         <input class="form-check-input" type="checkbox" value="" id="remember">
                         <label class="form-check-label" for="remember">
@@ -141,22 +141,22 @@ if (isset($_SESSION["user"])) {
                     <div class="d-grid">
                         <button class="btn btn-dark py-2">登入</button>
                     </div>
-                </form>
-            <?php endif; ?>
-            <div class="mt-4 text-muted">
-                © 2010-2024 Makeup
+                    </form>
 
+                    <div class="mt-4 text-muted">
+                        © 2010-2024 Makeup
+
+                    </div>
             </div>
         </div>
-    </div>
 
 
 
 
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <!-- Bootstrap JavaScript Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>
