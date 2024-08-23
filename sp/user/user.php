@@ -43,7 +43,7 @@ if ($userCount > 0) {
         }
 
         .img-size {
-            height: 450px;
+            max-height: 450px;
             width: auto;
         }
     </style>
@@ -70,6 +70,7 @@ if ($userCount > 0) {
                         <div class="ratio ratio-1x1">
                             <img src="./upload/<?= $row["member_img"] ?>" alt="會員頭像" class="rounded img-fluid shadow-sm img-size">
                         </div>
+
                     </div>
                     <div class="col-6 me-4">
 

@@ -53,7 +53,7 @@ if ($userCount > 0) {
         }
 
         .img-size {
-            height: 450px;
+            max-height: 450px;
             width: auto;
         }
     </style>
@@ -167,7 +167,7 @@ if ($userCount > 0) {
                                 </table>
                         </div>
                     </div>
-                    <div class="row mt-0 mx-2">
+                    <div class="row mt-0 ms-2">
                         <!-- 上傳區塊 -->
                         <label for="form-label text-style">
                             <h5 class="align-middle">編輯頭像</h5>
@@ -177,8 +177,8 @@ if ($userCount > 0) {
                         </div>
                         <div class="col-auto">
                             <button type="button" class="btn btn-dark" onclick="resetAvatar()"><i class="fa-solid fa-rotate-right"></i></button>
-                        </div class="col-4">
-                        <div class="mt-4 d-flex justify-content-end gap-4">
+                        </div>
+                        <div class="mb-3 d-flex justify-content-end gap-3 col-7">
                             <button class="btn btn-dark"
                                 type="submit"><i class="fa-solid fa-floppy-disk px-2"></i>儲存</button>
                             <a class="btn btn-outline-danger" href="#" onclick="return confirmDelete(<?= $row['id'] ?>)">
