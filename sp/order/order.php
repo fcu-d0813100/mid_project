@@ -19,7 +19,6 @@ $sql = "SELECT user_order.*,
  users.address AS user_address,
  pay.name AS pay_name,
  status.name AS status_name,
- color.color AS color_name,
  color.mainimage AS mainimage
 
 FROM user_order 
@@ -123,8 +122,6 @@ $orderCountAll = $resulorderAll->num_rows;
                         </div>
                         <div></div>
                     </div>
-
-
                 </div>
                 <table class="table "> <!-- table-bordered -->
                     <thead class="table-light">
@@ -146,7 +143,7 @@ $orderCountAll = $resulorderAll->num_rows;
                   <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="images/<?= $row["image"] ?>" alt=""> -->
                                 <td><?= $row["mainimage"]?></td>
                                 <td><?= $row["product_name"] ?></td>
-                                <td><?= $row["color_name"] ?></td>
+                                <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>
                                 <td><?= $row["price"] ?></td>
                                 <?php
