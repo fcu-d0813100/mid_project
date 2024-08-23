@@ -19,7 +19,8 @@ $sql = "SELECT user_order.*,
  users.address AS user_address,
  pay.name AS pay_name,
  status.name AS status_name,
- color.color AS color_name
+ color.color AS color_name,
+ color.mainimage AS mainimage
 
 FROM user_order 
 JOIN product_list ON user_order.product_id = product_list.id
@@ -141,7 +142,9 @@ $orderCountAll = $resulorderAll->num_rows;
                         $total = 0;
                         if ($orderCountAll > 0) : ?>
                             <tr>
-                                <td></td>
+                                <!-- </td>
+                  <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="images/<?= $row["image"] ?>" alt=""> -->
+                                <td><?= $row["mainimage"]?></td>
                                 <td><?= $row["product_name"] ?></td>
                                 <td><?= $row["color_name"] ?></td>
                                 <td><?= $row["amount"] ?></td>
