@@ -10,7 +10,7 @@ $id = $_GET["id"];
 require_once("../../db_connect.php");
 
 
-$sql = "SELECT user_order.*,
+$sql = "SELECT *,
  product_list.product_name AS product_name, 
  product_list.price as price,
  users.name AS user_name, 
@@ -31,8 +31,6 @@ WHERE user_order.id='$id' AND user_order.valid=1
 ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
-
-print_r($row);
 
 $sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
 $resulorderAll = $conn->query($sqlorderAll);
@@ -139,9 +137,7 @@ $orderCountAll = $resulorderAll->num_rows;
                         $total = 0;
                         if ($orderCountAll > 0) : ?>
                             <tr>
-                                <!-- </td>
-                  <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="images/<?= $row["image"] ?>" alt=""> -->
-                                <td><?= $row["mainimage"]?></td>
+                                <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./image/<?= $row["mainimage"] ?>" alt=""></td>
                                 <td><?= $row["product_name"] ?></td>
                                 <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>
