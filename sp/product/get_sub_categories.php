@@ -12,10 +12,10 @@ try {
     $sql = "SELECT id, name FROM sub_category WHERE main_category_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$mainCategoryId]);
-
+    
     // 獲取結果集
     $sub_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
     // 將子分類加入回應數據
     $response['sub_categories'] = $sub_categories;
 } catch (Exception $e) {
@@ -24,3 +24,4 @@ try {
 }
 // 返回 JSON 格式的回應數據
 echo json_encode($response);
+?>

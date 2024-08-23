@@ -1,5 +1,6 @@
 <?php
 include('../../db_pdo.php');
+
 // 獲取動態 productId 和 colorId
 $productId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 $colorId = isset($_GET['color_id']) ? (int)$_GET['color_id'] : 1;
@@ -14,7 +15,7 @@ $imageName = "";
 $description = "";
 $stock = 0; // 初始化庫存變量
 
-// 獲取當前商品數據1
+// 獲取當前商品數據
 $productSql = "SELECT pl.product_name, b.name AS brand_name, mc.name AS main_category_name, 
                       sc.name AS sub_category_name, c.id AS color_id, c.color AS color_name, pl.price, 
                       c.mainimage, pl.description, c.stock

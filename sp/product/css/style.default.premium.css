@@ -2692,7 +2692,7 @@ progress {
 }
 .form-control:focus {
   color: var(--bs-body-color);
-  background-color: var(--bs-body-bg);
+  background-color: var(--bs-body-bg);  
   border-color: none;
   outline: 0;
   -webkit-box-shadow: none;
@@ -20587,7 +20587,7 @@ STYLE SWITCHER FOR DEMO
 #style-switch .h4 {
   color: #495057;
 }
-
+@charset "UTF-8";
 /*
 ==========================================================
 ==========================================================
@@ -23281,7 +23281,7 @@ progress {
 }
 .form-control:focus {
   color: var(--bs-body-color);
-  background-color: var(--bs-body-bg);
+  background-color: var(--bs-body-bg);  
   border-color: none;
   outline: 0;
   -webkit-box-shadow: none;

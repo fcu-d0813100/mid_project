@@ -9,10 +9,14 @@
   display: inline-block !important;
   width: 50%; /* 這裡的 50% 可以改成具體的像素值或者百分比 */
   text-align: right; /* 分頁按鈕靠右對齊 */
+  option:hover {
+    background-color: #dc3545;
+    color: #fff;
+  }
 }
+
 .pagination {
   display: inline-block;
-  width: 50%;
   width: auto; /* 使分頁根據內容自動調整寬度 */
   flex-grow: 0; /* 保持原來的寬度 */
 }
@@ -33,12 +37,15 @@
   border-color: #999999; /* 滑鼠移過時邊框顏色變化 */
 }
 
-.pagination a.active {
+.pagination a.active,
+.pagination a:focus,
+.pagination a:active {
   transform: scale(1.1); /* 當前頁面放大效果 */
   background-color: #ffffff; /* 當前頁面背景維持白色 */
-  color: #000000; /* 當前頁面文字顏色維持黑色 */
+  color: #dc3545; /* 當前頁面文字顏色維持黑色 */
   border-color: #999999; /* 當前頁面邊框顏色 */
   cursor: default; /* 當前頁面不可點擊 */
+  outline: none; /* 移除焦點时的默认样式 */
 }
 
 .pagination a[disabled] {
