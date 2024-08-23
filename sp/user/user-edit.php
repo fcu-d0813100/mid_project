@@ -67,7 +67,7 @@ if ($userCount > 0) {
             <div class="col-10">
                 <div class="row mb-2">
                     <div class="d-flex justify-content-between align-items-start mt-3 mb-2">
-                        <p class="m-0 d-inline text-lg text-secondary h1">會員管理 <span class="fs-5"> / 會員編輯</span></p>
+                        <p class="m-0 d-inline h2">會員管理 <span class="fs-5"> / 會員編輯</span></p>
 
                         <div class="py-2">
                             <a class="btn btn-dark" href="user.php?id=<?= $row["id"] ?>" title="回到會員資料"><i class="fa-solid fa-left-long me-1"></i>回到上一頁</a>
@@ -169,6 +169,7 @@ if ($userCount > 0) {
                     </div>
                     <div class="row mt-0 ms-2">
                         <!-- 上傳區塊 -->
+
                         <label for="form-label text-style">
                             <h5 class="align-middle">編輯頭像</h5>
                         </label>
@@ -186,7 +187,6 @@ if ($userCount > 0) {
                             </a>
                         </div>
                     </div>
-
             </div>
             </form>
         <?php else : ?>

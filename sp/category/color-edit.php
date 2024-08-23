@@ -37,29 +37,22 @@ $color = $result->fetch_assoc();
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container ">
-            <div class="py-3">
-                <p class="m-0 d-inline text-lg text-secondary">編輯修改 /<span class="text-sm">色號及庫存</span></p>
+            <div class="py-3 mt-5">
+                <p class="m-0 d-inline h2">編輯修改 <span class="text-sm fs-5"> / 色號及庫存</span></p>
             </div>
             <form class="mt-3" action="doUpdateColor.php" method="get">
                 <input type="hidden" name="id" value="<?= $color['id'] ?>">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th>商品編號：</th>
+                            <th class="col-2">商品編號：</th>
                             <td><?= $color['id'] ?></td>
                         </tr>
                         <tr>
@@ -78,8 +71,8 @@ $color = $result->fetch_assoc();
                         </tr>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary">送出</button>
-                <a class="btn btn-secondary" href="color.php">返回</a>
+                <button type="submit" class="btn btn-dark me-2">送出</button>
+                <a class="btn btn-dark" href="color.php">返回</a>
             </form>
         </div>
     </main>
