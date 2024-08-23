@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION["user"])) {
+  header("location: ../user/sign-in.php");
+  exit;
+}
+?>
+<?php
 
 require_once("../../db_connect.php");
 //計算資料庫中全部的活動
