@@ -81,8 +81,8 @@ $row = $result->fetch_assoc();
                                 <th>圖片</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">修改活動圖片: </label>
-                                        <input type="file" name="image" id="" class="form-control">
+                                        <label for="file-upload" class="mb-2">修改活動圖片: </label>
+                                        <input type="file" name="image" id="file-upload" class="form-control" value="<?= $row["image"] ?>">
                                     </div>
                                 </td>
                             </tr>
@@ -91,7 +91,7 @@ $row = $result->fetch_assoc();
                                 <td>
                                     <div class="mb-2">
                                         <label for="option1">修改活動名稱:</label>
-                                        <input type="text" id="" class="form-control" name="name">
+                                        <input type="text" id="" class="form-control" name="name" value="<?= $row["name"] ?>">
                                     </div>
                                 </td>
                             </tr>
@@ -101,9 +101,9 @@ $row = $result->fetch_assoc();
                                     <div class="mb-2">
                                         <label for="option1">修改活動日期時間:</label>
                                         <p class="mb-0 mt-2">開始:</p>
-                                        <input type="datetime-local" id="" class="form-control" name="start_at">
+                                        <input type="datetime-local" id="" class="form-control" name="start_at" value="<?= $row["start_at"] ?>">
                                         <p class="mb-0 mt-2">結束:</p>
-                                        <input type="datetime-local" id="" class="form-control" name="end_at">
+                                        <input type="datetime-local" id="" class="form-control" name="end_at" value="<?= $row["end_at"] ?>">
                                     </div>
                                 </td>
                             </tr>
@@ -112,7 +112,7 @@ $row = $result->fetch_assoc();
                                 <td>
                                     <div class="mb-2">
                                         <label for="option1">修改活動地點:</label>
-                                        <input type="address" id="" class="form-control" name="address">
+                                        <input type="address" id="" class="form-control" name="address" value="<?= $row["address"] ?>">
                                     </div>
                                 </td>
                             </tr>
@@ -138,7 +138,7 @@ $row = $result->fetch_assoc();
                                 <td>
                                     <div class="mb-2">
                                         <label for="quantity">修改數量:</label>
-                                        <input type="number" id="quantity" name="maxAPP" class="form-control">
+                                        <input type="number" id="quantity" name="maxAPP" class="form-control" value="<?= $row["maxAPP"] ?>">
                                     </div>
                                 </td>
                             </tr>
@@ -147,7 +147,7 @@ $row = $result->fetch_assoc();
                                 <td>
                                     <div class="mb-2">
                                         <label for="option1">修改說明</label>
-                                        <input type="text" id="" class="form-control" name="description">
+                                        <input type="text" id="" class="form-control" name="description" value="<?= $row["description"] ?>">
                                     </div>
                                 </td>
                             </tr>

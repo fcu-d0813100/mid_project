@@ -45,11 +45,12 @@
                                 <th>活動名稱</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動名稱: </label>
-                                        <input type="text" id="" class="form-control" name="name">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>輸入活動名稱: </label>
+                                        <input type="text" id="" class="form-control" name="name" required>
                                     </div>
                                 </td>
                             </tr>
+
                             <tr>
                                 <th>活動品牌</th>
                                 <td>
@@ -70,8 +71,8 @@
                                 <th>圖片</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">選取活動圖片: </label>
-                                        <input type="file" name="image" id="" class="form-control">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>選取活動圖片: </label>
+                                        <input type="file" name="image" id="" class="form-control" required>
                                     </div>
                                 </td>
                             </tr>
@@ -80,10 +81,10 @@
                                 <th>活動日期</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動開始日期時間: </label>
-                                        <input type="datetime-local" id="" class="form-control mb-2" name="start_at">
-                                        <label for="" class="mb-2">輸入活動結束日期時間: </label>
-                                        <input type="datetime-local" id="" class="form-control" name="end_at">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>輸入活動開始日期時間: </label>
+                                        <input type="datetime-local" id="" class="form-control mb-2" name="start_at" required>
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>輸入活動結束日期時間: </label>
+                                        <input type="datetime-local" id="" class="form-control" name="end_at" required>
                                     </div>
                                 </td>
                             </tr>
@@ -91,8 +92,8 @@
                                 <th>地點</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動地點: </label>
-                                        <input type="address" id="" class="form-control" name="address">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>輸入活動地點: </label>
+                                        <input type="address" id="" class="form-control" name="address" required>
                                     </div>
                                 </td>
                             </tr>
@@ -103,9 +104,9 @@
 
                                         <div class="col-6">
 
-                                            <label for="" class="mb-2">設定報名最大人數 :</label>
+                                            <label for="" class="mb-2"><span class="text-danger">* </span>設定報名最大人數 :</label>
                                             <div class="">
-                                                <input type="number" id="" class="form-control" name="maxAPP">
+                                                <input type="number" id="" class="form-control" name="maxAPP" required>
                                             </div>
                                         </div>
                                     </div>
@@ -116,8 +117,8 @@
                                 <th>活動說明</th>
                                 <td>
                                     <div class="mb-2">
-                                        <label for="" class="mb-2">輸入活動內容: </label>
-                                        <input type="text" id="" class="form-control" name="description">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>輸入活動內容: </label>
+                                        <input type="text" id="" class="form-control" name="description" required>
                                     </div>
                                 </td>
                             </tr>
