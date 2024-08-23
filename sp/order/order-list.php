@@ -94,14 +94,7 @@ $result = $conn->query($sql);
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
@@ -120,8 +113,8 @@ $result = $conn->query($sql);
 
                 <!-- header 標題 -->
                 <div class="col">
-                    <p class="m-0 d-inline text-lg text-secondary">訂單管理 /
-                        <span class="text-sm">訂單列表</span>
+                    <p class="m-0 d-inline h2">訂單管理
+                        <span class="text-sm fs-5"> / 訂單列表</span>
                     </p>
                     <hr>
                 </div>
@@ -132,15 +125,15 @@ $result = $conn->query($sql);
                 <ul class="nav nav-tabs">
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
+                        <a class="nav-link text-dark <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
+                        <a class="nav-link text-dark <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
+                        <a class="nav-link text-dark <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
                     </li>
 
                 </ul>
@@ -149,11 +142,11 @@ $result = $conn->query($sql);
 
 
             <!-- 關鍵字搜尋 -->
-            <div class="select d-flex align-items-center justify-content-between border-start border-end">
-                <form class="d-flex my-3" method="GET">
+            <div class="select d-flex align-items-center justify-content-between border-start border-end ">
+                <form class="d-flex my-3 " method="GET">
 
                     <div class="col-5 ">
-                        <select class="form-select rounded-start mx-2" name="search_type" aria-label="Default select example">
+                        <select class="form-select rounded-start mx-2 " name="search_type" aria-label="Default select example">
                             <option selected>搜尋</option>
                             <option value="1" <?php if ($searchType == "1") echo "selected"; ?>>訂單編號</option>
                             <option value="2" <?php if ($searchType == "2") echo "selected"; ?>>訂購者名稱</option>
@@ -163,7 +156,7 @@ $result = $conn->query($sql);
                     <div class="col-8 me-1">
                         <div class="input-group ">
                             <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="搜尋">
-                            <button class="btn btn-primary rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class="btn btn-dark rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
 
@@ -182,7 +175,7 @@ $result = $conn->query($sql);
                             <div class="row g-2">
                                 <?php if (isset($_GET["start"])) : ?>
                                     <div class="col-auto">
-                                        <a class="btn btn-primary" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
+                                        <a class="btn btn-dark" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
                                     </div>
                                 <?php endif; ?>
                                 <div class="col-auto">
@@ -195,7 +188,7 @@ $result = $conn->query($sql);
                                     <input type="date" class="form-control" name="end" value="<?= $end ?>" id="end-date">
                                 </div>
                                 <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-dark">
                                         <i class="fa-solid fa-filter"></i>
                                     </button>
                                 </div>
@@ -238,13 +231,13 @@ $result = $conn->query($sql);
                                 ?>
                                 <td class=""><?= number_format($subtotal) ?></td>
                                 <td>
-                                    <a class="btn btn-outline-secondary " href="order.php?id=<?= $order["id"] ?>">
+                                    <a class="btn btn-outline-danger " href="order.php?id=<?= $order["id"] ?>">
                                         <i class="fa-solid fa-file-lines "></i>
                                     </a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
+                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                     <!-- Modal -->
