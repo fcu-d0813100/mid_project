@@ -92,43 +92,38 @@ if (isset($_GET["search"])) {
   <meta name="robots" content="noindex">
 
   <?php include("./css.php") ?>
-
+  
   </style>
 </head>
 
 <body>
   <?php include("../../nav1.php") ?>
-
-  <main class="main-content main-content d-flex justify-content-center">
+  <main class=" main-content d-flex justify-content-center">
     <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="d-flex justify-content-between align-items-start pt-5 ">
+    <div class="row">
+      <div class="col">
+        <div class=" d-flex justify-content-between align-items-start mt-3">
 
-
-
-
+          <div>
+            <p class="m-0 d-inline text-lg h2">文章管理 <span class="text-sm fs-5"> / 文章列表</span></p>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <?php if (isset($_GET["search"])): ?>
+              <a href="article-list.php" class="btn btn-dark" title="回文章列表"><i class="fa-solid fa-left-long"></i></a>
+            <?php endif; ?>
+            <!-- sort search -->
+            <form action="">
+              <div class="input-group">
+                <input type="search" class="form-control  border-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋標題">
+                <button class="btn btn-dark border-start-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+            </form>
             <div>
-              <p class="m-0 d-inline text-lg h2">文章管理 <span class="text-sm fs-5"> / 文章列表</span></p>
+              <!-- add button -->
+              <div class="text-end">
+                <a href="article-create.php" class="btn btn-dark btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
+              </div>
             </div>
-
-            <div class="d-flex justify-content-between gap-2">
-              <?php if (isset($_GET["search"])): ?>
-                <a href="article-list.php" class="btn btn-dark" title="回文章列表"><i class="fa-solid fa-left-long"></i></a>
-              <?php endif; ?>
-              <!-- sort search -->
-              <form action="">
-                <div class="input-group">
-                  <input type="search" class="form-control  border-secondary" name="search" value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>" placeholder="搜尋標題">
-                  <button class="btn btn-dark border-start-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-              </form>
-              <div>
-                <!-- add button -->
-                <div class="text-end">
-                  <a href="article-create.php" class="btn btn-dark btn-md "><i class="fa-solid fa-plus"></i> 新增</a>
-                </div>
-
           </div>
         </div>
         <hr>
@@ -150,12 +145,8 @@ if (isset($_GET["search"])) {
                   href="article-list.php?p=<?= $page ?>&order=3">按發布時間<i class="fa-solid fa-arrow-up-long ms-2"></i></a>
                 <a class="btn btn-outline-danger <?php if ($order == 4) echo "active" ?> "
                   href="article-list.php?p=<?= $page ?>&order=4">按發布時間<i class="fa-solid fa-arrow-down-long ms-2"></i></a>
-
               </div>
-            </div>
           </div>
-
- 
           <table class="table table-striped table-md text-md">
             <thead>
               <tr>
@@ -189,52 +180,28 @@ if (isset($_GET["search"])) {
                       <i class="fa-regular fa-trash-can"></i>
                     </a>
                   </td>
-
                 </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($rows as $row) : ?>
-                  <tr class="align-middle dataList">
-                    <td><?= $row["id"] ?></td>
-                    <td><?= $row["brand_name"] ?></td>
-                    <td><?= $row["type_name"] ?></td>
-                    <td class="article-title"><?= $row["title"] ?></td>
-                    <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./pic/<?= $row["main_pic"] ?>" alt=""></td>
-                    <td><?= $row["launched_date"] ?></td>
-                    <td class="gap-3">
-                      <a href="article-review.php?id=<?= $row["id"] ?>" class="btn  btn-outline-danger btn-md">
-                        <i class="fa-regular fa-eye"></i>
-                      </a>
-                      <a href="article-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger btn-md">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                      </a>
-                      <a href="javascript:void(0);" class="btn btn-outline-danger btn-md"
-                        onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteArticle.php?id=<?= $row['id'] ?>'; }">
-                        <i class="fa-regular fa-trash-can"></i>
-                      </a>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          <?php else: ?>
-            目前沒有文章
-          <?php endif; ?>
-          </div>
-          <?php if (isset($_GET["p"])): ?>
-            <nav aria-label="Page navigation example ">
-              <ul class="pagination d-flex justify-content-end">
-                <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                  <li class="page-item <?php if ($page == $i) echo "active"; ?>">
-                    <a class="page-link" href="article-list.php?p=<?= $i ?>&order=<?= $order ?>">
-                      <?= $i ?></a>
-                  </li>
-                <?php endfor; ?>
-              </ul>
-            </nav>
-          <?php endif; ?>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php else: ?>
+          目前沒有文章
+        <?php endif; ?>
         </div>
+        <?php if (isset($_GET["p"])): ?>
+          <nav aria-label="Page navigation example ">
+            <ul class="pagination d-flex justify-content-end">
+              <?php for ($i = 1; $i <= $total_page; $i++): ?>
+                <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                  <a class="page-link" href="article-list.php?p=<?= $i ?>&order=<?= $order ?>">
+                    <?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php endif; ?>
       </div>
+    </div>
     </div>
   </main>
   </div>
