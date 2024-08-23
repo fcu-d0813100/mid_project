@@ -4,7 +4,7 @@
    <div class="d-flex align-items-center text-white text-md gap-2">
      <!--登入後能顯示使用者名稱 -->
      <div class="text-md">Hi ! Admin</div>
-     <a class="btn btn-dark me-3" href="../user/doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
+     <a class="btn btn-dark me-3" href="../../doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
    </div>
  </header>
  <!-- Sidebar -->
