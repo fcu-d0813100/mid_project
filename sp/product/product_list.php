@@ -204,16 +204,28 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             padding: 20px;
         }
         .image-preview {
-            max-width: 10px;
-            max-height: 10px;
-            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
-        .image-preview img {
-            max-width: 5px;  /* 調整預覽圖片的最大寬度 */
-            max-height: 5px; /* 調整預覽圖片的最大高度 */
-            margin-right: 10px; /* 調整圖片之間的間距 */
-            border: 1px solid #ddd; /* 為圖片添加邊框 */
-            border-radius: 5px; /* 添加圓角 */
+        .ratio {
+            width: 100px; /* 寬度 */
+            height: 0;
+            padding-bottom: 100px; /* 1:1 比例 */
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden; /* 确確保圖片不會超出容器 */
+        }
+        .ratio img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 確保圖片按比例縮放，並填充整個容器 */
         }
         thead th {
             background-color: #393836 !important;
@@ -222,6 +234,59 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         table {
             margin-top: 20px;
         }
+        .price-pagination-form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .price-filter {
+        display: inline-block !important;
+        width: 50%; /* 這裡的 50% 可以改成具體的像素值或者百分比 */
+        text-align: right; /* 分頁按鈕靠右對齊 */
+        }
+
+        .pagination {
+        display: inline-block;
+        width: auto; /* 使分頁根據內容自動調整寬度 */
+        flex-grow: 0; /* 保持原來的寬度 */
+        }
+
+        .pagination a {
+        padding: 10px 15px;
+        margin: 0;
+        background-color: #ffffff; /* 白色背景 */
+        color: #000000; /* 黑色文字 */
+        text-decoration: none;
+        border-radius: 0; /* 移除圓角 */
+        border: 1px solid #cccccc; /* 灰色邊框 */
+        transition: transform 0.2s ease-in-out; /* 過渡效果，用於方格放大 */
+        }
+
+        .pagination a:hover {
+        transform: scale(1.1); /* 當滑鼠移過時方格放大 */
+        border-color: #999999; /* 滑鼠移過時邊框顏色變化 */
+        }
+
+        .pagination a.active,
+        .pagination a:focus,
+        .pagination a:active {
+        transform: scale(1.1); /* 當前頁面放大效果 */
+        background-color: #ffffff; /* 當前頁面背景維持白色 */
+        color: #dc3545; /* 當前頁面文字顏色維持黑色 */
+        border-color: #999999; /* 當前頁面邊框顏色 */
+        cursor: default; /* 當前頁面不可點擊 */
+        outline: none; /* 移除焦點时的默认样式 */
+        }
+
+        .pagination a[disabled] {
+        background-color: #f9f9f9; /* 禁用狀態背景顏色 */
+        color: #cccccc; /* 禁用狀態文字顏色 */
+        cursor: not-allowed; /* 禁用狀態的鼠標樣式 */
+        border-color: #f9f9f9; /* 禁用狀態的邊框顏色 */
+        }
+
     </style>
 </head>
 <body>
@@ -286,7 +351,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="form-group">
                                     <label for="images">上傳圖片:</label>
                                     <input type="file" class="form-control-file" id="images" name="images[]" accept="image/*" multiple required>
-                                    <div id="image_preview" style="margin-top: 10px;">
+                                    <div id="image_preview" style="margin-top: 10px;" class="image_preview">
                                         <!-- 圖片預覽 -->
                                     </div>
                                 </div>
@@ -309,13 +374,13 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // 上一組頁碼按鈕
                     if ($currentGroup > 1) {
                         $prevGroupPage = $startPage - 1;
-                        echo "<a href='product_list.php?page=$prevGroupPage&price_filter=$filter'>Previous</a>";
+                        echo "<a href='product_list.php?page=$prevGroupPage&price_filter=$filter'>上一頁</a>";
                     }
 
                     // 顯示當前組的頁碼
                     for ($i = $startPage; $i <= $endPage; $i++) {
                         if ($i == $page) {
-                            echo "<strong>$i</strong>";
+                            echo "<a class='active' href='javascript:void(0);'>$i</a>";
                         } else {
                             echo "<a href='product_list.php?page=$i&price_filter=$filter'>$i</a>";
                         }
@@ -324,10 +389,11 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // 下一組頁碼按鈕
                     if ($endPage < $totalPages) {
                         $nextGroupPage = $endPage + 1;
-                        echo "<a href='product_list.php?page=$nextGroupPage&price_filter=$filter'>Next</a>";
+                        echo "<a href='product_list.php?page=$nextGroupPage&price_filter=$filter'>下一頁</a>";
                     }
                     ?>
                 </div>
+
                 <!-- 關鍵字搜尋表單 -->
                 <form method="GET" action="product_list.php" class="form-inline">
                     <input type="text" class="form-control mr-2" name="keyword" placeholder="搜尋產品名稱、品牌、部位或品項" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
@@ -421,20 +487,23 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     });
     // 圖片預覽功能
     $('#images').change(function() {
-            $('#image_preview').empty(); // 清空現有的預覽
-            var files = this.files;
+    $('#image_preview').empty(); // 清空現有的預覽
+    var files = this.files;
 
-            if (files.length > 0) {
-                $.each(files, function(index, file) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        var img = $('<img>').attr('src', e.target.result);
-                        $('#image_preview').append(img);
-                    }
-                    reader.readAsDataURL(file);
-                });
-            }
+    if (files.length > 0) {
+        $.each(files, function(index, file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = $('<img>').attr('src', e.target.result);
+                var container = $('<div>').addClass('ratio');
+                container.append(img);
+                $('#image_preview').append(container);
+            };
+            reader.readAsDataURL(file);
         });
+    }
+});
+
 });
 
 function confirmDelete(productId, productName) {
