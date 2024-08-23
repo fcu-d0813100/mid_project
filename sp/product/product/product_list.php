@@ -189,7 +189,6 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>商品列表</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -204,37 +203,101 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin-top: 100px;
             padding: 20px;
         }
-
         .image-preview {
-            max-width: 10px;
-            max-height: 10px;
-            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
-
-        .image-preview img {
-            max-width: 5px;
-            /* 調整預覽圖片的最大寬度 */
-            max-height: 5px;
-            /* 調整預覽圖片的最大高度 */
+        .ratio {
+            width: 100px; /* 寬度 */
+            height: 0;
+            padding-bottom: 100px; /* 1:1 比例 */
+            position: relative;
             margin-right: 10px;
-            /* 調整圖片之間的間距 */
+            margin-bottom: 10px;
             border: 1px solid #ddd;
-            /* 為圖片添加邊框 */
             border-radius: 5px;
-            /* 添加圓角 */
+            overflow: hidden; /* 确確保圖片不會超出容器 */
         }
-
+        .ratio img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 確保圖片按比例縮放，並填充整個容器 */
+        }
         thead th {
             background-color: #393836 !important;
             color: white !important;
         }
-
         table {
             margin-top: 20px;
         }
+        .price-pagination-form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .price-filter {
+        display: inline-block !important;
+        width: 50%; /* 這裡的 50% 可以改成具體的像素值或者百分比 */
+        text-align: right; /* 分頁按鈕靠右對齊 */
+        }
+
+        .pagination {
+        display: inline-block;
+        width: auto; /* 使分頁根據內容自動調整寬度 */
+        flex-grow: 0; /* 保持原來的寬度 */
+        }
+
+        .pagination a {
+        padding: 10px 15px;
+        margin: 0;
+        background-color: #ffffff; /* 白色背景 */
+        color: #000000; /* 黑色文字 */
+        text-decoration: none;
+        border-radius: 0; /* 移除圓角 */
+        border: 1px solid #cccccc; /* 灰色邊框 */
+        transition: transform 0.2s ease-in-out; /* 過渡效果，用於方格放大 */
+        }
+
+        .pagination a:hover {
+        transform: scale(1.1); /* 當滑鼠移過時方格放大 */
+        border-color: #999999; /* 滑鼠移過時邊框顏色變化 */
+        }
+
+        .pagination a.active,
+        .pagination a:focus,
+        .pagination a:active {
+        transform: scale(1.1); /* 當前頁面放大效果 */
+        background-color: #ffffff; /* 當前頁面背景維持白色 */
+        color: #dc3545; /* 當前頁面文字顏色維持黑色 */
+        border-color: #999999; /* 當前頁面邊框顏色 */
+        cursor: default; /* 當前頁面不可點擊 */
+        outline: none; /* 移除焦點时的默认样式 */
+        }
+
+        .pagination a[disabled] {
+        background-color: #f9f9f9; /* 禁用狀態背景顏色 */
+        color: #cccccc; /* 禁用狀態文字顏色 */
+        cursor: not-allowed; /* 禁用狀態的鼠標樣式 */
+        border-color: #f9f9f9; /* 禁用狀態的邊框顏色 */
+        }
+        .increase {
+            color: #fff;
+            background-color: #dc3545;
+        }
+        #price_fillter {
+            option:hover {
+                background-color: #dc3545;
+                color: #fff;
+            }
+        }
     </style>
 </head>
-
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content container">
@@ -297,14 +360,14 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="form-group">
                                     <label for="images">上傳圖片:</label>
                                     <input type="file" class="form-control-file" id="images" name="images[]" accept="image/*" multiple required>
-                                    <div id="image_preview" style="margin-top: 10px;">
+                                    <div id="image_preview" style="margin-top: 10px;" class="image_preview">
                                         <!-- 圖片預覽 -->
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                <button type="submit" class="btn btn-primary" name="add_product">新增</button>
+                                <button type="submit" class="btn increase" name="add_product">新增</button>
                             </div>
                         </form>
                     </div>
@@ -312,21 +375,21 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <hr>
-            <!-- 分頁、篩選器、關鍵字搜尋 -->
-            <div class="filters d-flex justify-content-between">
+             <!-- 分頁、篩選器、關鍵字搜尋 -->
+             <div class="filters d-flex justify-content-between">
                 <!-- 分頁連結 -->
                 <div class="pagination">
                     <?php
                     // 上一組頁碼按鈕
                     if ($currentGroup > 1) {
                         $prevGroupPage = $startPage - 1;
-                        echo "<a href='product_list.php?page=$prevGroupPage&price_filter=$filter'>Previous</a>";
+                        echo "<a href='product_list.php?page=$prevGroupPage&price_filter=$filter'>上一頁</a>";
                     }
 
                     // 顯示當前組的頁碼
                     for ($i = $startPage; $i <= $endPage; $i++) {
                         if ($i == $page) {
-                            echo "<strong>$i</strong>";
+                            echo "<a class='active' href='javascript:void(0);'>$i</a>";
                         } else {
                             echo "<a href='product_list.php?page=$i&price_filter=$filter'>$i</a>";
                         }
@@ -335,10 +398,11 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // 下一組頁碼按鈕
                     if ($endPage < $totalPages) {
                         $nextGroupPage = $endPage + 1;
-                        echo "<a href='product_list.php?page=$nextGroupPage&price_filter=$filter'>Next</a>";
+                        echo "<a href='product_list.php?page=$nextGroupPage&price_filter=$filter'>下一頁</a>";
                     }
                     ?>
                 </div>
+
                 <!-- 關鍵字搜尋表單 -->
                 <form method="GET" action="product_list.php" class="form-inline">
                     <input type="text" class="form-control mr-2" name="keyword" placeholder="搜尋產品名稱、品牌、部位或品項" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
@@ -357,7 +421,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <button type="submit" class="btn"><i class="fa-solid fa-filter-circle-dollar"></i></button>
                 </form>
             </div>
-            <!-- 商品列表1-->
+            <!-- 商品列表 -->
             <div class="col-12">
                 <table class="table table-bordered">
                     <thead>
@@ -373,25 +437,25 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($rows as $row): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['id']); ?></td>
-                                <td><?php echo htmlspecialchars($row['product_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['brand_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['main_category_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['sub_category_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['color_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['price']); ?></td>
-                                <td class="gap-3">
-                                    <a href="product.php?id=<?= htmlspecialchars($row['id']) ?>&color_id=<?= htmlspecialchars($row['color_id']) ?>" class="btn btn-outline-secondary btn-md">
-                                        <i class="fa-regular fa-eye"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-outline-secondary btn-md" onclick="confirmDelete(<?= htmlspecialchars($row['id']) ?>, '<?= htmlspecialchars($row['product_name']) ?>')">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <?php foreach ($rows as $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['id']); ?></td>
+                            <td><?php echo htmlspecialchars($row['product_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['brand_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['main_category_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['sub_category_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['color_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['price']); ?></td>
+                            <td class="gap-3">
+                                <a href="product.php?id=<?= htmlspecialchars($row['id']) ?>&color_id=<?= htmlspecialchars($row['color_id']) ?>" class="btn btn-outline-secondary btn-md">
+                                    <i class="fa-regular fa-eye"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-secondary btn-md" onclick="confirmDelete(<?= htmlspecialchars($row['id']) ?>, '<?= htmlspecialchars($row['product_name']) ?>')">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
 
                     </tbody>
                 </table>
@@ -405,74 +469,73 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // 監聽主分類下拉列表的變化
-            $('#main_category_id').change(function() {
-                var categoryId = $(this).val();
-                $.ajax({
-                    url: 'get_sub_categories.php',
-                    type: 'POST',
-                    data: {
-                        main_category_id: categoryId
-                    },
-                    dataType: 'json', // 確保指定返回數據類型為 JSON
-                    success: function(response) {
-                        var subCategorySelect = $('#sub_category_id');
-                        subCategorySelect.empty(); // 清空現有選項
-                        if (response.sub_categories && response.sub_categories.length > 0) {
-                            $.each(response.sub_categories, function(index, subCategory) {
-                                subCategorySelect.append($('<option>').val(subCategory.id).text(subCategory.name));
-                            });
-                        } else {
-                            subCategorySelect.append($('<option>').text('無子分類'));
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("錯誤: " + status + " " + error);
-                    }
-                });
-            });
-            // 圖片預覽功能
-            $('#images').change(function() {
-                $('#image_preview').empty(); // 清空現有的預覽
-                var files = this.files;
-
-                if (files.length > 0) {
-                    $.each(files, function(index, file) {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            var img = $('<img>').attr('src', e.target.result);
-                            $('#image_preview').append(img);
-                        }
-                        reader.readAsDataURL(file);
+    $(document).ready(function() {
+    // 監聽主分類下拉列表的變化
+    $('#main_category_id').change(function() {
+        var categoryId = $(this).val();
+        $.ajax({
+            url: 'get_sub_categories.php',
+            type: 'POST',
+            data: { main_category_id: categoryId },
+            dataType: 'json',  // 確保指定返回數據類型為 JSON
+            success: function(response) {
+                var subCategorySelect = $('#sub_category_id');
+                subCategorySelect.empty(); // 清空現有選項
+                if(response.sub_categories && response.sub_categories.length > 0) {
+                    $.each(response.sub_categories, function(index, subCategory) {
+                        subCategorySelect.append($('<option>').val(subCategory.id).text(subCategory.name));
                     });
+                } else {
+                    subCategorySelect.append($('<option>').text('無子分類'));
                 }
-            });
-        });
-
-        function confirmDelete(productId, productName) {
-            if (confirm(`確定要刪除"${productName}"嗎?`)) {
-                $.ajax({
-                    url: 'delete_product.php', // 指向處理刪除的 PHP 文件
-                    type: 'POST',
-                    data: {
-                        id: productId
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert('商品已成功刪除！');
-                            location.reload(); // 刷新頁面以顯示更新後的數據
-                        } else {
-                            alert('刪除失敗：' + response.error);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        alert('刪除失敗：' + error);
-                    }
-                });
+            },
+            error: function(xhr, status, error) {
+                console.error("錯誤: " + status + " " + error);
             }
-        }
+        });
+    });
+    // 圖片預覽功能
+    $('#images').change(function() {
+    $('#image_preview').empty(); // 清空現有的預覽
+    var files = this.files;
+
+    if (files.length > 0) {
+        $.each(files, function(index, file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = $('<img>').attr('src', e.target.result);
+                var container = $('<div>').addClass('ratio');
+                container.append(img);
+                $('#image_preview').append(container);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+
+});
+
+function confirmDelete(productId, productName) {
+    if (confirm(`確定要刪除"${productName}"嗎?`)) {
+        $.ajax({
+            url: 'delete_product.php',  // 指向處理刪除的 PHP 文件
+            type: 'POST',
+            data: { id: productId },
+            success: function(response) {
+                if (response.success) {
+                    alert('商品已成功刪除！');
+                    location.reload();  // 刷新頁面以顯示更新後的數據
+                } else {
+                    alert('刪除失敗：' + response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('刪除失敗：' + error);
+            }
+        });
+    }
+}
+
     </script>
 </body>
-
 </html>

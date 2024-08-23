@@ -1,5 +1,0 @@
-/* 在 CSS 檔案中新增或更新 main-content 的樣式 */
-.main-content {
-  margin-left: 250px; /* 假設 aside 和 nav 的寬度為 250px，您可以根據實際情況調整 */
-  padding: 20px;
-}
