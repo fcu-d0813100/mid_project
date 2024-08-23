@@ -73,9 +73,9 @@ $userCount = $result->num_rows;
 <body>
   <?php include("../../nav1.php") ?>
 
-  <main class="main-content d-flex justify-content-center container">
+  <main class="main-content d-flex justify-content-center container ">
     <div>
-      <div class="d-flex justify-content-between align-items-start mt-3 align-middle">
+      <div class="d-flex justify-content-between align-items-start mt-3 pt-3 align-middle">
         <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-decoration-none text-dark h2">活動管理 </a> <span class="text-sm fs-5 text-dark"> / 活動列表</span></p>
 
         <form action="" class="align-self-center " style="width: 600px;">

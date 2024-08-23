@@ -20,7 +20,7 @@
 <body>
 
 
-    <header class="py-4">
+    <header class="py-4 ">
         <?php include("../../nav1.php") ?>
 
         <main class="main-content container">
