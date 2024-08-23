@@ -11,4 +11,3 @@ if (isset($_POST['main_category_id'])) {
         echo "<option value='{$subCategory['id']}'>{$subCategory['name']}</option>";
     }
 }
-?>

@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
     try {
         // 開始刪除操作
+
         $pdo->beginTransaction();
 
         // 刪除 color 表格中與該產品相關的記錄

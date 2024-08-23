@@ -10,7 +10,6 @@
   width: 50%; /* 這裡的 50% 可以改成具體的像素值或者百分比 */
   text-align: right; /* 分頁按鈕靠右對齊 */
 }
-
 .pagination {
   display: inline-block;
   width: 50%;
