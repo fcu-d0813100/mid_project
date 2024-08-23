@@ -35,31 +35,26 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
     <?php include("../../nav1.php") ?>
     <main class="main-content">
         <div class="container">
-            <div class="py-3">
-                <p class="m-0 d-inline text-lg text-secondary">編輯修改 /<span class="text-sm">品項管理</span></p>
+            <div class="py-3 mt-4">
+                <p class="m-0 d-inline h2">編輯修改 /<span class="text-sm fs-5">品項管理</span></p>
             </div>
             <form action="doUpadateCategory.php" method="get">
                 <input type="hidden" name="id" value="<?= $category['id'] ?>">
-                <div class="mt-2"><label class="bg-light p-2" for="">編號<?= $category['id'] ?></label></div>
+                <div class="mt-2"><label class="bg-light py-2 fw-semibold" for="">編號<?= $category['id'] ?></label></div>
                 <div class="form-group py-2">
                     <label for="sub_name">品項名稱</label>
-                    <input type="text" class="form-control" id="sub_name" name="sub_name" value="<?= htmlspecialchars($category["sub_name"]) ?>" required>
+                    <input type="text" class="form-control mt-2" id="sub_name" name="sub_name" value="<?= htmlspecialchars($category["sub_name"]) ?>" required>
                 </div>
                 <div class="form-group py-3">
                     <label for="main_category_id">部位分類</label>
-                    <select class="form-control" id="main_category_id" name="main_category_id" required>
+                    <select class="form-control mt-2" id="main_category_id" name="main_category_id" required>
                         <?php while ($main_category = $main_categories->fetch_assoc()) : ?>
                             <option value="<?= $main_category['id'] ?>" <?= $main_category['id'] == $category['main_category_id'] ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($main_category['name']) ?>
@@ -68,8 +63,8 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
                     </select>
                 </div>
                 <div class="py-3">
-                    <button type="submit" class="btn btn-primary">保存</button>
-                    <a class="btn btn-secondary" href="category.php">取消</a>
+                    <button type="submit" class="btn btn-dark me-2">保存</button>
+                    <a class="btn btn-dark" href="category.php">取消</a>
                 </div>
             </form>
         </div>
