@@ -88,7 +88,7 @@ $row = $result->fetch_assoc();
                                     <td>
                                         <div class="mb-2">
                                             <label for="option1">修改活動名稱:</label>
-                                            <input type="text" id="" class="form-control" name="name">
+                                            <input type="text" id="" class="form-control" name="name" value="<?= $row["name"] ?>">
                                         </div>
                                     </td>
                                 </tr>
@@ -98,9 +98,9 @@ $row = $result->fetch_assoc();
                                         <div class="mb-2">
                                             <label for="option1">修改活動日期時間:</label>
                                             <p class="mb-0 mt-2">開始:</p>
-                                            <input type="datetime-local" id="" class="form-control" name="start_at">
+                                            <input type="datetime-local" id="" class="form-control" name="start_at" value="<?= $row["start_at"] ?>">
                                             <p class="mb-0 mt-2">結束:</p>
-                                            <input type="datetime-local" id="" class="form-control" name="end_at">
+                                            <input type="datetime-local" id="" class="form-control" name="end_at" value="<?= $row["end_at"] ?>">
                                         </div>
                                     </td>
                                 </tr>
@@ -109,7 +109,7 @@ $row = $result->fetch_assoc();
                                     <td>
                                         <div class="mb-2">
                                             <label for="option1">修改活動地點:</label>
-                                            <input type="address" id="" class="form-control" name="address">
+                                            <input type="address" id="" class="form-control" name="address" value="<?= $row["address"] ?>">
                                         </div>
                                     </td>
                                 </tr>
@@ -132,34 +132,34 @@ $row = $result->fetch_assoc();
                                 </td>
                             </tr> -->
 
-                             
 
-                            <tr>
-                                <th>活動報名人數</th>
-                                <td>
-                                    <div class="mb-2">
-                                        <label for="quantity">修改數量:</label>
-                                        <input type="number" id="quantity" name="maxAPP" class="form-control" value="<?= $row["maxAPP"] ?>">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>活動說明</th>
-                                <td>
-                                    <div class="mb-2">
-                                        <label for="option1">修改說明</label>
-                                        <input type="text" id="" class="form-control" name="description" value="<?= $row["description"] ?>">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="text-end">
-                            <button class="btn btn-dark" type="submit">修改</button>
-                        </div>
-                    </form>
 
+                                <tr>
+                                    <th>活動報名人數</th>
+                                    <td>
+                                        <div class="mb-2">
+                                            <label for="quantity">修改數量:</label>
+                                            <input type="number" id="quantity" name="maxAPP" class="form-control" value="<?= $row["maxAPP"] ?>">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>活動說明</th>
+                                    <td>
+                                        <div class="mb-2">
+                                            <label for="option1">修改說明</label>
+                                            <input type="text" id="" class="form-control" name="description" value="<?= $row["description"] ?>">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="text-end">
+                                <button class="btn btn-dark" type="submit">修改</button>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
-            </div>
         </main>
         </div>
         <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
