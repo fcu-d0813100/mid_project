@@ -20,7 +20,6 @@ $statusCountAll = $resulstatusAll->num_rows;
 
 
 // 換頁
-
 // 頁碼和每頁顯示數量
 $page = isset($_GET["p"]) ? intval($_GET["p"]) : 1;
 $per_page = 7;
@@ -231,13 +230,13 @@ $result = $conn->query($sql);
 
                                 <!-- class="btn btn-outline-secondary " -->
                                 <td>
-                                    <a class="btn btn-dark " href="order.php?id=<?= $order["id"] ?>">
+                                    <a class="btn btn-outline-danger " href="order.php?id=<?= $order["id"] ?>">
                                         <i class="fa-solid fa-file-lines "></i>
                                     </a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
+                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                     <!-- Modal -->
@@ -264,7 +263,15 @@ $result = $conn->query($sql);
 
                 <nav aria-label="Page navigation example ">
                     <ul class="pagination justify-content-center mt-5">
-                        <?php if (isset($_GET["p"]) && isset($_GET["pay"])): ?>
+                        <?php if (isset($_GET["p"]) && !isset($_GET["status"]) && !isset($_GET["pay"])): ?>
+                            <?php for ($i = 1; $i <= $total_Page; $i++) : ?>
+                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                    <a class="page-link " href="order-list.php?p=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                        <?php endif; ?>
+
+                        <?php if (isset($_GET["p"]) && isset($_GET["pay"]) && $_GET["pay"] == 1): ?>
                             <?php $payPage = ceil($payCountAll / $per_page);
                             for ($i = 1; $i <= $payPage; $i++) : ?>
                                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">
@@ -272,7 +279,9 @@ $result = $conn->query($sql);
                                 </li>
                             <?php endfor; ?>
                         <?php endif; ?>
-                        <?php if (isset($_GET["p"]) && isset($_GET["status"])): ?>
+
+
+                        <?php if (isset($_GET["p"]) && isset($_GET["status"]) && $_GET["status"] == 1): ?>
                             <?php $staPage = ceil($statusCountAll / $per_page);
                             for ($i = 1; $i <= $staPage; $i++) : ?>
                                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">
@@ -280,14 +289,7 @@ $result = $conn->query($sql);
                                 </li>
                             <?php endfor; ?>
                         <?php endif; ?>
-                        <?php if (isset($_GET["p"]) && !isset($_GET["status"]) && !isset($_GET["pay"])): ?>
-                            <?php $orderPage = ceil($orderCountAll / $per_page);
-                            for ($i = 1; $i <= $orderPage; $i++) : ?>
-                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                    <a class="page-link " href="order-list.php?p=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php endfor; ?>
-                        <?php endif; ?>
+
                     </ul>
                 </nav>
 
