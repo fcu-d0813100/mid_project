@@ -33,6 +33,7 @@ $row = $result->fetch_assoc();
     <header>
         <?php include("../../nav1.php") ?>
 
+
         <main class="main-content ">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-start pt-3 mt-5">
@@ -113,6 +114,7 @@ $row = $result->fetch_assoc();
                                     </td>
                                 </tr>
                                 <!-- <tr>
+
                                 <th>活動狀態</th>
                                 <td>
                                     <form>
@@ -129,30 +131,33 @@ $row = $result->fetch_assoc();
                                     </form>
                                 </td>
                             </tr> -->
-                                <tr>
-                                    <th>活動報名人數</th>
-                                    <td>
-                                        <div class="mb-2">
-                                            <label for="quantity">修改數量:</label>
-                                            <input type="number" id="quantity" name="maxAPP" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>活動說明</th>
-                                    <td>
-                                        <div class="mb-2">
-                                            <label for="option1">修改說明</label>
-                                            <input type="text" id="" class="form-control" name="description">
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="text-end">
-                                <button class="btn btn-dark" type="submit">修改</button>
-                            </div>
-                        </form>
-                    </div>
+
+                             
+
+                            <tr>
+                                <th>活動報名人數</th>
+                                <td>
+                                    <div class="mb-2">
+                                        <label for="quantity">修改數量:</label>
+                                        <input type="number" id="quantity" name="maxAPP" class="form-control" value="<?= $row["maxAPP"] ?>">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>活動說明</th>
+                                <td>
+                                    <div class="mb-2">
+                                        <label for="option1">修改說明</label>
+                                        <input type="text" id="" class="form-control" name="description" value="<?= $row["description"] ?>">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="text-end">
+                            <button class="btn btn-dark" type="submit">修改</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </main>

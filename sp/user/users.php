@@ -166,6 +166,53 @@ if (isset($_GET["search"])) {
 
 
 
+                        </div>
+                    </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($userCount > 0) :
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        ?>
+
+
+
+
+
+            <table class="table table-hover text-center align-middle mt-3 ">
+                <thead class="">
+                    <tr>
+
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>性別</th>
+                        <th>電話</th>
+                        <th>生日</th>
+                        <th>信箱</th>
+                        <th>註冊時間</th>
+                        <th>會員等級</th>
+                        <th>檢視 <span></span> <span></span><span></span>編輯</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($rows as $user) : ?>
+                        <tr class=" align-middle">
+                            <td><?= $user["id"] ?></td>
+                            <td><?= $user["name"] ?></td>
+                            <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>
+                            <td><?= $user["phone"] ?></td>
+                            <td><?= $user["birthday"] ?></td>
+                            <td><?= $user["email"] ?></td>
+                            <td><?= $user["created_at"] ?></td>
+                            <td><?= $user["level_name"] ?></td>
+                            <td class="text-md">
+                                <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </td>
+                        </tr>
+
+
                 <table class="table table-hover text-center align-middle mt-3 ">
                     <thead class="">
                         <tr>

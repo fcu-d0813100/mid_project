@@ -17,6 +17,7 @@
     <header>
         <?php include("../../nav1.php") ?>
 
+
         <main class="main-content">
             <div class=" container">
                 <div class="d-flex justify-content-between align-items-start mt-3 pt-5">
@@ -96,32 +97,38 @@
                                     <td>
                                         <div class="row">
 
+ 
+
                                             <div class="col-6">
 
-                                                <label for="" class="mb-2">設定報名最大人數 :</label>
-                                                <div class="">
-                                                    <input type="number" id="" class="form-control" name="maxAPP">
-                                                </div>
+
+    
+
+                                            <label for="" class="mb-2"><span class="text-danger">* </span>設定報名最大人數 :</label>
+                                            <div class="">
+                                                <input type="number" id="" class="form-control" name="maxAPP" required>
+
                                             </div>
                                         </div>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>活動說明</th>
-                                    <td>
-                                        <div class="mb-2">
-                                            <label for="" class="mb-2">輸入活動內容: </label>
-                                            <input type="text" id="" class="form-control" name="description">
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="text-end">
-                                <button class="btn btn-dark" type="submit">新增</button>
-                            </div>
-                        </form>
-                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>活動說明</th>
+                                <td>
+                                    <div class="mb-2">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>輸入活動內容: </label>
+                                        <input type="text" id="" class="form-control" name="description" required>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="text-end">
+                            <button class="btn btn-dark" type="submit">新增</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </main>

@@ -176,9 +176,7 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
           </nav>
         <?php endif; ?>
       <?php else : ?>
-        <div class="py-3">
-          目前沒有此品項
-        </div>
+        <div class="alert alert-warning">沒有找到相關產品</div>
       <?php endif; ?>
     </div>
   </main>

@@ -162,28 +162,28 @@ if (isset($_GET["search"])) {
                                 <?php if (isset($_GET["p"])): ?>
 
                                     <a class="btn btn-dark me-2
-    <?php if ($order == 1) echo "active" ?>" href="teachers.php?p=1&order=1">
+                                    <?php if ($order == 1) echo "active" ?>" href="teachers.php?p=1&order=1">
                                         <i class="py-1 fa-solid fa-list-ol me-2"></i>ID
                                     </a>
 
                                     <div class="btn-group me-2">
                                         <a class="btn btn-dark border-end 
-    <?php if ($nation == 1) echo "active" ?>" href="teachers.php?p=1&nation=1">
+                                    <?php if ($nation == 1) echo "active" ?>" href="teachers.php?p=1&nation=1">
                                             <i class="py-1 fa-solid fa-location-dot me-2"></i>國內
                                         </a>
                                         <a class="btn btn-dark border-start
-    <?php if ($nation == 2) echo "active" ?>" href="teachers.php?p=1&nation=2">
+                                    <?php if ($nation == 2) echo "active" ?>" href="teachers.php?p=1&nation=2">
                                             <i class="py-1 fa-solid fa-earth-americas me-2"></i>國際
                                         </a>
                                     </div>
 
                                     <div class="btn-group">
                                         <a class="btn btn-dark border-end
-    <?php if ($order == 2) echo "active" ?>" href="teachers.php?p=1&order=2">
+                                    <?php if ($order == 2) echo "active" ?>" href="teachers.php?p=1&order=2">
                                             <i class="py-1 fa-solid fa-arrow-down-1-9 me-2"></i>年資
                                         </a>
                                         <a class="btn btn-dark border-start
-    <?php if ($order == 3) echo "active" ?>" href="teachers.php?p=1&order=3">
+                                    <?php if ($order == 3) echo "active" ?>" href="teachers.php?p=1&order=3">
                                             <i class="py-1 fa-solid fa-arrow-down-9-1 me-2"></i>年資
                                         </a>
                                     </div>
