@@ -31,28 +31,25 @@ $product_id = isset($_GET["product_id"]) ? (int)$_GET["product_id"] : 0;
 // 计算符合搜索条件的总库存量
 $sqlTotalStock = "SELECT SUM(stock) as total_stock FROM color
                    JOIN product_list ON color.product_id = product_list.id
-                   WHERE (color.color LIKE '%$search%' OR product.product_name LIKE '%$search%')
-                   AND ($product_id = 0 OR color.product_id = $product_id)
-                   AND color.deleted_at IS NULL";
+                   WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+                   AND ($product_id = 0 OR color.product_id = $product_id)";
 
 // 根据搜索关键字和产品 ID 修改 SQL 查询
 if ($search || $product_id || $filterLowStock) {
     $sqlAll = "SELECT COUNT(*) as total FROM color
-               JOIN product_list ON color.product_id = product.id
+               JOIN product_list ON color.product_id = product_list.id
                WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
-               AND ($product_id = 0 OR color.product_id = $product_id)
-               AND color.deleted_at IS NULL";
+               AND ($product_id = 0 OR color.product_id = $product_id)";
 
     if ($filterLowStock) {
         $sqlAll .= " AND color.stock < 30";
     }
 
-    $sql = "SELECT color.id, product.product_name, color.color, color.stock
+    $sql = "SELECT color.id, product_list.product_name, color.color, color.stock
             FROM color
-            JOIN product_list ON color.product_id = product.id
-            WHERE (color.color LIKE '%$search%' OR product.product_name LIKE '%$search%')
-            AND ($product_id = 0 OR color.product_id = $product_id)
-            AND color.deleted_at IS NULL";
+            JOIN product_list ON color.product_id = product_list.id
+            WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+            AND ($product_id = 0 OR color.product_id = $product_id)";
 
     if ($filterLowStock) {
         $sql .= " AND color.stock < 30";
@@ -62,13 +59,11 @@ if ($search || $product_id || $filterLowStock) {
               LIMIT $start_item, $per_page";
 } else {
     $sqlAll = "SELECT COUNT(*) as total FROM color
-               JOIN product_list ON color.product_id = product.id
-               WHERE color.deleted_at IS NULL";
+               JOIN product_list ON color.product_id = product_list.id ";
 
     $sql = "SELECT color.id, product.product_name, color.color, color.stock
             FROM color
-            JOIN product_list ON color.product_id = product.id
-            WHERE color.deleted_at IS NULL";
+            JOIN product_list ON color.product_id = product_list.id";
 
     if ($filterLowStock) {
         $sqlAll .= " AND color.stock < 30";
