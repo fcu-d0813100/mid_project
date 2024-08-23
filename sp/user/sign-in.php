@@ -130,8 +130,14 @@ if (isset($_SESSION["user"])) {
                         </div>
 
                     <?php
-                    unset($_SESSION["error"]["message"]);
-                endif; ?>
+
+                        unset($_SESSION["error"]["message"]);
+                    endif; ?>
+                    
+                    
+                </form>
+           
+
 
                     <div class="mt-4 text-muted">
                         © 2010-2024 Makeup

@@ -3,6 +3,8 @@
 session_start();
 
 unset($_SESSION["user"]);
-header("location: sign-in.php");
 
-$conn->close();
+header("location:sp/user/sign-in.php");
+
+?>
+
