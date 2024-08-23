@@ -71,13 +71,13 @@ $result = $conn->query($sql);
       </div>
       <hr>
       <div class="text-end">
-      <a class="btn btn-outline-secondary btn-md" href="coupon-create.php">
-        <i class="fa-solid fa-plus">新增</i>
-      </a>
+        <a class="btn btn-dark btn-md" href="coupon-create.php">
+          <i class="fa-solid fa-plus">新增</i>
+        </a>
       </div>
 
       <!-- 照狀態分類 -->
-      <div class="col-12 mt-3 text-end">
+      <div class="col-12  text-end">
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="coupon-list.php?p=1">全部 <?= $couponCountAll ?></a>
@@ -89,7 +89,7 @@ $result = $conn->query($sql);
 
         <!-- 日期篩選 -->
         <?php if (!isset($_GET["start_date"])): ?>
-          <div class="mx-3 my-2 py-2">
+          <div class="mx-3 my-2 py-2 ">
             <form action="">
               <?php
               $today = date('Y-m-d');
@@ -128,7 +128,7 @@ $result = $conn->query($sql);
         $rows = $result->fetch_all(MYSQLI_ASSOC);
       ?>
         <!-- table-->
-        <table class="table border text-center "> <!-- table-bordered -->
+        <table class="table border text-center align-middle"> <!-- table-bordered -->
           <thead class="">
             <tr class="">
               <th></th>

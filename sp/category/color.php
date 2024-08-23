@@ -156,7 +156,7 @@ $totalPages = ceil($totalRecords / $itemsPerPage);
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container">
-            <div class="py-3 mt-4">
+            <div class="py-3 mt-5">
                 <p class="m-0 d-inline h2">類別管理 <span class="text-sm fs-5"> / 色號及庫存</span></p>
             </div>
             <div class="py-2">
@@ -218,7 +218,7 @@ $totalPages = ceil($totalRecords / $itemsPerPage);
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a class="btn btn-dark me-2" href="color-edit.php?id=<?= $color["id"] ?>">修改</a>
+                                    <a class="btn btn-outline-danger me-2" href="color-edit.php?id=<?= $color["id"] ?>">修改</a>
                                     <a class="btn btn-outline-danger" href="doDeleteColor.php?id=<?= $color['id'] ?>"
                                         onclick="return confirm('是否確定刪除?')">刪除</a>
                                 </td>

@@ -88,7 +88,7 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
     <div class="container">
-      <div class="py-3 mt-4">
+      <div class="py-3 mt-5">
         <p class="m-0 d-inline h2">類別管理 <span class="text-sm fs-5"> / 品項管理</span></p>
       </div>
       <div class="py-2">

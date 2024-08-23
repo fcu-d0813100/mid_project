@@ -44,7 +44,7 @@ $color = $result->fetch_assoc();
     <?php include("../../nav1.php") ?>
     <main class="main-content ">
         <div class="container ">
-            <div class="py-3 mt-4">
+            <div class="py-3 mt-5">
                 <p class="m-0 d-inline h2">編輯修改 <span class="text-sm fs-5"> / 色號及庫存</span></p>
             </div>
             <form class="mt-3" action="doUpdateColor.php" method="get">

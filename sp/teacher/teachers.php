@@ -123,7 +123,7 @@ if (isset($_GET["search"])) {
     <main class="main-content px-3 pb-3 pt-5">
         <div class="container ">
             <div class="mt-4 row d-flex justify-content-center align-items-center ">
-                <div class="col-10">
+                <div class="">
                     <div>
                         <h1 class="h2 mt-5 pt-5 mb-3">師資列表</h1>
 

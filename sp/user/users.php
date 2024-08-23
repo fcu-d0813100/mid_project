@@ -85,6 +85,7 @@ if (isset($_GET["search"])) {
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="robots" content="noindex">
+
     <?php include("css.php") ?>
 
     <style>
@@ -99,9 +100,9 @@ if (isset($_GET["search"])) {
     <?php include("../../nav1.php") ?>
     <main class="main-content">
         <div class="mx-2">
-            <div class="row d-flex justify-content-between">
+            <div class="row d-flex justify-content-between mt-2">
                 <div class="mt-3 col-md-3">
-                    <p class="m-0 d-inline text-lg text-secondary">會員管理 /<span class="text-sm">會員列表</span></p>
+                    <p class="m-0 d-inline h2">會員管理 <span class="text-sm fs-5"> / 會員列表</span></p>
                 </div>
                 <div class="mt-3 col-md-3 d-flex justify-content-end pe-5">
                     <a class="btn btn-dark" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
@@ -110,7 +111,7 @@ if (isset($_GET["search"])) {
             <hr>
 
             <!-- 搜尋 -->
-            <div class="row mb-2">
+            <div class="row mb-2 py-3">
                 <div class=" col-md-4">
                     <form action="">
                         <div class="input-group">
@@ -129,7 +130,7 @@ if (isset($_GET["search"])) {
                     </div>
                 <?php else: ?>
                     <div class="d-flex justify-content-center align-items-center col-md-4">
-                        <p class="text-md">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共<?= $userCount ?>筆</p>
+                        <p class="text-md m-0">第 <?= $page ?> 頁，共 <?= $total_page ?> 頁，每頁顯示<?= $per_page ?>筆，共<?= $userCount ?>筆</p>
                     </div>
                 <?php endif; ?>
                 <?php if (isset($_GET["search"]) || isset($_GET["p"])):
@@ -138,18 +139,18 @@ if (isset($_GET["search"])) {
                     <div class="d-flex justify-content-end col-md-4">
                         <div class="btn-group">
                             <!-- 排序ID(由小到大)由大到小 利用order by -->
-                            <a class="btn btn-dark mx-1"
+                            <a class="btn btn-dark border-end"
                                 <?php if ($order == 1) echo "active" ?>
-                                href="users.php?p=<?= $page ?>&order=1">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                            <a class="btn btn-dark"
+                                href="users.php?p=<?= $page ?>&order=1">ID<i class="fa-solid fa-arrow-down-short-wide ms-2"></i></a>
+                            <a class="btn btn-dark border-start border-end"
                                 <?php if ($order == 2) echo "active" ?>
-                                href="users.php?p=<?= $page ?>&order=2">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                            <a class="btn btn-dark mx-1"
+                                href="users.php?p=<?= $page ?>&order=2">ID<i class="fa-solid fa-arrow-down-wide-short ms-2"></i></a>
+                            <a class="btn btn-dark border-end border-start"
                                 <?php if ($order == 3) echo "active" ?>
-                                href="users.php?p=<?= $page ?>&order=3">會員等級<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                            <a class="btn btn-dark"
+                                href="users.php?p=<?= $page ?>&order=3">會員等級<i class="fa-solid fa-arrow-down-short-wide ms-2"></i></a>
+                            <a class="btn btn-dark border-start"
                                 <?php if ($order == 4) echo "active" ?>
-                                href="users.php?p=<?= $page ?>&order=4">會員等級<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                                href="users.php?p=<?= $page ?>&order=4">會員等級<i class="fa-solid fa-arrow-down-wide-short ms-2"></i></a>
 
                         </div>
                     </div>
@@ -162,7 +163,7 @@ if (isset($_GET["search"])) {
 
 
 
-           
+
 
             <table class="table table-hover text-center align-middle mt-3 ">
                 <thead class="">
