@@ -65,16 +65,6 @@ if (isset($_GET["search_type"]) || isset($_GET["date"]) || isset($_GET["start"])
     $whereClause .= "";
 }
 
-// 默认排序字段和方向
-$sortField = 'user_order.id';
-$sortDirection = 'DESC';
-
-// 如果 GET 请求中有排序字段和方向参数
-if (isset($_GET['sort_field']) && isset($_GET['sort_direction'])) {
-    $sortField = $_GET['sort_field'];
-    $sortDirection = $_GET['sort_direction'];
-}
-
 
 $sql = "SELECT user_order.*, 
 product_list.product_name AS product_name, 
@@ -88,9 +78,7 @@ JOIN users ON user_order.user_id = users.id
 JOIN pay ON user_order.pay_id = pay.id
 JOIN status ON user_order.status_id = status.id
 $whereClause
-ORDER BY $sortField $sortDirection
-
--- ORDER BY user_order.id DESC
+ORDER BY user_order.id DESC
 LIMIT $start_item, $per_page";
 $result = $conn->query($sql);
 
@@ -98,8 +86,6 @@ $result = $conn->query($sql);
 
 <!doctype html>
 <html lang="en">
-
-
 
 <head>
     <meta charset="utf-8">
@@ -124,8 +110,9 @@ $result = $conn->query($sql);
     <main class="main-content">
         <div class="pt-5 px-5">
             <div class="d-flex justify-content-between align-items-start ">
+
                 <!-- 返回 order-list 的按鈕 -->
-                <?php if (isset($_GET["date"]) || isset($_GET["user"])) : ?>
+                <?php if (isset($_GET["id"])) : ?>
                     <div class="col-auto">
                         <a class="btn btn-primary" href="order-list.php?p=1"><i class="fa-solid fa-left-long"></i></a>
                     </div>
@@ -140,24 +127,20 @@ $result = $conn->query($sql);
                 </div>
             </div>
 
-
-
-            <!-- 照狀態分類 -->
+            <!-- 照狀態分類 (訂單未付款、處理中) -->
             <div class="col-12 mt-3">
                 <ul class="nav nav-tabs">
+
                     <li class="nav-item">
                         <a class="nav-link <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
-                        <!-- ?p=<?= $_GET["p"] ?> -->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=1&pay=1">未付款 <?= $payCountAll  ?></a>
-                        <!-- p=<?= $_GET["p"] ?>& -->
+                        <a class="nav-link <?php if (isset($_GET["pay"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&pay=1">未付款 <?= $payCountAll  ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=1&status=1">訂單處理中 <?= $statusCountAll ?></a>
-                        <!-- p=<?= $_GET["p"] ?>& -->
+                        <a class="nav-link <?php if (isset($_GET["status"]) == 1) echo "active" ?> " href="order-list.php?p=<?= $page ?>&status=1">訂單處理中 <?= $statusCountAll ?></a>
                     </li>
 
                 </ul>
@@ -168,19 +151,22 @@ $result = $conn->query($sql);
             <!-- 關鍵字搜尋 -->
             <div class="select d-flex align-items-center justify-content-between border-start border-end">
                 <form class="d-flex my-3" method="GET">
+
                     <div class="col-5 ">
                         <select class="form-select rounded-start mx-2" name="search_type" aria-label="Default select example">
-                            <option selected>搜尋關鍵字</option>
+                            <option selected>搜尋</option>
                             <option value="1" <?php if ($searchType == "1") echo "selected"; ?>>訂單編號</option>
                             <option value="2" <?php if ($searchType == "2") echo "selected"; ?>>訂購者名稱</option>
                         </select>
                     </div>
+
                     <div class="col-8 me-1">
                         <div class="input-group ">
                             <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="搜尋">
                             <button class="btn btn-primary rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
+
                 </form>
 
 
@@ -219,11 +205,10 @@ $result = $conn->query($sql);
                 <?php endif; ?>
             </div>
 
-
+            <!-- 列表資料的顯示 -->
             <?php if ($orderCountAll > 0) :
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
             ?>
-
                 <table class="table border table-hover"> <!-- table-bordered -->
                     <thead class="table-light text-center">
                         <tr>
@@ -235,9 +220,7 @@ $result = $conn->query($sql);
                             <th>合計</th>
                             <th>明細</th>
                             <th>取消</th>
-
                         </tr>
-
                     </thead>
                     <tbody class="text-center">
                         <?php
@@ -254,8 +237,6 @@ $result = $conn->query($sql);
                                 $total += $subtotal
                                 ?>
                                 <td class=""><?= number_format($subtotal) ?></td>
-
-                                <!-- class="btn btn-outline-secondary " -->
                                 <td>
                                     <a class="btn btn-outline-secondary " href="order.php?id=<?= $order["id"] ?>">
                                         <i class="fa-solid fa-file-lines "></i>
@@ -312,8 +293,6 @@ $result = $conn->query($sql);
                                 </li>
                             <?php endfor; ?>
                         <?php endif; ?>
-
-
                     </ul>
                 </nav>
             <?php else : ?>
