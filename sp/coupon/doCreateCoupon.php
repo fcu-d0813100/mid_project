@@ -3,20 +3,11 @@
 require_once("../../db_connect.php");
 
 
-if (!isset($_POST["id"])) {
+if (!isset($_POST["name"])) {
     echo "請循正常管道進入此頁";
     exit;
 }
-$code = $_POST["code"];
-if (empty($code)) {
-    echo "代碼不能為空";
-    exit;
-}
-$discount_value = $_POST["discount_value"];
-if (empty($discount_value)) {
-    echo "折扣數不能為空";
-    exit;
-}
+
 
 $sqlCheck = "SELECT *FROM coupon_list WHERE code ='$code'";
 $result = $conn->query($sqlCheck);

@@ -163,8 +163,6 @@ $orderCountAll = $resulorderAll->num_rows;
                 </table>
 
 
-
-
                 <div class="d-flex align-items-center justify-content-start mt-5">
                     <div class="col-3">
                         <p class=" d-inline text-lg text-secondary border-bottom">會員資料</p>
@@ -174,9 +172,7 @@ $orderCountAll = $resulorderAll->num_rows;
                         <h5 class="text-secondary">地址：<?= $row["user_address"] ?></h5>
                     </div>
                 </div>
-
             </div>
-
         </main>
 
         <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

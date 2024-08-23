@@ -28,6 +28,8 @@ if (isset($_GET["search"])) {
           OR id LIKE '%$search%'
           OR start_at LIKE '%$search%') 
           AND valid = 1";
+  $result = $conn->query($sql);
+  $searchCount = $result->num_rows;
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
   $order = $_GET["order"];
   $page = $_GET["p"];
@@ -74,6 +76,21 @@ $userCount = $result->num_rows;
       padding-left: 200px;
       padding-right: 0;
     }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /* 使按鈕左對齊 */
+    }
+
+    .btn:active {
+      border: none;
+      outline: none;
+      /* 取消外部边框 */
+      box-shadow: none;
+      /* 取消可能的阴影 */
+    }
   </style>
 </head>
 
@@ -88,7 +105,7 @@ $userCount = $result->num_rows;
 
         <form action="" class="align-self-center " style="width: 600px;">
           <div class="input-group mb-3">
-            <input type="search" class="form-control border border-secondary" placeholder="輸入使用者名稱" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
+            <input type="search" class="form-control border border-secondary" placeholder="輸入關鍵字" aria-label="Recipient's username" aria-describedby="button-addon2" name="search"
               value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>">
             <button class="btn btn-dark border-start-0" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
@@ -105,11 +122,151 @@ $userCount = $result->num_rows;
 
 
       <!-- table-->
-      <?php if ($activeCountAll):
+      <?php if ($activeCountAll && !isset($_GET["search"])):
         $rows = $result->fetch_all(MYSQLI_ASSOC); ?>
         <div class="text-md mb-2">共有<?= $activeCountAll;
                                     //var_dump($where_clause); 
                                     ?> 筆活動</div>
+
+        <div class="table-responsive large">
+          <table class="table table-striped table-md text-center" id="datatable">
+            <thead>
+              <tr class="align-middle">
+                <th class="col" style="width: 105px;">
+
+                  <?php if (isset($_GET["p"])) : ?>
+                    <div class="d-flex">
+                      <span style="background-color: none;">ID</span>
+                      <div class=" btn-group ms-2 ">
+                        <a
+                          type="button"
+                          class="btn btn-outline-none btn-bordered-none btn-sm p-0 "
+                          <?php if ($order == 2) echo "active" ?>
+                          href="active.php?p=<?php echo $page; ?>&order=2">
+                          <i class="fa-solid fa-sort-up"></i>
+                        </a>
+                        <a
+                          type="button"
+                          class="btn btn-outline-none btn-bordered-none btn-sm p-0 "
+                          <?php if ($order == 1) echo "active" ?>
+                          href="active.php?p=<?php echo $page; ?>&order=1">
+                          <i class="fa-solid fa-sort-down align-top"></i>
+                        </a>
+                      </div>
+                    </div>
+                  <?php
+                  endif; ?>
+                </th>
+                <th class="col-2">圖片</th>
+                <th class="col-1">活動品牌</th>
+                <th class=" col" class="col-2">活動名稱</th>
+                <th class="col" class="col-2" style=" width:150px;">
+                  <span style="background-color: none;">活動日期</span>
+                  <?php if (isset($_GET["p"])) : ?>
+                    <a
+                      type="button"
+                      class="btn btn-outline-none btn-sm p-0"
+                      <?php if ($order == 3) echo "active" ?>
+                      href="active.php?p=<?php echo $page; ?>&order=3">
+                      <i class="fa-solid fa-sort-down"></i>
+                    </a>
+
+                    <a
+                      type="button"
+                      class="btn btn-outline-none btn-sm p-0"
+                      <?php if ($order == 4) echo "active" ?>
+                      href="active.php?p=<?php echo $page; ?>&order=4">
+                      <i class="fa-solid fa-sort-up"></i>
+                    </a>
+                  <?php
+                  endif; ?>
+                </th>
+                <th class="col" style="width: 100px
+            ;">活動地點</th>
+                <th class="col-1">活動狀態</th>
+                <th class="col" style="width: 100px;">報名人數</th>
+
+                <th class="col-2">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <?php foreach ($rows as $row): ?>
+
+
+                <tr class="align-middle">
+                  <td><?= $row["id"] ?></td>
+                  <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="images/<?= $row["image"] ?>" alt=""></td>
+                  <td><?= $row["brand"] ?></td>
+                  <td><?= $row["name"] ?></td>
+                  <td><?= $row["start_at"] ?></td>
+                  <td>
+                    <?= $row["address"] ?>
+                  </td>
+                  <td>
+                    <?php
+                    // 计算7天前的时间
+                    $startAt = $row["start_at"];
+                    // 将字符串转换为 DateTime 对象
+                    $applyTime = new DateTime($startAt);
+                    // 使用 modify 减去7天
+                    $applyTime->modify('-7 days');
+                    // 将 $applyTime 格式化为字符串
+                    $applyTimeFor = $applyTime->format('Y-m-d H:i:s');
+                    ?>
+                    <?php if ($row["currentAPP"] === $row["maxAPP"]): ?>
+                      <span class=" rounded-pill p-1 px-2 my-1 text-white" style="background-color: orange;">已額滿</span>
+                    <?php endif; ?>
+                    <?php if ($now < $applyTimeFor) : ?>
+                      <span class=" rounded-pill bg-success p-1 px-2 my-1 text-white">報名中</span>
+                    <?php elseif ($now < $row["start_at"] && $now > $applyTimeFor) : ?>
+                      <span class=" rounded-pill bg-secondary p-1 px-2 my-1 text-white">已截止</span>
+                    <?php elseif ($now > $row["start_at"] && $now < $row["end_at"]) : ?>
+                      <span class=" rounded-pill bg-warning p-1 px-2 my-1 text-white">進行中</span>
+                    <?php else : ?>
+                      <span class=" rounded-pill bg-danger p-1 px-2 my-1 text-white">已結束</span>
+                    <?php endif; ?>
+
+                  </td>
+
+
+                  <td><?= $row["currentAPP"] ?>/<?= $row["maxAPP"] ?></td>
+
+                  <td>
+                    <a href="active-info.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger">
+                      <i class="fa-regular fa-eye"></i>
+                    </a>
+                    <a href="active-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger">
+                      <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-outline-danger"
+                      onclick="if (confirm('確定要刪除嗎')) { window.location.href='doDeleteActive.php?id=<?= $row['id'] ?>'; }">
+                      <i class="fa-regular fa-trash-can"></i>
+                    </a>
+
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+        <?php if (!isset($_GET["search"])): ?>
+          <nav aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+              <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+                <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                  <a class="page-link " href="active.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php endif; ?>
+      <?php elseif (isset($_GET["search"])): ?>
+        <div class="text-md mb-2">共有<?= $searchCount;
+                                    //var_dump($where_clause); 
+                                    ?> 筆活動</div>
+        <?php $rows = $result->fetch_all(MYSQLI_ASSOC); ?>
+
 
         <div class="table-responsive large">
           <table class="table table-striped table-md text-center" id="datatable">
@@ -229,20 +386,10 @@ $userCount = $result->num_rows;
               <?php endforeach; ?>
             </tbody>
           </table>
+        <?php else: ?>
+          目前沒有任何活動
+        <?php endif; ?>
         </div>
-        <nav aria-label="Page navigation example ">
-          <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPage; $i++): ?>
-              <li class="page-item <?php if ($page == $i) echo "active"; ?>">
-                <a class="page-link " href="active.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
-              </li>
-            <?php endfor; ?>
-          </ul>
-        </nav>
-      <?php else: ?>
-        目前沒有任何活動
-      <?php endif; ?>
-    </div>
   </main>
 
   </div>

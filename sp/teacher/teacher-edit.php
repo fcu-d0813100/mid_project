@@ -118,7 +118,7 @@ if ($userCount > 0) {
 
                                     <div class="mt-4 d-flex justify-content-between">
                                         <div class=" ">
-                                            <input type="file" name="pic" id="imgUpload" class="py-2 form-control" required onchange="previewImg()">
+                                            <input type="file" name="pic" id="imgUpload" class="py-2 form-control" onchange="previewImg()">
                                         </div>
                                         <div>
                                             <button class="btn btn-dark me-3" type="submit">
