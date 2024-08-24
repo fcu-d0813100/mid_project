@@ -25,7 +25,7 @@
         <div class="d-flex justify-content-between text-white text-md">
             <h1 class="text-dark">恭喜你註冊成功成為會員！</h1>
             <!--登入後能顯示使用者名稱 -->
-            <a class="btn btn-dark me-3" href="doLogout-member.php">登出</a>
+            <!-- <a class="btn btn-dark me-3" href="doLogout-member.php">登出</a> -->
         </div>
     </main>
     <footer>

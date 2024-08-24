@@ -78,7 +78,7 @@ if (isset($_GET["search"])) {
 <html lang="en">
 
 <head>
-    <title>Users</title>
+    <title>會員管理</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
 

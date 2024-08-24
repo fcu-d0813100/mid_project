@@ -1,11 +1,3 @@
-<?php
-session_start();
-
-if (isset($_SESSION["user"])) {
-    header("location:member-center.php");
-    exit;
-}
-?>
 <!doctype html>
 <html lang="en">
 
