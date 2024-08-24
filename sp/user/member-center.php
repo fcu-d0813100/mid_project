@@ -15,6 +15,13 @@
         rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous" />
+    <style>
+        body {
+            background: url(./login_bg/07.jpg) center center;
+            background-size: cover;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -22,11 +29,7 @@
         <!-- place navbar here -->
     </header>
     <main>
-        <div class="d-flex justify-content-between text-white text-md">
-            <h1 class="text-dark">恭喜你註冊成功成為會員！</h1>
-            <!--登入後能顯示使用者名稱 -->
-            <!-- <a class="btn btn-dark me-3" href="doLogout-member.php">登出</a> -->
-        </div>
+
     </main>
     <footer>
         <!-- place footer here -->
@@ -42,5 +45,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 </body>
+<script>
+    alert("恭喜你註冊成功成為會員！");
+</script>
 
 </html>
