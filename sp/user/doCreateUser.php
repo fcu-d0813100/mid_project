@@ -53,7 +53,7 @@ $phone = $_POST["phone"];
 $birthday = $_POST["birthday"];
 $email = $_POST["email"];
 $address = $_POST["city"] . $_POST["streetAddress"];
-$level_id = $_POST["level_id"];
+$level_id = 1; // 設定預設值為 1
 
 $now = date('Y-m-d H:i:s');
 
@@ -75,7 +75,7 @@ if ($conn->query($sql) === TRUE) {
         if (move_uploaded_file($_FILES["meupload"]["tmp_name"], "./upload/" . $newFilename)) {
             $sql = "UPDATE users SET member_img = '$newFilename' WHERE id = $last_id";
             if ($conn->query($sql) === TRUE) {
-                header("Location: users.php"); // 跳轉到上傳成功頁面
+                header("Location: member-center.php"); // 跳轉到上傳成功頁面
                 exit;
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -87,7 +87,7 @@ if ($conn->query($sql) === TRUE) {
         }
     }
 
-    header("Location: users.php");
+    header("Location: member-center.php");
     exit;
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;

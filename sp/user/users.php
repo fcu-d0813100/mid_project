@@ -101,13 +101,11 @@ if (isset($_GET["search"])) {
     <main class="main-content">
         <div class="container">
             <div class="mx-2">
-                <div class="row d-flex justify-content-between mt-2">
+                <div class="row d-flex justify-content-start mt-2">
                     <div class="mt-3 col-md-3">
                         <p class="m-0 d-inline h2">會員管理 <span class="text-sm fs-5"> / 會員列表</span></p>
                     </div>
-                    <div class="mt-3 col-md-3 d-flex justify-content-end pe-5">
-                        <a class="btn btn-dark" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
-                    </div>
+
                 </div>
                 <hr>
 
