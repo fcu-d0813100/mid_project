@@ -12,10 +12,6 @@ $sqlpayAll = "SELECT * FROM coupon_list WHERE type_id = 2 AND valid = 1";
 $resultype2All = $conn->query($sqlpayAll);
 $type2CountAll = $resultype2All->num_rows;
 
-$sqlsearchAll = "SELECT * FROM coupon_list WHERE name  LIKE '%$search%' AND valid = 1";
-$resulsearcAll = $conn->query($sqlsearchAll);
-$searcCountAll = $resulsearcAll->num_rows;
-
 // 總數量查詢
 $sqlAll = "SELECT * FROM coupon_list WHERE valid = 1";
 $resulAll = $conn->query($sqlAll);
@@ -41,36 +37,10 @@ if ($type_id) {
   $whereClause .= " AND coupon_list.type_id = $type_id";
 }
 
-// if (isset($_GET["type_id"]) && $_GET["type_id"] == 1) {
-//   $whereClause .= " AND coupon_list.type_id = 1";
-//   $total_Page = ceil($type1CountAll / $per_page);
-// } elseif (isset($_GET["type_id"]) && $_GET["type_id"] == 2) {
-//   $whereClause .= " AND coupon_list.type_id = 2";
-//   $total_Page = ceil($type2CountAll / $per_page);
-// }
-
-// 搜索
-// Sanitize search input
-$search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : "";
-if (!empty($search)) {
-    $whereClause .= "AND coupon_list.name LIKE '%$search%'";
+if (isset($_GET["search"])) {
+  $search = $_GET["search"];
+  $whereClause .= "AND coupon_list.name LIKE '%$search%'";
 }
-// if (isset($_GET["search"])) {
-//   $search = $_GET["search"];
-//   $whereClause .= "AND coupon_list.name LIKE '%$search%'";
-// }
-
-// $search = isset($_GET["search"]) ? $conn->real_escape_string($_GET["search"]) : "";
-// if (!empty($search)) {
-//   $whereClause .= " AND coupon_list.name LIKE '%$search%'";
-// }
-
-// if (isset($_GET["search"]) && !empty($_GET["search"])) {
-//   $search = $conn->real_escape_string($_GET["search"]);
-//   $whereClause .= " AND coupon_list.name LIKE '%$search%' ";
-//   $sqlCount = "SELECT COUNT(*) as total FROM coupon_list $whereClause";
-//   $stmtCount = $conn->prepare($sqlCount);
-// }
 
 $sql = "SELECT coupon_list.*, type.name AS type_name 
         FROM coupon_list 
@@ -79,6 +49,12 @@ $sql = "SELECT coupon_list.*, type.name AS type_name
         ORDER BY coupon_list.start_date DESC
         LIMIT $start_item, $per_page";
 $result = $conn->query($sql);
+
+if (isset($_GET["search"])) {
+  $nameCount = $result->num_rows;
+} else {
+  $nameCount = $couponCountAll;
+}
 
 ?>
 
@@ -99,9 +75,6 @@ $result = $conn->query($sql);
 <body>
   <?php include("../../nav1.php") ?>
   <main class="main-content ">
-
-
-
     <div class="container">
       <div class="mt-5">
         <div class="d-flex justify-content-between align-items-start mt-3">
@@ -137,8 +110,11 @@ $result = $conn->query($sql);
           <form class="d-flex my-3 " method="GET">
             <div class="col-12 me-1">
               <div class="input-group ">
-                <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="優惠券名稱">
+                <input type="search" class="form-control rounded-0" name="search"  value="<?php echo isset($_GET["search"]) ? $_GET["search"] : "" ?>"  placeholder="優惠券名稱">
                 <button class="btn btn-dark rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <?php if (isset($_GET["search"])) : ?>
+                                    <a class="btn btn-dark ms-1 rounded" href="coupon-list.php?p=1" title="回到會員列表"><i class="fa-solid fa-rotate-right"></i></a>
+                                <?php endif; ?>
               </div>
             </div>
           </form>
@@ -185,20 +161,20 @@ $result = $conn->query($sql);
           $rows = $result->fetch_all(MYSQLI_ASSOC);
         ?>
           <!-- table-->
-          <table class="table border text-center align-middle"> <!-- table-bordered -->
+          <table class="table border text-center align-middle table-hover"> <!-- table-bordered -->
             <thead class="">
               <tr class="">
                 <th></th>
                 <th>活動名稱</th>
                 <th>折扣代碼</th>
-                <th>消費金額</th>
+                <!-- <th>消費金額</th> -->
                 <th>促銷期限</th>
                 <th>折扣方式</th>
                 <th>折扣額度</th>
                 <th>已使用/限制</th>
-                <th>狀態</th>
+                <th class="text-start">狀態</th>
                 <!-- <th>領取/使用紀錄</th> -->
-                <th>編輯</th>
+                <th>內容</th>
                 <th>刪除</th>
               </tr>
 
@@ -210,7 +186,7 @@ $result = $conn->query($sql);
                   <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
                   <td><?= $row["name"] ?></td>
                   <td><?= $row["code"] ?></td>
-                  <td><?= $row["minimum_amount"] ?></td>
+                  <!-- <td><?= $row["minimum_amount"] ?></td> -->
                   <td><?= $row["start_date"] ?><br><?= $row["end_date"] ?></td>
                   <td><?= $row["type_name"] ?></td>
                   <td><?= $row["discount_value"] ?></td>
@@ -229,8 +205,9 @@ $result = $conn->query($sql);
 
                   <!-- 修改編輯 -->
                   <td>
-                    <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger btn-md">
-                      <i class="fa-regular fa-pen-to-square"></i>
+                    <a href="coupon.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger btn-md">
+                    <i class="fa-solid fa-file-lines "></i>
+                      <!-- <i class="fa-regular fa-pen-to-square"></i> -->
                     </a>
                   </td>
 
@@ -270,9 +247,9 @@ $result = $conn->query($sql);
                 <?php endfor; ?>
               <?php endif; ?>
 
-              <?php if (isset($_GET["p"]) && isset($_GET["search"])): ?>
+              <?php if (isset($_GET["search"])): ?>
                 <?php
-                $searchPage = ceil($searcCountAll / $per_page);
+                $searchPage = ceil($nameCount / $per_page);
                 for ($i = 1; $i <= $searchPage; $i++): ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="coupon-list.php?p=<?= $i ?>&search=<?= $_GET["search"] ?>">

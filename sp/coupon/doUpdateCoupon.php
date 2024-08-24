@@ -27,6 +27,6 @@ if ($result === TRUE) {
     echo "更新資料錯誤: " . $conn->error;
 }
 
-header("location:coupon-list.php?p=1");
+header("location:coupon.php?id=$id");
 
 $conn->close();

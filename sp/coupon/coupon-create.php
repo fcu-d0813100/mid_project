@@ -39,8 +39,11 @@
                 <div class="row mt-5 justify-content-center">
                     <div class="col-10 text-end mt-5">
                         <form action="doCreateCoupon.php" method="post">
-
+                            <div>
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                            </div>
                             <div class="mb-3 row">
+
                                 <label for="name" class="col-sm-2 col-form-label">活動名稱</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="name" required>
@@ -94,7 +97,7 @@
                             <div class="mb-3 row">
                                 <label for="name" class="col-sm-2 col-form-label">結束日期</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="end_date" id="end_date">
+                                    <input type="date" class="form-control" name="end_date" id="end_date" >
                                 </div>
                             </div>
                             <a href="coupon-list.php?p=1" class="btn btn-dark px-3 me-3 mt-3" title="回優惠券列表">
