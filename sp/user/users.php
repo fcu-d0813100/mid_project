@@ -27,7 +27,7 @@ if (isset($_GET["search"])) {
     $sql = "SELECT users.* , user_level.name AS level_name 
     FROM users 
     JOIN user_level ON users.level_id = user_level.id 
-    WHERE users.id = '$search' OR users.name LIKE '%$search%' AND users.valid=1";
+    WHERE users.valid = 1 AND (users.id LIKE '%$search%' OR users.name LIKE '%$search%')";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
