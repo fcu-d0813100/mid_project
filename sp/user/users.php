@@ -268,12 +268,13 @@ if (isset($_GET["search"])) {
                         </ul>
                     </nav>
                 <?php endif; ?>
+                </tbody>
             <?php else : ?>
                 搜尋不到資料
             <?php endif; ?>
             </div>
         </div>
-    </main>
+                </main>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
 </body>

@@ -154,6 +154,9 @@ $result = $conn->query($sql);
                         <div class="input-group ">
                             <input type="search" class="form-control rounded-0" name="search" value="<?php echo isset($_GET["search"]) ? htmlspecialchars($_GET["search"]) : "" ?>" placeholder="編號/訂購者名稱">
                             <button class="btn btn-dark rounded-end" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <?php if (isset($_GET["search"])) : ?>
+                                <a class="btn btn-dark ms-1 rounded" href="order-list.php?p=1" title="回到訂單列表"><i class="fa-solid fa-rotate-right"></i></a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </form>
@@ -237,14 +240,14 @@ $result = $conn->query($sql);
                                 <td>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($order["id"]) ?> ">
-                                        <i class="fa-regular fa-trash-can"></i>
+                                        <i class="fa-regular fa-file-excel"></i>
                                     </button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content ">
                                                 <div class="modal-body">
-                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要取消此筆訂單 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>

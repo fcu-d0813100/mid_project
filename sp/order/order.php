@@ -86,14 +86,14 @@ $orderCountAll = $resulorderAll->num_rows;
 
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-outline-secondary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($_GET["id"]) ?> ">
-                        <i class="fa-regular fa-trash-can"></i> 刪除
+                    <i class="fa-regular fa-file-excel"></i> 取消
                     </button>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content ">
                                 <div class="modal-body">
-                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要取消此筆訂單 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -102,9 +102,6 @@ $orderCountAll = $resulorderAll->num_rows;
                             </div>
                         </div>
                     </div>
-                    <!-- <a href="doDeleteOrder.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary"> <i class="fa-regular fa-trash-can"></i>
-                        刪除
-                    </a> -->
                 </div>
 
                 <div class="d-flex align-items-center justify-content-between p-3 border mb-3">
@@ -137,7 +134,7 @@ $orderCountAll = $resulorderAll->num_rows;
                         $total = 0;
                         if ($orderCountAll > 0) : ?>
                             <tr>
-                                <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./image/<?= $row["mainimage"] ?>" alt=""></td>
+                                <td class="ratio ratio-4x3 activePic"><img class="object-fit-contain p-3" src="./image/<?= $row["mainimage"] ?>" alt=""></td>
                                 <td><?= $row["product_name"] ?></td>
                                 <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>

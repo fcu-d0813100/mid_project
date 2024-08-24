@@ -33,13 +33,6 @@ WHERE user_order.id='$id' AND user_order.valid=1
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-
-
-// $sqlorderAll = "SELECT * FROM user_order WHERE valid = 1";
-// $resulorderAll = $conn->query($sqlorderAll);
-// $orderCountAll = $resulorderAll->num_rows;
-
-
 ?>
 
 
@@ -127,7 +120,7 @@ $row = $result->fetch_assoc();
                             // if ($orderCountAll > 0) : 
                             ?>
                             <tr>
-                                 <td class="ratio ratio-4x3 activePic"><img class="object-fit-cover p-3" src="./image/<?= $row["mainimage"] ?>" alt=""></td>
+                                 <td class="ratio ratio-4x3 activePic"><img class="object-fit-contain p-3" src="./image/<?= $row["mainimage"] ?>" alt=""></td>
                                 <td><?= $row["product_name"] ?></td>
                                 <td><?= $row["color"] ?></td>
                                 <td><?= $row["amount"] ?></td>
