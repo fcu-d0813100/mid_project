@@ -85,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -98,19 +97,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .product-container {
             display: flex;
             align-items: flex-start;
-            padding-left: 200px;
-            padding-top: 160px;
-            margin-top: 40px;
+            /* padding-left: 100px; */
+            padding-top: 20%;
             position: relative;
+            width: 115%;
+            font-size: 20px;
         }
 
+
         .product-image {
-            max-width: 250px;
-            max-height: 250px;
-            margin-right: 30px;
+            max-width: 400px;
+            max-height: 400px;
+            margin-right: 80px;
             border-radius: 10px;
-            border: 1px solid #ddd;
-            position: relative;
+            position: relative; 
             top: 50px;
         }
 
@@ -119,22 +119,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             top: 0px;
             left: 0px;
             z-index: 10;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* 半透明背景 */
-            color: white;
-            /* 白色文字 */
-            border-radius: 5px;
-            /* 圓角 */
-            padding: 5px 10px;
-            /* 內間距 */
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+            color: white; /* 白色文字 */
+            border-radius: 5px; /* 圓角 */
+            padding: 5px 10px; /* 內間距 */
             text-decoration: none;
         }
 
-        .edit-button {
+        .edit-button
+        {
             position: absolute;
             top: -50px;
             right: -50px;
-            background-color: #cccccc;
+            background-color: #393836;
             color: white;
             border-radius: 50%;
             padding: 10px;
@@ -159,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex-direction: column;
             justify-content: space-between;
             position: relative;
+            flex-grow: 1; /* 使 product-details 撐滿剩餘的空間 */
         }
 
         .product-details p {
@@ -176,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .price {
             font-size: 24px;
-            color: pink;
+            color: red;
             font-weight: bold;
         }
 
@@ -197,34 +195,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 50px;
             z-index: 10;
         }
-
         .reverse {
-            position: absolute;
-            left: -270px;
-            top: -100px;
+            position: fixed;
+            left: 13%;
+            top: 10%;
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: #a31e1f;
+            color: #fff;
         }
-
         #productForm {
             margin-top: 50px;
         }
-
         .descriptiontxt {
-            display: block;
+            display:block;
         }
-
         form {
             position: relative;
             border-top: 1px solid #ccc;
             padding-top: 25px;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            white-space: nowrap; /* 防止換行 */
+        }
 
         #product_name {
             position: absolute;
             top: -60px;
+            font-size: 28px; /* 放大字體 */
+            font-weight: bold; /* 加粗字體 */
+            border: none;
         }
     </style>
 </head>
-
 <body>
     <?php include("../../nav1.php") ?>
     <main class="container">
@@ -237,19 +254,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>無圖片</p>
             <?php endif; ?>
             <div class="product-details">
-                <a href="product_list.php" class="btn btn-secondary reverse" style="margin-top: 20px;"><i class="fa-solid fa-chevron-left"></i></a>
+                <a href="product_list.php" class="btn  reverse" ><i class="fa-solid fa-chevron-left"></i></a>
                 <i class="fa-solid fa-pen edit-button"></i> <!-- 編輯按鈕 -->
                 <form id="productForm">
-                    <h2 contenteditable="false" id="product_name" class="fs-1"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></h2>
-                    <p><strong>品牌&nbsp;:&nbsp;</strong> <?php echo htmlspecialchars($brandName, ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p><strong>部位&nbsp;:&nbsp;</strong> <?php echo htmlspecialchars($mainCategoryName, ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p><strong>品項&nbsp;:&nbsp;</strong> <?php echo htmlspecialchars($subCategoryName, ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p><strong>色號&nbsp;:&nbsp;</strong> <span contenteditable="false" id="color_name"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></span></p>
-                    <p class="price">價格&nbsp;:&nbsp;<span contenteditable="false" id="price"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?></span> 元</p>
-                    <p class="stock">庫存&nbsp;:&nbsp;<span contenteditable="false" id="stock"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?></span> 件</p>
-                    <p><strong>
-                            <div class="descriptiontxt">商品描述&nbsp;:&nbsp;</div>
-                        </strong><span contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></span></p>
+                    <table>
+                        <tr>
+                            <td contenteditable="false" id="product_name"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>品牌</th>
+                            <td><?php echo htmlspecialchars($brandName, ENT_QUOTES, 'UTF-8'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>部位</th>
+                            <td><?php echo htmlspecialchars($mainCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>品項</th>
+                            <td><?php echo htmlspecialchars($subCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>色號</th>
+                            <td contenteditable="false" id="color_name"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>價格</th>
+                            <td class="price" contenteditable="false" id="price"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?> 元</td>
+                        </tr>
+                        <tr>
+                            <th>庫存</th>
+                            <td class="stock" contenteditable="false" id="stock"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?> 件</td>
+                        </tr>
+                        <tr>
+                            <th>商品描述</th>
+                            <td contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></td>
+                        </tr>
+                    </table>
                     <button type="submit" class="save-button"><i class="fa-solid fa-cloud-arrow-down"></i></button>
                 </form>
             </div>
@@ -307,5 +347,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 </body>
-
 </html>
