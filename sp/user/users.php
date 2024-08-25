@@ -101,8 +101,8 @@ if (isset($_GET["search"])) {
     <main class="main-content">
         <div class="container">
             <div class="mx-2">
-                <div class="row d-flex justify-content-start mt-2">
-                    <div class="mt-3 col-md-3">
+                <div class="row d-flex justify-content-start mt-3">
+                    <div class="mt-4 col-md-3">
                         <p class="m-0 d-inline h2">會員管理 <span class="text-sm fs-5"> / 會員列表</span></p>
                     </div>
 
