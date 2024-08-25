@@ -17,10 +17,8 @@ $row = $result->fetch_assoc();
 if ($couponCount > 0) {
     $titile = $row["name"];
 } else {
-    $titile = "使用者不存在";
+    $titile = "優惠券不存在";
 }
-
-
 ?>
 
 
@@ -43,27 +41,13 @@ if ($couponCount > 0) {
         <div class="container">
             <div class="mt-5 ">
                 <div class="d-flex justify-content-between align-items-start">
-
-
-                <p class="m-0 d-inline  h2">編輯優惠券</p>
-
-
-
-
+                    <p class="m-0 d-inline  h2">編輯優惠券</p>
                 </div>
                 <hr>
                 <!-- table-->
-
-
-
-
-
-
                 <div class="row mt-5  justify-content-center">
                     <div class="col-10 mt-5 pt-3">
                         <?php if ($couponCount > 0) : ?>
-
-
                             <form action="doUpdateCoupon.php" method="post">
                                 <div>
                                     <input type="hidden" name="id" value="<?= $row["id"] ?>">
@@ -102,57 +86,39 @@ if ($couponCount > 0) {
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-2 col-form-label">折扣數</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="discount_value" value="<?= $row["discount_value"] ?>">
+                                        <input type="text" class="form-control" name="discount_value" value="<?= $row["discount_value"] ?>" required>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-2 col-form-label">可使用次數</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="maximum" value="<?= $row["maximum"] ?>">
+                                        <input type="text" class="form-control" name="maximum" value="<?= $row["maximum"] ?>" required>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-2 col-form-label">起始日期</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" name="start_date" value="<?= $row["start_date"] ?>">
+                                        <input type="date" class="form-control" name="start_date" value="<?= $row["start_date"] ?>" required>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-2 col-form-label">結束日期</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" name="end_date" value="<?= $row["end_date"] ?>">
+                                        <input type="date" class="form-control" name="end_date" value="<?= $row["end_date"] ?>" required>
                                     </div>
                                 </div>
                                 <div class="text-end ">
 
-                                    <a href="coupon-list.php?p=1" class="btn btn-dark p-2 me-2 mt-3">
+                                    <a href="coupon.php?id=<?= $row["id"] ?>" class="btn btn-dark p-2 me-2 mt-3">
                                         <i class="fa-solid fa-arrow-left"></i> 取消
                                     </a>
+
                                     <button class="btn btn-dark p-2 me-2 mt-3" type="submit">
                                         <i class="fa-solid fa-floppy-disk"></i> 儲存
                                     </button>
 
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-danger p-2 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
-                                        <i class="fa-regular fa-trash-can"></i> 刪除
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hid den="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content ">
-                                                <div class="modal-body">
 
-                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料
-                                                        <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i>
-                                                    </h1>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                                    <button type="button" class="btn btn-dark" id="confirmDelete">確定</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
 
                                 </div>
                             </form>

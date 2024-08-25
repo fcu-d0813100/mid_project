@@ -158,6 +158,7 @@ if (isset($_GET["search"])) {
             <?php if ($userCount > 0) :
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
             ?>
+
             </div>
         </div>
         </div>
@@ -231,6 +232,7 @@ if (isset($_GET["search"])) {
     </div>
     </div>
     </main>
+
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
 </body>

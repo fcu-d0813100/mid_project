@@ -6,97 +6,159 @@ if (!isset($_GET["id"])) {
 
 $id = $_GET["id"];
 
-require_once("../db_connect.php");
+require_once("../../db_connect.php");
 
-$sql = "SELECT * FROM users 
-WHERE id='$id' AND valid=1";
-
+$sql = "SELECT * FROM coupon_list
+WHERE id='$id'";
 $result = $conn->query($sql);
-$userCount = $result->num_rows;
+$couponCount = $result->num_rows;
 $row = $result->fetch_assoc();
 
-if ($userCount > 0) {
+if ($couponCount > 0) {
     $titile = $row["name"];
-
-    $sqlFavorite = "SELECT user_like.*, product.name as product_name
-    FROM user_like
-    JOIN product ON user_like.product_id = product.id
-    WHERE user_like.user_id = $id";
-
-    $resultFavorite = $conn->query($sqlFavorite);
-    $rowProducts = $resultFavorite->fetch_all(MYSQLI_ASSOC);
 } else {
-    $titile = "使用者不存在";
+    $titile = "優惠券不存在";
 }
 
+
 ?>
+
 
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title><?= $titile ?></title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <?php include("../css.php") ?>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>編輯優惠券</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <?php include("./css.php") ?>
 </head>
 
 <body>
-    <div class="container">
-        <div class="py-2">
-            <a class="btn btn-primary" href="users.php" title="回使用者列表"><i class="fa-solid fa-circle-left"></i></a>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <?php if ($userCount > 0) : ?>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>id</th>
-                            <td><?= $row["id"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Account</th>
-                            <td><?= $row["account"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Name</th>
-                            <td><?= $row["name"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td><?= $row["email"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Phone</th>
-                            <td><?= $row["phone"] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Created At</th>
-                            <td><?= $row["created_at"] ?></td>
-                        </tr>
-                    </table>
-                    <div class="">
-                        <a href="user-edit.php?id=<?= $row["id"] ?>" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></a>
+    <?php include("../../nav1.php") ?>
+    <main class="main-content">
+        <div class="container">
+            <div class="mt-5 ">
+                <div class="d-flex justify-content-between align-items-start">
+                    <p class="m-0 d-inline  h2"><a href="coupon-list.php?p=1" class="btn btn-outline-danger">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a> 
+                        #<?= $row["name"] ?></p>
+                </div>
+                <hr>
+                <!-- table-->
+                <div class="row mt-5  justify-content-center">
+                    <div class="col-6 mt-5 pt-3">
+                        <?php if ($couponCount > 0) : ?>
+                            <form action="doUpdateCoupon.php" method="post">
+                                <div>
+                                    <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                                </div>
+
+                                <div class=" bg-body-tertiary border rounded text-center">
+                                    <table class="align-middle col-12 my-2">
+                                        <tr class="border-bottom">
+                                            <th class="p-3 border-end">折扣代碼</th>
+                                            <td class="px-5"> <?= $row["code"] ?></td>
+                                        </tr>
+                                        <tr class="border-bottom">
+                                            <th class="p-3 ps-4 border-end">消費金額</th>
+                                            <td> <?= $row["minimum_amount"] ?></td>
+                                        </tr>
+                                        <tr class="border-bottom">
+                                            <th class="p-3 ps-4 border-end">折扣方式</th>
+                                            <td class="px-5"> <?php if ($row["type_id"] == "1") {
+                                                                    echo "百分比%";
+                                                                } else {
+                                                                    echo "金額";
+                                                                }
+                                                                ?></td>
+                                        </tr>
+                                        <tr class="border-bottom">
+                                            <th class="p-3 ps-4 border-end">折扣數</th>
+                                            <td class="px-5 "><?= $row["discount_value"] ?></td>
+                                        </tr>
+                                        <tr class="border-bottom">
+                                            <th class="p-3 ps-4 border-end">可使用次數</th>
+                                            <td class="px-5"><?= $row["maximum"] ?></td>
+                                        </tr>
+                                        <tr class="border-bottom">
+                                            <th class="p-3 ps-4 border-end">起始日期</th>
+                                            <td class="px-5"><?= $row["start_date"] ?></td>
+                                        </tr>
+                                        <tr class="">
+                                            <th class="p-3 ps-4 border-end">結束日期</th>
+                                            <td class="px-5"> <?= $row["end_date"] ?></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="text-end ">
+
+
+                                    <a href="coupon-edit.php?id=<?=$row["id"]?>" class="btn btn-dark p-2 me-2 mt-3">
+                                        <i class="fa-regular fa-pen-to-square"></i> 編輯
+                                    </a>
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-outline-danger p-2 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($row["id"]) ?> ">
+                                        <i class="fa-regular fa-trash-can"></i> 刪除
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hid den="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content ">
+                                                <div class="modal-body">
+
+                                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要刪除此筆資料
+                                                        <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i>
+                                                    </h1>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                                    <button type="button" class="btn btn-dark" id="confirmDelete">確定</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        <?php else : ?>
+                            優惠券不存在
+                        <?php endif; ?>
                     </div>
-                    <h2 class="h3 mt-3">收藏商品</h2>
-                    <?php if ($resultFavorite->num_rows > 0) : ?>
-                        <ul>
-                            <?php foreach ($rowProducts as $product) : ?>
-                                <li><a href="/product/product.php?id=<?= $product["product_id"] ?>"><?= $product["product_name"] ?></a></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else : ?>
-                        尚未收藏商品
-                    <?php endif; ?>
-                <?php else : ?>
-                    使用者不存在
-                <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+    <!-- Quill-->
+    <script src="../vendor/quill/quill.min.js"></script>
+    <!-- Quill init-->
+    <script src="../js/forms-texteditor.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/front.js"></script>
+    <script>
+        // 儲存刪除 URL 的變量
+        let deleteUrl = '';
 
+        // 當點擊觸發 Modal 的按鈕時，儲存刪除 URL
+        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+            button.addEventListener('click', function() {
+                deleteUrl = 'doDeleteCoupon.php?id=' + encodeURIComponent(this.getAttribute('data-id'));
+            });
+        });
+
+        // 當點擊“確定”按鈕時，執行刪除操作
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (deleteUrl) {
+                window.location.href = deleteUrl;
+            }
+        });
+    </script>
 </body>
 
 </html>
