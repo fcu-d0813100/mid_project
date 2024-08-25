@@ -6,7 +6,7 @@ $userCountAll = $resultAll->num_rows;
 
 $page = 1;
 $start_item = 0;
-$per_page = 9;
+$per_page = 8;
 
 $total_page = ceil($userCountAll / $per_page);
 
