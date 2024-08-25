@@ -43,15 +43,16 @@ if ($stmt->rowCount() > 0) {
     echo "找不到商品資料。";
     echo "<br>product_id: $productId";
     echo "<br>color_id: $colorId";
+    exit();
 }
 
 // 更新資料庫中的商品數據
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $updatedProductName = $_POST['product_name'];
-    $updatedColorName = $_POST['color_name'];
-    $updatedPrice = $_POST['price'];
-    $updatedDescription = $_POST['description'];
-    $updatedStock = $_POST['stock'];
+    $updatedProductName = trim($_POST['product_name']);
+    $updatedColorName = trim($_POST['color_name']);
+    $updatedPrice = (float)str_replace("元", "", trim($_POST['price']));
+    $updatedDescription = trim($_POST['description']);
+    $updatedStock = (int)trim($_POST['stock']);
 
     // 更新 product_list 表格
     $updateProductSql = "UPDATE product_list 
@@ -102,9 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="product_list.php" class="btn btn-dark reverse py-2 "><i class="fa-solid fa-chevron-left fa-fw "></i></a>
                 </div>
                 <div d-flex>
-                    <a class="btn btn-dark py-2 me-2" href="#"><i class="fa-solid fa-pen edit-button fa-fw"></i></a> <!-- 編輯按鈕 -->
-                    <button type="submit" class="save-button btn btn-dark py-2"><i class="fa-solid fa-cloud-arrow-down fa-fw "></i>
-                    </button>
+                    <button type="button" class="btn btn-dark py-2 me-2 edit-button"><i class="fa-solid fa-pen fa-fw"></i></button> <!-- 編輯按鈕 -->
+                    <button type="submit" form="productForm" class="btn btn-dark py-2 save-button"><i class="fa-solid fa-cloud-arrow-down fa-fw"></i></button>
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
@@ -119,9 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 <div class="product-details col-6">
 
-                    <form id="productForm">
+                    <form id="productForm" method="POST">
                         <div class="border-bottom h2 py-2 mb-3">
-                            <td contenteditable="false" id="product_name"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></td>
+                            <span contenteditable="false" id="product_name"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></span>
                         </div>
                         <table class="table table-bordered align-middle">
 
@@ -154,11 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td class="px-4 py-2" contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                         </table>
-
                     </form>
-
                 </div>
-
             </div>
         </div>
     </main>
@@ -176,30 +173,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 element.setAttribute('contenteditable', 'true');
                 element.style.borderBottom = "1px solid #ddd";
             });
-            //saveButton.style.display = 'block';
         });
 
         $('#productForm').on('submit', function(e) {
             e.preventDefault(); // 阻止表單默認提交
 
             const formData = {
-                product_name: $('#product_name').text(),
-                color_name: $('#color_name').text(),
-                price: $('#price').text(),
-                description: $('#description').text(),
-                stock: $('#stock').text()
+                product_name: $('#product_name').text().trim(),
+                color_name: $('#color_name').text().trim(),
+                price: $('#price').text().replace(/[^\d.]/g, '').trim(),
+                description: $('#description').text().trim(),
+                stock: $('#stock').text().replace(/[^\d]/g, '').trim()
             };
 
             $.ajax({
-                url: '', // 留空表示提交到當前頁面
+                url: window.location.href, // 提交到當前頁面
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    // 隱藏保存按鈕
-                    saveButton.style.display = 'none';
-
                     // 顯示成功消息
-                    //successMessage.style.display = 'block';
+                    successMessage.style.display = 'block';
                     setTimeout(() => {
                         successMessage.style.display = 'none';
                     }, 2000);
