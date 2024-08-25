@@ -43,12 +43,12 @@ $types = $resultTypes->fetch_all(MYSQLI_ASSOC);
     <?php include("../../nav1.php") ?>
     <main class="main-content">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-start pt-5 mt-3">
+            <div class="d-flex justify-content-between align-items-start mt-5">
                 <p class="m-0 d-inline text-dark h2">文章列表 <span class="text-sm fs-5"> / 新增文章</span></p>
             </div>
             <hr>
             <!-- table-->
-            <div class="py-2 d-flex justify-content-end gap-2">
+            <div class="d-flex justify-content-end gap-2">
                 <a href="article-list.php" class="btn btn-dark">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>

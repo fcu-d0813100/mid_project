@@ -59,11 +59,11 @@ $conn->close();
     <main class="main-content ">
         <div class="container">
             <div class="d-flex justify-content-between align-items-start ">
-                <p class="m-0 mt-3 pt-5 d-inline h2">文章列表 <span class="text-sm fs-5"> / 檢視文章</span></p>
+                <p class="m-0 mt-5 d-inline h2">文章列表 <span class="text-sm fs-5"> / 檢視文章</span></p>
             </div>
             <hr>
             <!-- table-->
-            <div class="py-2 d-flex justify-content-end gap-2">
+            <div class="d-flex justify-content-end gap-2">
                 <a href="article-list.php" class="btn btn-dark ">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>

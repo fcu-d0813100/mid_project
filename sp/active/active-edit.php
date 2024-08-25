@@ -36,12 +36,12 @@ $row = $result->fetch_assoc();
 
         <main class="main-content ">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-start pt-3 mt-5">
+                <div class="d-flex justify-content-between align-items-start mt-5">
                     <p class="m-0 d-inline text-lg"><a href="active.php" class="text-dark text-decoration-none h2">活動列表 </a> <span class="text-sm fs-5"> / 活動編輯</span></p>
                 </div>
                 <hr>
                 <!-- table-->
-                <div class="py-3 d-flex justify-content-between gap-2">
+                <div class="py-2 d-flex justify-content-between gap-2">
                     <a href="active.php" class="btn btn-dark">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>

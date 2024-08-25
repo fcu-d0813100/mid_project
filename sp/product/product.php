@@ -85,213 +85,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品頁</title>
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <link rel="stylesheet" href="../css/custom.css" id="theme-stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- 新增的樣式 -->
-    <style>
-        .product-container {
-            display: flex;
-            align-items: flex-start;
-            /* padding-left: 100px; */
-            padding-top: 20%;
-            position: relative;
-            width: 115%;
-            font-size: 20px;
-        }
-
-
-        .product-image {
-            max-width: 400px;
-            max-height: 400px;
-            margin-right: 80px;
-            border-radius: 10px;
-            position: relative; 
-            top: 50px;
-        }
-
-        .back-button {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-            color: white; /* 白色文字 */
-            border-radius: 5px; /* 圓角 */
-            padding: 5px 10px; /* 內間距 */
-            text-decoration: none;
-        }
-
-        .edit-button
-        {
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            background-color: #393836;
-            color: white;
-            border-radius: 50%;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .save-button {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            right: 60px;
-            color: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            font-size: 30px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .product-details {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            flex-grow: 1; /* 使 product-details 撐滿剩餘的空間 */
-        }
-
-        .product-details p {
-            margin-bottom: 10px;
-            font-size: 18px;
-            color: #555;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .product-details p strong {
-            color: #333;
-        }
-
-        .price {
-            font-size: 24px;
-            color: red;
-            font-weight: bold;
-        }
-
-        .stock {
-            font-size: 18px;
-            color: #555;
-            margin-top: 10px;
-        }
-
-        .success-message {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #4caf50;
-            color: white;
-            padding: 15px;
-            border-radius: 50px;
-            z-index: 10;
-        }
-        .reverse {
-            position: fixed;
-            left: 13%;
-            top: 10%;
-            display: block;
-            width: 40px;
-            height: 40px;
-            background-color: #a31e1f;
-            color: #fff;
-        }
-        #productForm {
-            margin-top: 50px;
-        }
-        .descriptiontxt {
-            display:block;
-        }
-        form {
-            position: relative;
-            border-top: 1px solid #ccc;
-            padding-top: 25px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f4f4f4;
-            white-space: nowrap; /* 防止換行 */
-        }
-
-        #product_name {
-            position: absolute;
-            top: -60px;
-            font-size: 28px; /* 放大字體 */
-            font-weight: bold; /* 加粗字體 */
-            border: none;
-        }
-    </style>
+    <?php include("css.php") ?>
 </head>
+
 <body>
     <?php include("../../nav1.php") ?>
-    <main class="container">
-        <div class="product-container">
-            <?php if ($imageName): ?>
-                <div class="product-image">
-                    <img src="./uploads/<?php echo htmlspecialchars($imageName, ENT_QUOTES, 'UTF-8'); ?>" alt="商品圖片" style="width: 100%;">
+    <main class="main-content">
+        <div class="container">
+            <div class="d-flex justify-content-between my-2 pt-5 mt-5">
+                <div>
+                    <a href="product_list.php" class="btn btn-dark reverse py-2 "><i class="fa-solid fa-chevron-left fa-fw "></i></a>
                 </div>
-            <?php else: ?>
-                <p>無圖片</p>
-            <?php endif; ?>
-            <div class="product-details">
-                <a href="product_list.php" class="btn  reverse" ><i class="fa-solid fa-chevron-left"></i></a>
-                <i class="fa-solid fa-pen edit-button"></i> <!-- 編輯按鈕 -->
-                <form id="productForm">
-                    <table>
-                        <tr>
+                <div d-flex>
+                    <a class="btn btn-dark py-2 me-2" href="#"><i class="fa-solid fa-pen edit-button fa-fw"></i></a> <!-- 編輯按鈕 -->
+                    <button type="submit" class="save-button btn btn-dark py-2"><i class="fa-solid fa-cloud-arrow-down fa-fw "></i>
+                    </button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <?php if ($imageName): ?>
+                    <div class="product-image col-5">
+                        <div class="ratio ratio-1x1">
+                            <img src="./uploads/<?php echo htmlspecialchars($imageName, ENT_QUOTES, 'UTF-8'); ?>" alt="商品圖片" style="width: 100%;">
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <p>無圖片</p>
+                <?php endif; ?>
+                <div class="product-details col-6">
+
+                    <form id="productForm">
+                        <div class="border-bottom h2 py-2 mb-3">
                             <td contenteditable="false" id="product_name"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></td>
-                        </tr>
-                        <tr>
-                            <th>品牌</th>
-                            <td><?php echo htmlspecialchars($brandName, ENT_QUOTES, 'UTF-8'); ?></td>
-                        </tr>
-                        <tr>
-                            <th>部位</th>
-                            <td><?php echo htmlspecialchars($mainCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
-                        </tr>
-                        <tr>
-                            <th>品項</th>
-                            <td><?php echo htmlspecialchars($subCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
-                        </tr>
-                        <tr>
-                            <th>色號</th>
-                            <td contenteditable="false" id="color_name"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></td>
-                        </tr>
-                        <tr>
-                            <th>價格</th>
-                            <td class="price" contenteditable="false" id="price"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?> 元</td>
-                        </tr>
-                        <tr>
-                            <th>庫存</th>
-                            <td class="stock" contenteditable="false" id="stock"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?> 件</td>
-                        </tr>
-                        <tr>
-                            <th>商品描述</th>
-                            <td contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></td>
-                        </tr>
-                    </table>
-                    <button type="submit" class="save-button"><i class="fa-solid fa-cloud-arrow-down"></i></button>
-                </form>
+                        </div>
+                        <table class="table table-bordered align-middle">
+
+                            <tr class="">
+                                <th class="col-2 py-3 text-center ">品牌</th>
+                                <td class="px-4"><?php echo htmlspecialchars($brandName, ENT_QUOTES, 'UTF-8'); ?></td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-center">部位</th>
+                                <td class="px-4"><?php echo htmlspecialchars($mainCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-center ">品項</th>
+                                <td class="px-4"><?php echo htmlspecialchars($subCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-center">色號</th>
+                                <td class="px-4" contenteditable="false" id="color_name"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-center">價格</th>
+                                <td class="price px-4" contenteditable="false" id="price"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?> 元</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-center">庫存</th>
+                                <td class="stock px-4" contenteditable="false" id="stock"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?> 件</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-center">商品描述</th>
+                                <td class="px-4 py-2" contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></td>
+                            </tr>
+                        </table>
+
+                    </form>
+
+                </div>
+
             </div>
         </div>
     </main>
@@ -309,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 element.setAttribute('contenteditable', 'true');
                 element.style.borderBottom = "1px solid #ddd";
             });
-            saveButton.style.display = 'block';
+            //saveButton.style.display = 'block';
         });
 
         $('#productForm').on('submit', function(e) {
@@ -332,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     saveButton.style.display = 'none';
 
                     // 顯示成功消息
-                    successMessage.style.display = 'block';
+                    //successMessage.style.display = 'block';
                     setTimeout(() => {
                         successMessage.style.display = 'none';
                     }, 2000);
@@ -347,4 +214,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 </body>
+
 </html>

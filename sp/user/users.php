@@ -75,7 +75,7 @@ if (isset($_GET["search"])) {
     $userCount = $userCountAll;
 }
 ?>
-    
+
 <!doctype html>
 <html lang="en">
 
@@ -103,8 +103,8 @@ if (isset($_GET["search"])) {
     <main class="main-content">
         <div class="container">
             <div class="mx-2">
-                <div class="row d-flex justify-content-start mt-2">
-                    <div class="mt-3 col-md-3">
+                <div class="row d-flex justify-content-start mt-3">
+                    <div class="mt-4 col-md-3">
                         <p class="m-0 d-inline h2">會員管理 <span class="text-sm fs-5"> / 會員列表</span></p>
                     </div>
 
@@ -162,29 +162,25 @@ if (isset($_GET["search"])) {
             ?>
 
             </div>
-        </div>
-        </div>
-    <?php endif; ?>
 
-    <table class="table table-hover text-center align-middle mt-3 ">
-        <thead class="">
-            <tr>
+        <?php endif; ?>
 
-                <th>ID</th>
-                <th>姓名</th>
-                <th>性別</th>
-                <th>電話</th>
-                <th>生日</th>
-                <th>信箱</th>
-                <th>註冊時間</th>
-                <th>會員等級</th>
-                <th>檢視 <span></span> <span></span><span></span>編輯</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($rows):
-
-                foreach ($rows as $user) : ?>
+        <table class="table table-hover text-center align-middle mt-3 ">
+            <thead class="">
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>性別</th>
+                    <th>電話</th>
+                    <th>生日</th>
+                    <th>信箱</th>
+                    <th>註冊時間</th>
+                    <th>會員等級</th>
+                    <th>檢視 <span></span> <span></span><span></span>編輯</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rows as $user) : ?>
                     <tr class=" align-middle">
                         <td><?= $user["id"] ?></td>
                         <td><?= $user["name"] ?></td>
@@ -200,46 +196,47 @@ if (isset($_GET["search"])) {
                             <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
                     </tr>
+
                 <?php endforeach; ?>
-            <?php endif ?>
+            </tbody>
+        </table>
+        <?php if (isset($_GET["p"])) : ?>
+            <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link cursor-pointer" <?php if ($page > 1) : ?> href="users.php?p=<?= $page - 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <?php for ($i = 1; $i <= $total_page; $i++) : ?>
+                        <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                    <?php endfor; ?>
+                    <li class="page-item">
+                        <a class="page-link" <?php if ($page < $total_page) : ?> href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        <?php endif; ?>
+        <?php if ($userCount > 0) :
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-        </tbody>
-    </table>
-    <?php if (isset($_GET["p"])) : ?>
-        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link cursor-pointer" <?php if ($page > 1) : ?> href="users.php?p=<?= $page - 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <?php for ($i = 1; $i <= $total_page; $i++) : ?>
-                    <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
-                <li class="page-item">
-                    <a class="page-link" <?php if ($page < $total_page) : ?> href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    <?php endif; ?>
-    <?php if ($userCount > 0) :
-        $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-    ?>
+        ?>
 
 
 
-    <?php else : ?>
-        搜尋不到資料
-    <?php endif; ?>
-    </div>
-    </div>
+        <?php else : ?>
+            搜尋不到資料
+        <?php endif; ?>
+        </div>
+        </div>
     </main>
 
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
+    </div>
+    </div>
 </body>
 <?php $conn->close(); ?>
 

@@ -52,116 +52,118 @@ $orderCountAll = $resulorderAll->num_rows;
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../css/style.default.premium.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../css/custom.css">
-    <!-- font-awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <?php include("./css.php") ?>
 </head>
 
 <body>
 
 
-    <header class="py-4">
+    <header>
         <?php include("../../nav1.php") ?>
 
         <main class="main-content">
-            <div class="pt-5 px-5 mx-5">
-                <div class="d-flex justify-content-start align-items-center">
-                    <a href="order-list.php?p=1" class="btn btn-outline-secondary btn-md mx-2">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </a>
-                    <p class="m-0 d-inline text-lg text-secondary">訂單明細 </p>
-                </div>
+            <div class="container">
+                <div class="pt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <a href="order-list.php?p=1" class="btn btn-dark btn-md mx-2">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </a>
+                            <p class="m-0 d-inline h2 ms-3">訂單明細 </p>
+                        </div>
+                        <div>
+                            <a href="order-edit.php?id=<?= $_GET["id"] ?>" class="btn btn-dark me-2">
+                                <i class="fa-regular fa-pen-to-square"></i> 編輯
+                            </a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($_GET["id"]) ?> ">
+                                <i class="fa-regular fa-file-excel"></i> 取消
+                            </button>
+                        </div>
+                    </div>
 
-                <!-- table-->
-                <div class="py-2 d-flex justify-content-end gap-2">
-                    <a href="order-edit.php?id=<?= $_GET["id"] ?>" class="btn btn-outline-secondary p-2">
-                        <i class="fa-regular fa-pen-to-square"></i> 編輯
-                    </a>
+                    <!-- table-->
+                    <div class="py-2 d-flex justify-content-end gap-2">
 
-
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-secondary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= urlencode($_GET["id"]) ?> ">
-                    <i class="fa-regular fa-file-excel"></i> 取消
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content ">
-                                <div class="modal-body">
-                                    <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要取消此筆訂單 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content ">
+                                    <div class="modal-body">
+                                        <h1 class="modal-title py-3 text-center" id="exampleModalLabel">確定要取消此筆訂單 <i class="fa-solid fa-triangle-exclamation text-lg" style="color: #f50000;"></i></h1>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary" id="confirmDelete">確定</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="d-flex align-items-center justify-content-between p-3 border mb-3">
-                    <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號 # <?= $row["number"] ?></span></p>
-                    <div class="d-flex align-items-center justify-content-between col-6">
-                        <div>
-                            <p>付款狀態</p>
-                            <div><?= $row["pay_name"] ?></div>
+                    <div class="d-flex align-items-center justify-content-between p-2 px-4 border mb-3">
+                        <p class="m-0 d-inline text-lg text-secondary"><span class="text-lg">訂單編號 # <?= $row["number"] ?></span></p>
+                        <div class="d-flex align-items-center justify-content-between col-6">
+                            <div>
+                                <p>付款狀態</p>
+                                <div><?= $row["pay_name"] ?></div>
+                            </div>
+                            <div>
+                                <p>訂單狀態</p>
+                                <div><?= $row["status_name"] ?></div>
+                            </div>
+                            <div></div>
                         </div>
-                        <div>
-                            <p>訂單狀態</p>
-                            <div><?= $row["status_name"] ?></div>
-                        </div>
-                        <div></div>
                     </div>
-                </div>
-                <table class="table "> <!-- table-bordered -->
-                    <thead class="table-light">
-                        <tr>
-                            <th>商品圖片</th>
-                            <th>名稱</th>
-                            <th>規格</th>
-                            <th>數量</th>
-                            <th>價格</th>
-                            <th>小計</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $total = 0;
-                        if ($orderCountAll > 0) : ?>
+                    <table class="table  align-middle"> <!-- table-bordered -->
+                        <thead class="table-light">
                             <tr>
-                                <td class="ratio ratio-4x3 activePic"><img class="object-fit-contain p-3" src="./image/<?= $row["mainimage"] ?>" alt=""></td>
-                                <td><?= $row["product_name"] ?></td>
-                                <td><?= $row["color"] ?></td>
-                                <td><?= $row["amount"] ?></td>
-                                <td><?= $row["price"] ?></td>
-                                <?php
-                                $subtotal = $row["price"] * $row["amount"];
-                                $total += $subtotal
-                                ?>
-                                <td class="text-start"><?= number_format($subtotal) ?></td>
+                                <th class="col-4">商品圖片</th>
+                                <th class="col-3">名稱</th>
+                                <th class="col-2">規格</th>
+                                <th class="col-1">數量</th>
+                                <th class="col-1">價格</th>
+                                <th class="col-1">小計</th>
                             </tr>
-                        <?php endif; ?>
-                        <tr>
-                            <td colspan="4 border-bottom-none"></td>
-                            <td>訂單總額：</td>
-                            <td><?= number_format($subtotal) ?></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $total = 0;
+                            if ($orderCountAll > 0) : ?>
+                                <tr>
+                                    <td class="activePic">
+                                        <div class="ratio ratio-4x3">
+                                            <img class=" object-fit-contain p-3" src="./image/<?= $row["mainimage"] ?>" alt="">
+                                        </div>
+                                    </td>
+                                    <td><?= $row["product_name"] ?></td>
+                                    <td><?= $row["color"] ?></td>
+                                    <td><?= $row["amount"] ?></td>
+                                    <td><?= $row["price"] ?></td>
+                                    <?php
+                                    $subtotal = $row["price"] * $row["amount"];
+                                    $total += $subtotal
+                                    ?>
+                                    <td class="text-start"><?= number_format($subtotal) ?></td>
+                                </tr>
+                            <?php endif; ?>
+                            <tr>
+                                <td colspan="4 border-bottom-none"></td>
+                                <td>訂單總額：</td>
+                                <td><?= number_format($subtotal) ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
-                <div class="d-flex align-items-center justify-content-start mt-5">
-                    <div class="col-3">
-                        <p class=" d-inline text-lg text-secondary border-bottom">會員資料</p>
-                        <h5 class="mt-2 text-secondary">姓名：<?= $row["user_name"] ?></h5>
-                        <h5 class="text-secondary">Email：<?= $row["user_email"] ?></h5>
-                        <h5 class="text-secondary">手機：<?= $row["user_phone"] ?></h5>
-                        <h5 class="text-secondary">地址：<?= $row["user_address"] ?></h5>
+                    <div class="d-flex align-items-center justify-content-start pt-4">
+                        <div class="col-3">
+                            <p class=" d-inline h3 border-bottom border-dark mb-5">會員資料</p>
+                            <h5 class="mt-3 fs-5 text-secondary">姓名：<?= $row["user_name"] ?></h5>
+                            <h5 class="fs-5 text-secondary">Email：<?= $row["user_email"] ?></h5>
+                            <h5 class="fs-5 text-secondary">手機：<?= $row["user_phone"] ?></h5>
+                            <h5 class="fs-5 text-secondary">地址：<?= $row["user_address"] ?></h5>
+                        </div>
                     </div>
                 </div>
             </div>

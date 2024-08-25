@@ -1,16 +1,16 @@
  <!-- Header    -->
  <header class="main-header d-flex justify-content-between bg-dark align-items-center fixed-top shadow ">
-   <a class="brand bg-black text-white text-decoration-none d-block" href="">後台管理系統</a>
+   <a class="brand bg-black text-white text-decoration-none d-block fs-5" href="">美妝後台管理</a>
    <div class="d-flex align-items-center text-white text-md gap-2">
      <!--登入後能顯示使用者名稱 -->
-     <div class="text-md">Hi ! Admin</div>
+     <div class="text-md me-3">Hi ! Admin</div>
      <a class="btn btn-dark me-3" href="../../doLogout.php"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
    </div>
  </header>
  <!-- Sidebar -->
  <aside class="side-navbar mt-5 d-block">
    <div class="side-navbar-inner">
-     <ul class="list-unstyled mt-4">
+     <ul class="list-unstyled mt-5">
        <li class="sidebar-item d-block"><a class="sidebar-link" href="#memberDropdown" data-bs-toggle="collapse"
            aria-expanded="false">
            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-2">
