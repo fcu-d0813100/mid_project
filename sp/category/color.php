@@ -124,6 +124,22 @@ if (isset($_GET["search"])) {
    AND color.valid=1 $filter";
 }
 
+// 庫存過低篩選
+if ($filterLowStock) {
+    $sqlTotalStock = "SELECT SUM(stock) as total_stock FROM color
+                       JOIN product_list ON color.product_id = product_list.id
+                       WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+                       AND ($product_id = 0 OR color.product_id = $product_id)
+                       AND color.stock < 35"; 
+    $sqlTotalStock = "SELECT SUM(stock) as total_stock FROM color
+                       JOIN product_list ON color.product_id = product_list.id
+                       WHERE (color.color LIKE '%$search%' OR product_list.product_name LIKE '%$search%')
+                       AND ($product_id = 0 OR color.product_id = $product_id)";
+}
+
+$totalStockResult = $conn->query($sqlTotalStock);
+$totalStock = $totalStockResult->fetch_assoc()['total_stock'];
+
 $result = $conn->query($sql);
 $colorCount = $result->num_rows;
 
