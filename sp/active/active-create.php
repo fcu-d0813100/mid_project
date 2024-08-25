@@ -95,21 +95,17 @@
                                 <tr>
                                     <th>報名人數</th>
                                     <td>
-                                        <div class="row">
+                                <div class="row">
 
 
 
-                                            <div class="col-6">
+                                    <div class="col-6">
+                                        <label for="" class="mb-2"><span class="text-danger">* </span>設定報名最大人數 :</label>
+                                        <div class="">
+                                            <input type="number" id="" class="form-control" name="maxAPP" required min="1">
+                                        </div>
+                                    </div>
 
-
-
-
-                                                <label for="" class="mb-2"><span class="text-danger">* </span>設定報名最大人數 :</label>
-                                                <div class="">
-                                                    <input type="number" id="" class="form-control" name="maxAPP" required>
-
-                                                </div>
-                                            </div>
 
 
                                     </td>
