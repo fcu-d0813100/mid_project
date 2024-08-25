@@ -6,7 +6,7 @@ require_once("../../db_connect.php");
 <html lang="en">
 
 <head>
-    <title>新增會員</title>
+    <title>註冊會員</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />

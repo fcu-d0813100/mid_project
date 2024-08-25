@@ -28,6 +28,8 @@ if (isset($_GET["search"])) {
     FROM users 
     JOIN user_level ON users.level_id = user_level.id 
     WHERE users.valid = 1 AND (users.id LIKE '%$search%' OR users.name LIKE '%$search%')";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
@@ -180,24 +182,27 @@ if (isset($_GET["search"])) {
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($rows as $user) : ?>
-                <tr class=" align-middle">
-                    <td><?= $user["id"] ?></td>
-                    <td><?= $user["name"] ?></td>
-                    <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>
-                    <td><?= $user["phone"] ?></td>
-                    <td><?= $user["birthday"] ?></td>
-                    <td><?= $user["email"] ?></td>
-                    <td><?= $user["created_at"] ?></td>
-                    <td><?= $user["level_name"] ?></td>
-                    <td class="text-md">
-                        <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
-                        </a>
-                        <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                    </td>
-                </tr>
+            <?php if ($rows):
 
-            <?php endforeach; ?>
+                foreach ($rows as $user) : ?>
+                    <tr class=" align-middle">
+                        <td><?= $user["id"] ?></td>
+                        <td><?= $user["name"] ?></td>
+                        <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>
+                        <td><?= $user["phone"] ?></td>
+                        <td><?= $user["birthday"] ?></td>
+                        <td><?= $user["email"] ?></td>
+                        <td><?= $user["created_at"] ?></td>
+                        <td><?= $user["level_name"] ?></td>
+                        <td class="text-md">
+                            <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
+                            </a>
+                            <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif ?>
+
         </tbody>
     </table>
     <?php if (isset($_GET["p"])) : ?>
