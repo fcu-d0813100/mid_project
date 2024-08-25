@@ -114,24 +114,27 @@ $userCount = $result->num_rows;
 
                   <?php if (isset($_GET["p"])) : ?>
                     <div class="d-flex">
-                      <span style="background-color: none;">ID</span>
-                      <div class=" btn-group ms-2 ">
-                        <a
-                          type="button"
-                          class="btn btn-outline-none btn-bordered-none btn-sm p-0 "
-                          <?php if ($order == 2) echo "active" ?>
-                          href="active.php?p=<?php echo $page; ?>&order=2">
-                          <i class="fa-solid fa-sort-up"></i>
-                        </a>
-                        <a
-                          type="button"
-                          class="btn btn-outline-none btn-bordered-none btn-sm p-0 "
-                          <?php if ($order == 1) echo "active" ?>
-                          href="active.php?p=<?php echo $page; ?>&order=1">
-                          <i class="fa-solid fa-sort-down align-top"></i>
-                        </a>
-                      </div>
-                    </div>
+  <span style="background-color: none;">ID</span>
+  <div class="btn-group ms-2">
+    <a 
+      type="button"
+      class="btn btn-outline-none btn-bordered-none btn-sm p-0 <?php echo $order == 2 ? 'active' : ''; ?>" 
+      id="sortUpButton"
+      href="active.php?p=<?php echo $page; ?>&order=2"
+      onclick="toggleButton('sortUpButton', 'sortDownButton')">
+      <i class="fa-solid fa-sort-up"></i>
+    </a>
+    <a 
+      type="button"
+      class="btn btn-outline-none btn-bordered-none btn-sm p-0 <?php echo $order == 1 ? 'active' : ''; ?>" 
+      id="sortDownButton"
+      href="active.php?p=<?php echo $page; ?>&order=1"
+      onclick="toggleButton('sortDownButton', 'sortUpButton')">
+      <i class="fa-solid fa-sort-down align-top"></i>
+    </a>
+  </div>
+</div>
+
                   <?php
                   endif; ?>
                 </th>
@@ -279,23 +282,27 @@ $userCount = $result->num_rows;
                 <th class="col-1">活動品牌</th>
                 <th class=" col" class="col-2">活動名稱</th>
                 <th class="col" class="col-2" style=" width:150px;">
-                  <span style="background-color: none;">活動日期</span>
+                 
                   <?php if (isset($_GET["p"])) : ?>
-                    <a
-                      type="button"
-                      class="btn btn-outline-none btn-sm"
-                      <?php if ($order == 3) echo "active" ?>
-                      href="active.php?p=<?php echo $page; ?>&order=3">
-                      <i class="fa-solid fa-sort-down"></i>
-                    </a>
-
-                    <a
-                      type="button"
-                      class="btn btn-outline-none btn-sm"
-                      <?php if ($order == 4) echo "active" ?>
-                      href="active.php?p=<?php echo $page; ?>&order=4">
-                      <i class="fa-solid fa-sort-up"></i>
-                    </a>
+                    <div class="d-flex">
+                    <span style="background-color: none;">活動日期</span>
+                      <div class=" btn-group ms-2 ">
+                        <a
+                          type="button"
+                          class="btn btn-outline-none btn-bordered-none btn-sm p-0 "
+                          <?php if ($order == 2) echo "active" ?>
+                          href="active.php?p=<?php echo $page; ?>&order=2">
+                          <i class="fa-solid fa-sort-up"></i>
+                        </a>
+                        <a
+                          type="button"
+                          class="btn btn-outline-none btn-bordered-none btn-sm p-0 "
+                          <?php if ($order == 1) echo "active" ?>
+                          href="active.php?p=<?php echo $page; ?>&order=1">
+                          <i class="fa-solid fa-sort-down align-top"></i>
+                        </a>
+                      </div>
+                    </div>
                   <?php
                   endif; ?>
                 </th>
@@ -386,7 +393,18 @@ $userCount = $result->num_rows;
   </div>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- <scrip src="../js/front.js"></script> -->
+<script>
+  function toggleButton(activeId, inactiveId) {
+  // 取得兩個按鈕的元素
+  var activeButton = document.getElementById(activeId);
+  var inactiveButton = document.getElementById(inactiveId);
 
+  // 切換 active class
+  activeButton.classList.add('active');
+  inactiveButton.classList.remove('active');
+}
+
+</script>
 
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"

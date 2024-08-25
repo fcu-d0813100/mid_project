@@ -28,6 +28,8 @@ if (isset($_GET["search"])) {
     FROM users 
     JOIN user_level ON users.level_id = user_level.id 
     WHERE users.valid = 1 AND (users.id LIKE '%$search%' OR users.name LIKE '%$search%')";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
@@ -73,12 +75,12 @@ if (isset($_GET["search"])) {
     $userCount = $userCountAll;
 }
 ?>
-
+    
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>會員管理</title>
+    <title>會員列表</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
 
@@ -163,6 +165,7 @@ if (isset($_GET["search"])) {
 
         <?php endif; ?>
 
+<<<<<<< HEAD
         <table class="table table-hover text-center align-middle mt-3 ">
             <thead class="">
                 <tr>
@@ -180,6 +183,23 @@ if (isset($_GET["search"])) {
             </thead>
             <tbody>
                 <?php foreach ($rows as $user) : ?>
+=======
+                <th>ID</th>
+                <th>姓名</th>
+                <th>性別</th>
+                <th>電話</th>
+                <th>生日</th>
+                <th>信箱</th>
+                <th>註冊時間</th>
+                <th>會員等級</th>
+                <th>檢視 <span></span> <span></span><span></span>編輯</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($rows):
+
+                foreach ($rows as $user) : ?>
+>>>>>>> 7d5f5d702fbdfadf8f78668f8238a0ac7255b5b0
                     <tr class=" align-middle">
                         <td><?= $user["id"] ?></td>
                         <td><?= $user["name"] ?></td>
@@ -195,6 +215,7 @@ if (isset($_GET["search"])) {
                             <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
                     </tr>
+<<<<<<< HEAD
 
                 <?php endforeach; ?>
             </tbody>
@@ -220,6 +241,34 @@ if (isset($_GET["search"])) {
         <?php endif; ?>
         <?php if ($userCount > 0) :
             $rows = $result->fetch_all(MYSQLI_ASSOC);
+=======
+                <?php endforeach; ?>
+            <?php endif ?>
+
+        </tbody>
+    </table>
+    <?php if (isset($_GET["p"])) : ?>
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link cursor-pointer" <?php if ($page > 1) : ?> href="users.php?p=<?= $page - 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <?php for ($i = 1; $i <= $total_page; $i++) : ?>
+                    <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                <?php endfor; ?>
+                <li class="page-item">
+                    <a class="page-link" <?php if ($page < $total_page) : ?> href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    <?php endif; ?>
+    <?php if ($userCount > 0) :
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+>>>>>>> 7d5f5d702fbdfadf8f78668f8238a0ac7255b5b0
 
         ?>
 
