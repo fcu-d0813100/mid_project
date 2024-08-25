@@ -42,16 +42,18 @@ if ($couponCount > 0) {
     <main class="main-content">
         <div class="container">
             <div class="mt-5 ">
-                <div class="d-flex justify-content-between align-items-start">
-                    <p class="m-0 d-inline  h2"><a href="coupon-list.php?p=1" class="btn btn-outline-danger">
+                <div class="d-flex justify-content-start align-items-center">
+                    <p class="m-0 d-inline h2 ">
+                        <a href="coupon-list.php?p=1" class="btn btn-dark me-2">
                             <i class="fa-solid fa-arrow-left"></i>
-                        </a> 
-                        #<?= $row["name"] ?></p>
+                        </a>
+                        # <?= $row["name"] ?>
+                    </p>
                 </div>
                 <hr>
                 <!-- table-->
                 <div class="row mt-5  justify-content-center">
-                    <div class="col-6 mt-5 pt-3">
+                    <div class="col-8 mt-5 pt-3">
                         <?php if ($couponCount > 0) : ?>
                             <form action="doUpdateCoupon.php" method="post">
                                 <div>
@@ -98,7 +100,7 @@ if ($couponCount > 0) {
                                 <div class="text-end ">
 
 
-                                    <a href="coupon-edit.php?id=<?=$row["id"]?>" class="btn btn-dark p-2 me-2 mt-3">
+                                    <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn btn-dark p-2 me-2 mt-3">
                                         <i class="fa-regular fa-pen-to-square"></i> 編輯
                                     </a>
 

@@ -21,8 +21,8 @@ if (isset($_GET["search"])) {
           OR id LIKE '%$search%'
           OR start_at LIKE '%$search%') 
           AND valid = 1";
-$result = $conn->query($sql);
-$searchCount = $result->num_rows;
+  $result = $conn->query($sql);
+  $searchCount = $result->num_rows;
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
   $order = $_GET["order"];
   $page = $_GET["p"];
@@ -75,9 +75,9 @@ $userCount = $result->num_rows;
 <body>
   <?php include("../../nav1.php") ?>
 
-  <main class="main-content d-flex justify-content-center container ">
-    <div>
-      <div class="d-flex justify-content-between align-items-start mt-3 pt-3 align-middle">
+  <main class="main-content">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-start mt-5 align-middle">
         <p class="m-0 d-inline text-lg text-secondary"><a href="active.php" class="text-decoration-none text-dark h2">活動管理 </a> <span class="text-sm fs-5 text-dark"> / 活動列表</span></p>
 
 
@@ -228,25 +228,25 @@ $userCount = $result->num_rows;
             </tbody>
           </table>
         </div>
-        <?php if(!isset($_GET["search"])):?>
-        <nav aria-label="Page navigation example ">
-          <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPage; $i++): ?>
-              <li class="page-item <?php if ($page == $i) echo "active"; ?>">
-                <a class="page-link " href="active.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
-              </li>
-            <?php endfor; ?>
-          </ul> 
-        </nav>
-       
-        <?php endif;?>
-        
-      <?php elseif($activeCountAll && !isset($_GET["search"])):
+        <?php if (!isset($_GET["search"])): ?>
+          <nav aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+              <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+                <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                  <a class="page-link " href="active.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+
+        <?php endif; ?>
+
+      <?php elseif ($activeCountAll && !isset($_GET["search"])):
         $rows = $result->fetch_all(MYSQLI_ASSOC); ?>
         <div class="text-md mb-2">共有<?= $activeCountAll;
                                     //var_dump($where_clause); 
                                     ?> 筆活動</div>
-                                     <div class="table-responsive large">
+        <div class="table-responsive large">
           <table class="table table-striped table-md text-center" id="datatable">
             <thead>
               <tr class="align-middle">

@@ -103,7 +103,7 @@ $result = $conn->query($sql);
     <main class="main-content">
         <div class="container">
 
-            <div class="d-flex justify-content-between align-items-start ">
+            <div class="d-flex justify-content-between align-items-start mt-5">
                 <!-- 返回 order-list 的按鈕 -->
                 <?php if (isset($_GET["id"])) : ?>
                     <div class="col-auto">
@@ -124,7 +124,7 @@ $result = $conn->query($sql);
             <div class="col-12 mt-3">
                 <ul class="nav nav-tabs">
 
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link text-dark <?php if (!isset($_GET["pay"]) && !isset($_GET["status"])) echo "active" ?>" aria-current="page" href="order-list.php?p=1">全部 <?= $orderCountAll ?></a>
                     </li>
 

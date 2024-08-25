@@ -20,7 +20,7 @@
 
         <main class="main-content">
             <div class=" container">
-                <div class="d-flex justify-content-between align-items-start mt-3 pt-5">
+                <div class="d-flex justify-content-between align-items-start mt-5">
                     <p class="m-0 d-inline text-lg"><a href="active.php" class="text-dark text-decoration-none h2">活動列表 </a><span class="text-sm fs-5"> / 活動新增</span></p>
                 </div>
                 <hr>
@@ -95,16 +95,16 @@
                                 <tr>
                                     <th>報名人數</th>
                                     <td>
-                                <div class="row">
+                                        <div class="row">
 
 
 
-                                    <div class="col-6">
-                                        <label for="" class="mb-2"><span class="text-danger">* </span>設定報名最大人數 :</label>
-                                        <div class="">
-                                            <input type="number" id="" class="form-control" name="maxAPP" required min="1">
-                                        </div>
-                                    </div>
+                                            <div class="col-6">
+                                                <label for="" class="mb-2"><span class="text-danger">* </span>設定報名最大人數 :</label>
+                                                <div class="">
+                                                    <input type="number" id="" class="form-control" name="maxAPP" required min="1">
+                                                </div>
+                                            </div>
 
 
 

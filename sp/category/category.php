@@ -157,7 +157,7 @@ $main_categories = $conn->query("SELECT id, name FROM main_category");
                 <td><?= $category["main_name"] ?></td>
                 <td><?= $category["sub_name"] ?></td>
                 <td>
-                  <a class="btn btn-dark me-3" href="category-edit.php?id=<?= $category["id"] ?>">修改</a>
+                  <a class="btn btn-outline-danger me-3" href="category-edit.php?id=<?= $category["id"] ?>">修改</a>
                   <a class="btn btn-outline-danger" href="doDeleteCategory.php?id=<?= $category["id"] ?>" onclick="return confirm('是否確定刪除?')">刪除</a>
                 </td>
               </tr>
