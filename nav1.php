@@ -19,7 +19,6 @@
            會員管理</a>
          <ul class="collapse list-unstyled " id="memberDropdown">
            <li><a class="sidebar-link" href="../user/users.php">會員列表</a></li>
-           <li><a class="sidebar-link" href="../user/create-user.php">新增會員</a></li>
          </ul>
        </li>
        <li class="sidebar-item"><a class="sidebar-link" href="#teacherDropdown" data-bs-toggle="collapse"

@@ -11,7 +11,7 @@ if (isset($_SESSION["user"])) {
 <html lang="en">
 
 <head>
-    <title>LOGIN</title>
+    <title>後台管理登入</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -26,7 +26,7 @@ if (isset($_SESSION["user"])) {
     ?>
     <style>
         body {
-            background: url(./login_bg/07.jpg) center center;
+            background: url(./login_bg/01.jpg) center center;
             background-size: cover;
         }
 
@@ -133,14 +133,9 @@ if (isset($_SESSION["user"])) {
 
                     unset($_SESSION["error"]["message"]);
                 endif; ?>
-
-
                     </form>
-
-
-
                     <div class="mt-4 text-muted">
-                        © 2010-2024 Makeup 後台管理系統
+                        © 2024 Makeup 後台管理系統
 
                     </div>
             </div>

@@ -27,7 +27,7 @@ if (isset($_GET["search"])) {
     $sql = "SELECT users.* , user_level.name AS level_name 
     FROM users 
     JOIN user_level ON users.level_id = user_level.id 
-    WHERE users.id = '$search' OR users.name LIKE '%$search%' AND users.valid=1";
+    WHERE users.valid = 1 AND (users.id LIKE '%$search%' OR users.name LIKE '%$search%')";
 } elseif (isset($_GET["p"]) && isset($_GET["order"])) {
     $order = $_GET["order"];
     $page = $_GET["p"];
@@ -78,7 +78,7 @@ if (isset($_GET["search"])) {
 <html lang="en">
 
 <head>
-    <title>Users</title>
+    <title>會員管理</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
 
@@ -101,13 +101,11 @@ if (isset($_GET["search"])) {
     <main class="main-content">
         <div class="container">
             <div class="mx-2">
-                <div class="row d-flex justify-content-between mt-2">
+                <div class="row d-flex justify-content-start mt-2">
                     <div class="mt-3 col-md-3">
                         <p class="m-0 d-inline h2">會員管理 <span class="text-sm fs-5"> / 會員列表</span></p>
                     </div>
-                    <div class="mt-3 col-md-3 d-flex justify-content-end pe-5">
-                        <a class="btn btn-dark" href="create-user.php"><i class="fa-solid fa-user-plus pe-2"></i>新增會員</a>
-                    </div>
+
                 </div>
                 <hr>
 
@@ -159,122 +157,82 @@ if (isset($_GET["search"])) {
             <?php endif; ?>
             <?php if ($userCount > 0) :
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
-
             ?>
 
-
-
-
-
-                        </div>
-                    </div>
-            </div>
-        <?php endif; ?>
-        <?php if ($userCount > 0) :
-            $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-        ?>
-
-
-
-
-
-            <table class="table table-hover text-center align-middle mt-3 ">
-                <thead class="">
-                    <tr>
-
-                        <th>ID</th>
-                        <th>姓名</th>
-                        <th>性別</th>
-                        <th>電話</th>
-                        <th>生日</th>
-                        <th>信箱</th>
-                        <th>註冊時間</th>
-                        <th>會員等級</th>
-                        <th>檢視 <span></span> <span></span><span></span>編輯</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($rows as $user) : ?>
-                        <tr class=" align-middle">
-                            <td><?= $user["id"] ?></td>
-                            <td><?= $user["name"] ?></td>
-                            <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>
-                            <td><?= $user["phone"] ?></td>
-                            <td><?= $user["birthday"] ?></td>
-                            <td><?= $user["email"] ?></td>
-                            <td><?= $user["created_at"] ?></td>
-                            <td><?= $user["level_name"] ?></td>
-                            <td class="text-md">
-                                <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
-                                </a>
-                                <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            </td>
-                        </tr>
-
-
-                <table class="table table-hover text-center align-middle mt-3 ">
-                    <thead class="">
-                        <tr>
-
-                            <th>ID</th>
-                            <th>姓名</th>
-                            <th>性別</th>
-                            <th>電話</th>
-                            <th>生日</th>
-                            <th>信箱</th>
-                            <th>註冊時間</th>
-                            <th>會員等級</th>
-                            <th>檢視 <span></span> <span></span><span></span>編輯</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($rows as $user) : ?>
-                            <tr class=" align-middle">
-                                <td><?= $user["id"] ?></td>
-                                <td><?= $user["name"] ?></td>
-                                <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>
-                                <td><?= $user["phone"] ?></td>
-                                <td><?= $user["birthday"] ?></td>
-                                <td><?= $user["email"] ?></td>
-                                <td><?= $user["created_at"] ?></td>
-                                <td><?= $user["level_name"] ?></td>
-                                <td class="text-md">
-                                    <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                                </td>
-                            </tr>
-
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <?php if (isset($_GET["p"])) : ?>
-                    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link cursor-pointer" <?php if ($page > 1) : ?> href="users.php?p=<?= $page - 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <?php for ($i = 1; $i <= $total_page; $i++) : ?>
-                                <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-                            <?php endfor; ?>
-                            <li class="page-item">
-                                <a class="page-link" <?php if ($page < $total_page) : ?> href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                <?php endif; ?>
-                </tbody>
-            <?php else : ?>
-                搜尋不到資料
-            <?php endif; ?>
             </div>
         </div>
-                </main>
+        </div>
+    <?php endif; ?>
+
+    <table class="table table-hover text-center align-middle mt-3 ">
+        <thead class="">
+            <tr>
+
+                <th>ID</th>
+                <th>姓名</th>
+                <th>性別</th>
+                <th>電話</th>
+                <th>生日</th>
+                <th>信箱</th>
+                <th>註冊時間</th>
+                <th>會員等級</th>
+                <th>檢視 <span></span> <span></span><span></span>編輯</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($rows as $user) : ?>
+                <tr class=" align-middle">
+                    <td><?= $user["id"] ?></td>
+                    <td><?= $user["name"] ?></td>
+                    <td><?= ($user["gender"] == 1) ? '男' : '女' ?></td>
+                    <td><?= $user["phone"] ?></td>
+                    <td><?= $user["birthday"] ?></td>
+                    <td><?= $user["email"] ?></td>
+                    <td><?= $user["created_at"] ?></td>
+                    <td><?= $user["level_name"] ?></td>
+                    <td class="text-md">
+                        <a class="btn btn-outline-danger text-sm" href="user.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a class="btn btn-outline-danger text-sm" href="user-edit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                    </td>
+                </tr>
+
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php if (isset($_GET["p"])) : ?>
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link cursor-pointer" <?php if ($page > 1) : ?> href="users.php?p=<?= $page - 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <?php for ($i = 1; $i <= $total_page; $i++) : ?>
+                    <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                <?php endfor; ?>
+                <li class="page-item">
+                    <a class="page-link" <?php if ($page < $total_page) : ?> href="users.php?p=<?= $page + 1 ?>&order=<?= $order ?>" <?php endif; ?> aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    <?php endif; ?>
+    <?php if ($userCount > 0) :
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+    ?>
+
+
+
+    <?php else : ?>
+        搜尋不到資料
+    <?php endif; ?>
+    </div>
+    </div>
+    </main>
+
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/front.js"></script>
 </body>
