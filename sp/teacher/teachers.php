@@ -6,7 +6,7 @@ $userCountAll = $resultAll->num_rows;
 
 $page = 1;
 $start_item = 0;
-$per_page = 6;
+$per_page = 9;
 
 $total_page = ceil($userCountAll / $per_page);
 
@@ -120,12 +120,12 @@ if (isset($_GET["search"])) {
 <body>
     <?php include("../../nav1.php") ?>
 
-    <main class="main-content px-3 pb-3 pt-5">
+    <main class="main-content px-3 pb-3">
         <div class="container ">
-            <div class="mt-4 row d-flex justify-content-center align-items-center ">
+            <div class="row d-flex justify-content-center align-items-center ">
                 <div class="">
                     <div>
-                        <h1 class="h2 mt-5 pt-5 mb-3">師資列表</h1>
+                        <h1 class="h2 mt-5 mb-3">師資列表</h1>
 
 
 

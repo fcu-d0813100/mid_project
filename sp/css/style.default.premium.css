@@ -19,6 +19,7 @@ https://bootstrapious.com/p/bootstrap-4-dashboard-premium
  */
 :root,
 [data-bs-theme="light"] {
+  --mine-color: rgb(161, 29, 29);
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -56,7 +57,6 @@ https://bootstrapious.com/p/bootstrap-4-dashboard-premium
   --bs-faintGreen: #54e69d;
   --bs-orange: #ffc36d;
   --bs-violet: #796aee;
-  --mine-color: rgb(161, 29, 29);
   /* --bs-paleBlue: #85b4f2; */
   --bs-primary-rgb: 51, 179, 90;
   --bs-secondary-rgb: 108, 117, 125;
@@ -129,7 +129,7 @@ https://bootstrapious.com/p/bootstrap-4-dashboard-premium
   --bs-tertiary-bg: #f8f9fa;
   --bs-tertiary-bg-rgb: 248, 249, 250;
   --bs-heading-color: inherit;
-  --bs-link-color: var(--mine-color);
+  --bs-link-color: #33b35a;
   --bs-link-color-rgb: 51, 179, 90;
   --bs-link-decoration: underline;
   --bs-link-hover-color: #22773c;
@@ -2974,8 +2974,8 @@ textarea.form-control-lg {
   box-shadow: 0 0 0 0.25rem rgba(51, 179, 90, 0.25);
 }
 .form-check-input:checked {
-  background-color: var(--mine-color);
-  border-color: var(--mine-color);
+  background-color: #33b35a;
+  border-color: #33b35a;
 }
 .form-check-input:checked[type="checkbox"] {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
@@ -3754,10 +3754,10 @@ fieldset:disabled .btn {
 
 .btn-primary {
   --bs-btn-color: #212529;
-  --bs-btn-bg: var(var(--mine-color));
+  --bs-btn-bg: #33b35a;
   --bs-btn-border-color: #33b35a;
   --bs-btn-hover-color: #212529;
-  --bs-btn-hover-bg: var(--mine-color);
+  --bs-btn-hover-bg: #52be73;
   --bs-btn-hover-border-color: #47bb6b;
   --bs-btn-focus-shadow-rgb: 48, 158, 83;
   --bs-btn-active-color: #212529;
@@ -16362,14 +16362,14 @@ nav.navbar .dropdown-menu.show {
   transition: all 0.3s;
   text-align: left;
   color: #fff;
-  background: var(--mine-color);
+  background: #393836;
   z-index: 999;
   transition: all 0.3s;
   /* overflow: hidden; */
   /*  Side navbar small ------------------------ */
 }
 .side-navbar-inner {
-  background: var(--mine-color);
+  background: #393836;
 }
 .side-navbar .scrolled-wrapper {
   width: 100%;
@@ -16450,9 +16450,10 @@ nav.navbar .dropdown-menu.show {
 }
 .sidebar-item .collapse,
 .sidebar-item .collapsing {
-  border-left: 2px solid #33b35a;
+  border-left: 2px solid var(--mine-color);
   background: #292929;
 }
+
 .sidebar-item .collapse li:not(.active) .sidebar-link:hover,
 .sidebar-item .collapse li:not(.active) .sidebar-link:focus,
 .sidebar-item .collapsing li:not(.active) .sidebar-link:hover,
@@ -16478,7 +16479,7 @@ nav.navbar .dropdown-menu.show {
 }
 .sidebar-link:hover {
   color: #fff;
-  background: var(--mine-color);
+  background: var(--main-color);
 }
 .sidebar-link[data-bs-toggle="collapse"]::before {
   display: block;
