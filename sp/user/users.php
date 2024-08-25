@@ -75,7 +75,7 @@ if (isset($_GET["search"])) {
     $userCount = $userCountAll;
 }
 ?>
-
+    
 <!doctype html>
 <html lang="en">
 
