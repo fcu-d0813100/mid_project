@@ -3,7 +3,7 @@ if (!isset($_POST["title"])) {
     echo "請循正常管道進入此頁";
     exit;
 }
-require_once("/xampp/htdocs/mid_project/db_connect.php");
+require_once("../../db_connect.php");
 
 $id = $_POST["id"];
 $brand = $_POST["brand"];
