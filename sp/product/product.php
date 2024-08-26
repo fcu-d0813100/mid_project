@@ -72,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 檢查是否有更新其他內容的請求
-    if (isset($_POST['color_name']) || isset($_POST['price']) || isset($_POST['description']) || isset($_POST['stock'])) {
+    if (isset($_POST['product_name']) || isset($_POST['color_name']) || isset($_POST['price']) || isset($_POST['description']) || isset($_POST['stock'])) {
+        $updatedProductName = trim($_POST['product_name']);
         $updatedColorName = trim($_POST['color_name']);
         $updatedPrice = (float)str_replace("元", "", trim($_POST['price']));
         $updatedDescription = trim($_POST['description']);
@@ -80,10 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 更新 product_list 表格
         $updateProductSql = "UPDATE product_list 
-                             SET price = :price, description = :description 
+                             SET product_name = :product_name, price = :price, description = :description 
                              WHERE id = :product_id";
         $stmtUpdateProduct = $pdo->prepare($updateProductSql);
         $stmtUpdateProduct->execute([
+            'product_name' => $updatedProductName,
             'price' => $updatedPrice,
             'description' => $updatedDescription,
             'product_id' => $productId
