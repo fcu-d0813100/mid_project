@@ -1,5 +1,5 @@
 <?php
-require("/xampp/htdocs/mid_project/db_connect.php");
+require("../../db_connect.php");
 
 if (!isset($_POST["brand"])) {
     echo "請循正常管道進入此頁";
