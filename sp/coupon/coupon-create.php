@@ -69,8 +69,8 @@
                                 <label for="name" class="col-sm-2 col-form-label">折扣方式</label>
                                 <div class="col-sm-10">
                                     <select class="form-select" aria-label="Default select example" name="type_id">
-                                        <option value="1">金額</option>
-                                        <option value="2">百分比%</option>
+                                        <option value="1">百分比%</option>
+                                        <option value="2">金額</option>
                                     </select>
                                 </div>
                             </div>
