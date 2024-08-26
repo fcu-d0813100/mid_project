@@ -46,43 +46,67 @@ if ($stmt->rowCount() > 0) {
     exit();
 }
 
-// 更新資料庫中的商品數據
+// 更新資料庫中的數據
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $updatedProductName = trim($_POST['product_name']);
-    $updatedColorName = trim($_POST['color_name']);
-    $updatedPrice = (float)str_replace("元", "", trim($_POST['price']));
-    $updatedDescription = trim($_POST['description']);
-    $updatedStock = (int)trim($_POST['stock']);
 
-    // 更新 product_list 表格
-    $updateProductSql = "UPDATE product_list 
-                         SET product_name = :product_name, price = :price, description = :description 
-                         WHERE id = :product_id";
-    $stmtUpdateProduct = $pdo->prepare($updateProductSql);
-    $stmtUpdateProduct->execute([
-        'product_name' => $updatedProductName,
-        'price' => $updatedPrice,
-        'description' => $updatedDescription,
-        'product_id' => $productId
-    ]);
+    // 檢查是否有更新圖片的請求
+    if (!empty($_FILES['product_image']['name'])) {
+        $targetDir = "uploads/";
+        $imageFileType = strtolower(pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION));
+        $imageName = uniqid() . '.' . $imageFileType;
+        $targetFilePath = $targetDir . $imageName;
 
-    // 更新 color 表格
-    $updateColorSql = "UPDATE color 
-                       SET color = :color_name, stock = :stock 
-                       WHERE id = :color_id AND product_id = :product_id";
-    $stmtUpdateColor = $pdo->prepare($updateColorSql);
-    $stmtUpdateColor->execute([
-        'color_name' => $updatedColorName,
-        'stock' => $updatedStock,
-        'color_id' => $colorId,
-        'product_id' => $productId
-    ]);
+        if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFilePath)) {
+            // 只更新 color 表格的圖片字段
+            $updateImageSql = "UPDATE color SET mainimage = :image_name WHERE id = :color_id AND product_id = :product_id";
+            $stmtUpdateImage = $pdo->prepare($updateImageSql);
+            $stmtUpdateImage->execute([
+                'image_name' => $imageName,
+                'color_id' => $colorId,
+                'product_id' => $productId
+            ]);
+        } else {
+            echo "圖片上傳失敗。";
+            exit();
+        }
+    }
 
-    echo "<script>alert('商品資料已更新成功！'); window.location.href='product.php?id=$productId&color_id=$colorId';</script>";
+    // 檢查是否有更新其他內容的請求
+    if (isset($_POST['color_name']) || isset($_POST['price']) || isset($_POST['description']) || isset($_POST['stock'])) {
+        $updatedColorName = trim($_POST['color_name']);
+        $updatedPrice = (float)str_replace("元", "", trim($_POST['price']));
+        $updatedDescription = trim($_POST['description']);
+        $updatedStock = (int)trim($_POST['stock']);
+
+        // 更新 product_list 表格
+        $updateProductSql = "UPDATE product_list 
+                             SET price = :price, description = :description 
+                             WHERE id = :product_id";
+        $stmtUpdateProduct = $pdo->prepare($updateProductSql);
+        $stmtUpdateProduct->execute([
+            'price' => $updatedPrice,
+            'description' => $updatedDescription,
+            'product_id' => $productId
+        ]);
+
+        // 更新 color 表格
+        $updateColorSql = "UPDATE color 
+                           SET color = :color_name, stock = :stock 
+                           WHERE id = :color_id AND product_id = :product_id";
+        $stmtUpdateColor = $pdo->prepare($updateColorSql);
+        $stmtUpdateColor->execute([
+            'color_name' => $updatedColorName,
+            'stock' => $updatedStock,
+            'color_id' => $colorId,
+            'product_id' => $productId
+        ]);
+    }
+
+    // 重新加載頁面以顯示最新的數據，包括新圖片
+    header("Location: product.php?id=$productId&color_id=$colorId");
     exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -100,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
             <div class="d-flex justify-content-between my-2 pt-5 mt-5">
                 <div>
-                    <a href="product_list.php" class="btn btn-dark reverse py-2 "><i class="fa-solid fa-chevron-left fa-fw "></i></a>
+                    <a href="product_list.php" class="btn btn-dark reverse py-2"><i class="fa-solid fa-chevron-left fa-fw"></i></a>
                 </div>
                 <div d-flex>
                     <button type="button" class="btn btn-dark py-2 me-2 edit-button"><i class="fa-solid fa-pen fa-fw"></i></button> <!-- 編輯按鈕 -->
@@ -119,14 +143,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 <div class="product-details col-6">
 
-                    <form id="productForm" method="POST">
+                    <form id="productForm" method="POST" enctype="multipart/form-data">
                         <div class="border-bottom h2 py-2 mb-3">
-                            <span contenteditable="false" id="product_name"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></span>
+                            <span id="product_name_display"><?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?></span>
+                            <input type="text" name="product_name" id="product_name" value="<?php echo htmlspecialchars($productName, ENT_QUOTES, 'UTF-8'); ?>" style="display: none;">
                         </div>
                         <table class="table table-bordered align-middle">
-
                             <tr class="">
-                                <th class="col-2 py-3 text-center ">品牌</th>
+                                <th class="col-2 py-3 text-center">品牌</th>
                                 <td class="px-4"><?php echo htmlspecialchars($brandName, ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                             <tr>
@@ -134,24 +158,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td class="px-4"><?php echo htmlspecialchars($mainCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                             <tr>
-                                <th class="py-3 text-center ">品項</th>
+                                <th class="py-3 text-center">品項</th>
                                 <td class="px-4"><?php echo htmlspecialchars($subCategoryName, ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                             <tr>
                                 <th class="py-3 text-center">色號</th>
-                                <td class="px-4" contenteditable="false" id="color_name"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td class="px-4">
+                                    <span id="color_name_display"><?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?></span>
+                                    <input type="text" name="color_name" id="color_name" value="<?php echo htmlspecialchars($colorName, ENT_QUOTES, 'UTF-8'); ?>" style="display: none;">
+                                </td>
                             </tr>
                             <tr>
                                 <th class="py-3 text-center">價格</th>
-                                <td class="price px-4" contenteditable="false" id="price"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?> 元</td>
+                                <td class="price px-4">
+                                    <span id="price_display"><?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?> 元</span>
+                                    <input type="text" name="price" id="price" value="<?php echo htmlspecialchars($price, ENT_QUOTES, 'UTF-8'); ?>" style="display: none;">
+                                </td>
                             </tr>
                             <tr>
                                 <th class="py-3 text-center">庫存</th>
-                                <td class="stock px-4" contenteditable="false" id="stock"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?> 件</td>
+                                <td class="stock px-4">
+                                    <span id="stock_display"><?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?> 件</span>
+                                    <input type="text" name="stock" id="stock" value="<?php echo htmlspecialchars($stock, ENT_QUOTES, 'UTF-8'); ?>" style="display: none;">
+                                </td>
                             </tr>
                             <tr>
                                 <th class="py-3 text-center">商品描述</th>
-                                <td class="px-4 py-2" contenteditable="false" id="description"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td class="px-4 py-2">
+                                    <span id="description_display"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></span>
+                                    <textarea name="description" id="description" style="display: none;"><?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?></textarea>
+                                </td>
+                            </tr>
+                            <tr id="image-upload-row" style="display: none;">
+                                <th class="py-3 text-center">更換圖片</th>
+                                <td class="px-4"><input type="file" name="product_image" id="product_image" accept="image/*"></td>
                             </tr>
                         </table>
                     </form>
@@ -165,43 +205,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         const editButton = document.querySelector('.edit-button');
         const saveButton = document.querySelector('.save-button');
-        const contentEditableElements = document.querySelectorAll('[contenteditable="false"]');
-        const successMessage = document.querySelector('.success-message');
+        const imageUploadRow = document.getElementById('image-upload-row');
 
         editButton.addEventListener('click', function() {
-            contentEditableElements.forEach(element => {
-                element.setAttribute('contenteditable', 'true');
-                element.style.borderBottom = "1px solid #ddd";
+            // 切換為編輯模式
+            document.querySelectorAll('#productForm span').forEach(span => {
+                span.style.display = 'none';
             });
+            document.querySelectorAll('#productForm input, #productForm textarea').forEach(input => {
+                input.style.display = 'block';
+            });
+            imageUploadRow.style.display = 'table-row'; // 顯示文件上傳輸入框
         });
 
         $('#productForm').on('submit', function(e) {
             e.preventDefault(); // 阻止表單默認提交
 
-            const formData = {
-                product_name: $('#product_name').text().trim(),
-                color_name: $('#color_name').text().trim(),
-                price: $('#price').text().replace(/[^\d.]/g, '').trim(),
-                description: $('#description').text().trim(),
-                stock: $('#stock').text().replace(/[^\d]/g, '').trim()
-            };
+            const formData = new FormData(this); // 使用FormData對象來處理文件上傳
 
             $.ajax({
                 url: window.location.href, // 提交到當前頁面
                 type: 'POST',
                 data: formData,
+                contentType: false,
+                processData: false,
                 success: function(response) {
-                    // 顯示成功消息
-                    successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        successMessage.style.display = 'none';
-                    }, 2000);
-
-                    // 取消編輯狀態
-                    contentEditableElements.forEach(element => {
-                        element.setAttribute('contenteditable', 'false');
-                        element.style.borderBottom = "none";
-                    });
+                    // 重新加載頁面以顯示最新的數據
+                    location.reload();
                 }
             });
         });
